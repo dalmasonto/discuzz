@@ -9,9 +9,7 @@ from django.http import HttpResponseRedirect
 
 def home(request):
     todo_items = Add.objects.all().order_by("-added_date")
-    return render(request, "base.html", {
-        "todo_items": todo_items
-    })
+    return render(request, "base.html", )
 
 
 def add_html(request):
@@ -25,7 +23,7 @@ def new_search(request):
 def add_todo(request):
     current_date = timezone.now()
     content = request.POST.get("item", False)
-    created_object = Add.objects.create(added_date=current_date, text=content)
+    Add.objects.create(added_date=current_date, text=content)
     return HttpResponseRedirect("/")
 
 
