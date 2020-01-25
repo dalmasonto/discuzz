@@ -1,0 +1,48 @@
+
+.d-div1{
+background-color: red;
+}
+
+.icon-courier{
+    background: linear-gradient(50deg, red, blue);
+    height: 300px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    align-text: center;
+    /*width: 300px;
+    margin: auto;*/
+}
+.icon-courier_one{
+    padding-top: 20px;
+}
+.fa-chrome , .fa-bolt, .fa-slack{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    padding-bottom: 10px;
+}
+.icon-courier_two{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    max-width: 300px;
+    margin: auto;
+    background:red;
+    display: block;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 10px red,
+                            inset rgba(255,255,255,.03);
+}
+.icon-courier_two h4{
+    text-align:center;
+}
+.icon-courier_two p{
+    text-align: center;
+}
