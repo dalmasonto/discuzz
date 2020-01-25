@@ -26,9 +26,9 @@ def add_todo(request):
     current_date = timezone.now()
     content = request.POST.get("item", False)
     created_object = Add.objects.create(added_date=current_date, text=content)
-    return HttpResponseRedirect("/#todos")
+    return HttpResponseRedirect("/")
 
 
 def delete_todo(request, todo_id):
     Add.objects.get(id=todo_id).delete()
-    return HttpResponseRedirect("/#todos")
+    return HttpResponseRedirect("/")
