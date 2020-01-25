@@ -9,9 +9,13 @@ from django.http import HttpResponseRedirect
 
 def home(request):
     todo_items = Add.objects.all().order_by("-added_date")
-    return render(request, 'my_app/add_todo.html', {
+    return render(request, "/my_app/add_todo.html", {
         "todo_items": todo_items
     })
+
+
+def add_html(request):
+    return render(request, "/my_app/add_todo.html", )
 
 
 def new_search(request):
