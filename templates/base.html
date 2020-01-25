@@ -91,6 +91,30 @@
 </div>
 </div>
 <div class="jumbotron" id="todos">
+    <h2>Add To-do Item</h2>
+    <div class="col mt-4">
+        <form action="add_todo/" class="form-inline" method="post">
+            {% csrf_token %}
+            <input type="text" class="form-control mb-2 mr-sm-2" name="item" placeholder="To-do" >
+            <input type="submit" class="btn btn-primary mb-2">
+        </form>
+     </div>
+    <div class="row mt-4">
+        <div class="col">
+            <ul class="list-group">
+                {% for todo_item in todo_items %}
+                     <li class="list-group-item">{{todo_item.text}}
+                         <div class="float-right">
+                             <form action="delete_todo/{{todo_item.id}}/" method="post">
+                                 {% csrf_token %}
+                                <button class="btn btn-warning btn-sm">DELETE</button>
+                             </form>
+                         </div>
+                     </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% block content %}
 
 {% endblock content %}
