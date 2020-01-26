@@ -15,11 +15,11 @@ def home(request):
 
 
 def add_html(request):
-    return render(request, "/my_app/add_todo.html", )
+    return render(request, "my_app/add_todo.html", )
 
 
 def about_page(request):
-    return render(request, "/my_app/about.html", )
+    return render(request, "my_app/about.html", )
 
 
 def new_search(request):
