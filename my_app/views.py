@@ -19,7 +19,7 @@ def home(request):
 
 def about_page(request):
     todo_items = Add.objects.all().order_by("-added_date")
-    return render(request, 'my_app/about.html',  {
+    return render(request, 'my_app/about.html', {
         "todo_items": todo_items
     })
 
@@ -48,7 +48,8 @@ def form_sign_up(request):
     pwd = request.POST.get("pwd", False)
     pwd_repeat = request.POST.get("pwd-repeat", False)
     if pwd == pwd_repeat:
-        UserSignup.objects.create(username=username, fname=fname, lname=lname, email=email, phone_number=phone_no, password=pwd)
+        UserSignup.objects.create(username=username, fname=fname, lname=lname, email=email, phone_number=phone_no,
+                                  password=pwd)
         print(username)
         print(fname)
         print(lname)
@@ -58,6 +59,12 @@ def form_sign_up(request):
 
     return HttpResponseRedirect("/")
 
+
 def delete_todo(request, todo_id):
     Add.objects.get(id=todo_id).delete()
+    return HttpResponseRedirect("/")
+
+
+def delete_contact(request, contact_id):
+    UserSignup.objects.get(id=contact_id).delete()
     return HttpResponseRedirect("/")

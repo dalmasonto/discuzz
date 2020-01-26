@@ -11,5 +11,6 @@ urlpatterns = [
     path('form_sign_up/', views.form_sign_up, name='add_todo'),
     path('add_todo/', views.add_todo, name='add_todo'),
     path('delete_todo/<int:todo_id>/', views.delete_todo),
+    path('delete_contact/<int:contact_id>/', views.delete_contact),
     # path('admin/', admin.site.urls),
 ]

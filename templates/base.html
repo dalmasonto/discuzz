@@ -50,14 +50,13 @@
     </form>
   </div>
 </nav>
-<div class="row">
-<!--<h1 class="text-center">What do want to search for in codedadies list?</h1>-->
-</div>
+
 
 <div class="container">
-<div class="row">
-    <div class="col-md-4 col-sm-12 justify-content-center">
-        <div class="icon-courier">
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12 justify-content-center">
+            <div class="icon-courier">
             <div class="icon-courier_one">
                 <i class="fa fa-slack" aria-hidden="true"></i>
             </div>
@@ -65,41 +64,42 @@
                 <h4>Slack for fast experience</h4>
                 <p>Experience great deals from our resources</p>
             </div>
+             </div>
         </div>
-    </div>
-    <div class="col-md-4 col-sm-12">
-        <div class="icon-courier">
-            <div class="icon-courier_one">
-                <i class="fa fa-chrome" aria-hidden="true"></i>
-            </div>
-            <div class="icon-courier_two">
-                <h4>This is chrome logo</h4>
-                <p>We are here for speed</p>
-                <p>Learn our technology</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 col-sm-12">
-        <div class="icon-courier">
-            <div class="icon-courier_one">
-                <i class="fa fa-bolt" aria-hidden="true"></i>
-            </div>
-            <div class="icon-courier_two">
-                <h4>Bolt</h4>
-                <p>This is the bolt logo </p>
-                <p>Test our speed</p>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<div class="jumbotron" id="todos">
-    {% block content %}
 
-    {% endblock content %}
-    <div class="row mt-4">
-        <div class="row">Todos</div>
-        <div class="col">
+        <div class="col-md-4 col-sm-12">
+             <div class="icon-courier">
+                <div class="icon-courier_one">
+                    <i class="fa fa-chrome" aria-hidden="true"></i>
+                </div>
+                <div class="icon-courier_two">
+                    <h4>This is chrome logo</h4>
+                    <p>We are here for speed</p>
+                    <p>Learn our technology</p>
+                </div>
+            </div>
+         </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="icon-courier">
+                <div class="icon-courier_one">
+                    <i class="fa fa-bolt" aria-hidden="true"></i>
+                </div>
+                <div class="icon-courier_two">
+                    <h4>Bolt</h4>
+                    <p>This is the bolt logo </p>
+                    <p>Test our speed</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+        <div class="col-md-12 col-sm-12 text-center">Todos</div>
+        <div class="col-md-12 col-sm-12">
             <ul class="list-group">
                 {% for todo_item in todo_items %}
                      <li class="list-group-item">{{todo_item.text}}
@@ -113,33 +113,39 @@
                 {% endfor %}
             </ul>
         </div>
+
     </div>
-</div>
 
-<div class="container">
-    <form class="form" action="form_sign_up/" method="post">
-        {% csrf_token %}
-        <label for="username">Username</label>
-        <input type="text" id="username" class="form-control" name="username" placeholder="username">
-        <label for="fname">First name</label>
-        <input type="text" id="fname" class="form-control" name="fname" placeholder="First name">
-        <label for="lname">Last name</label>
-        <input type="text" id="lname" class="form-control" name="lname" placeholder="Last name">
-        <label for="email">Email</label>
-        <input type="email" id="email" class="form-control" name="email" placeholder="E-mail">
-        <label for="phone_no">Phone number</label>
-        <input type="tel" id="phone_no" class="form-control" name="phone_number" placeholder="username">
-        <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" name="pwd" placeholder="Password">
-        <label for="password-repeat">Repeat password</label>
-        <input type="password" id="password-repeat" class="form-control" name="pwd-repeat" placeholder="Password">
-        <input type="submit" class="btn btn-primary mt-4">
-    </form>
 
-   <div class="row mt-4">
-        <div class="row">Todos</div>
-        <div class="col">
-            <table class="table table-striped table-bordered table-dark">
+    <div class="row">
+
+        <div class="col-md-12 col-sm-12">
+            <form class="form" action="form_sign_up/" method="post">
+                {% csrf_token %}
+                <label for="username">Username</label>
+                <input type="text" id="username" class="form-control" name="username" placeholder="username">
+                <label for="fname">First name</label>
+                <input type="text" id="fname" class="form-control" name="fname" placeholder="First name">
+                <label for="lname">Last name</label>
+                <input type="text" id="lname" class="form-control" name="lname" placeholder="Last name">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" name="email" placeholder="E-mail">
+                <label for="phone_no">Phone number</label>
+                <input type="tel" id="phone_no" class="form-control" name="phone_number" placeholder="username">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" name="pwd" placeholder="Password">
+                <label for="password-repeat">Repeat password</label>
+                <input type="password" id="password-repeat" class="form-control" name="pwd-repeat" placeholder="Password">
+                <input type="submit" class="btn btn-primary mt-4 mb-2">
+            </form>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12 col-sm-12">
+            <table class="table table-responsive table-striped table-bordered table-dark">
                 <thead class="">
                     <tr>
                         <td>Username</td>
@@ -148,6 +154,7 @@
                         <td>Email</td>
                         <td>Phone number</td>
                         <td>Password</td>
+                        <td>Action</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -159,12 +166,27 @@
                     <td>{{members.email}}</td>
                     <td>{{members.phone_number}}</td>
                     <td>{{members.password}}</td>
+                    <td>
+                        <form action="delete_contact/{{members.id}}/" method="post">
+                                 {% csrf_token %}
+                                <button class="btn btn-warning btn-sm">DELETE</button>
+                             </form>
+                    </td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
-   </div>
+
+    </div>
+
+    <div class="row">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+
 </div>
+
 </body>
 </html>
