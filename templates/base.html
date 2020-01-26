@@ -105,7 +105,7 @@
     <div class="row">
 
         <div class="col-md-12 col-sm-12">
-            <h2>Add To-do Item</h2>
+            <h4 class="text-center">Add To-do Item</h4>
             <div class="col mt-4">
                 <form action="add_todo/" class="form-inline" method="post">
                     {% csrf_token %}
@@ -115,7 +115,7 @@
              </div>
         </div>
 
-        <div class="col-md-12 col-sm-12 text-center">TODOS</div>
+        <div class="col-md-12 col-sm-12 text-center"><h4>TODOS</h4></div>
         <div class="col-md-12 col-sm-12">
             <ul class="list-group">
                 {% for todo_item in todo_items %}
@@ -136,7 +136,7 @@
 
     <div class="row">
 
-        <div class="col-md-12 col-sm-12 text-center">SIGN UP</div>
+        <div class="col-md-12 col-sm-12 text-center"><h4>SIGN UP</h4></div>
         <div class="col-md-12 col-sm-12">
             <form class="form" action="form_sign_up/" method="post">
                 {% csrf_token %}
@@ -149,11 +149,11 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" class="form-control" name="email" placeholder="E-mail">
                 <label for="phone_no">Phone number</label>
-                <input type="tel" id="phone_no" class="form-control" name="phone_number" placeholder="username">
+                <input type="tel" id="phone_no" class="form-control" name="phone_number" placeholder="Phone number">
                 <label for="password">Password</label>
                 <input type="password" id="password" class="form-control" name="pwd" placeholder="Password">
                 <label for="password-repeat">Repeat password</label>
-                <input type="password" id="password-repeat" class="form-control" name="pwd-repeat" placeholder="Password">
+                <input type="password" id="password-repeat" class="form-control" name="pwd-repeat" placeholder="Password repeat">
                 <input type="submit" class="btn btn-primary mt-4 mb-2">
             </form>
         </div>
@@ -161,10 +161,10 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 col-sm-12 text-center">CONTACT TABLE</div>
+        <div class="col-md-12 col-sm-12 text-center"><h4>CONTACT TABLE</h4></div>
         <div class="col-md-12 col-sm-12">
-            <table class="table table-responsive table-striped table-bordered table-dark">
-                <thead class="">
+            <table class="table table-responsive table-striped table-light table-bordered ">
+                <thead class="thead-dark">
                     <tr>
                         <td>Username</td>
                         <td>First name</td>
