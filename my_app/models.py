@@ -17,3 +17,12 @@ class Search(models.Model):
 class Add(models.Model):
     added_date = models.DateTimeField()
     text = models.CharField(max_length=200)
+
+
+class UserSignup(models.Model):
+    username = models.CharField(max_length=100)
+    fname = models.CharField(max_length=50)
+    lname = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone_number = models.IntegerField()
+    password = models.CharField(max_length=300)
