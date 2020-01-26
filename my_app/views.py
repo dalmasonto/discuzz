@@ -14,15 +14,8 @@ def home(request):
     })
 
 
-def add_html(request):
-    return render(request, "my_app/add_todo.html", )
-
-
 def about_page(request):
-    todo_items = Add.objects.all().order_by("-added_date")
-    return render(request, "my_app/about.html", {
-        "todo_items": todo_items
-    })
+    return HttpResponseRedirect("my_app/about.html")
 
 
 def new_search(request):
@@ -30,7 +23,7 @@ def new_search(request):
 
 
 def add_todo_page(request):
-    return render(request, 'my_app/add_todo.html')
+    return HttpResponseRedirect("my_app/add_todo.html")
 
 
 def add_todo(request):
