@@ -91,7 +91,11 @@
 </div>
 </div>
 <div class="jumbotron" id="todos">
+    {% block content %}
+
+    {% endblock content %}
     <div class="row mt-4">
+        <div class="row">Todos</div>
         <div class="col">
             <ul class="list-group">
                 {% for todo_item in todo_items %}
@@ -107,9 +111,6 @@
             </ul>
         </div>
     </div>
-{% block content %}
-
-{% endblock content %}
 </div>
 </body>
 </html>
