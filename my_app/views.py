@@ -29,6 +29,10 @@ def new_search(request):
     return render(request, 'my_app/new_Search.html')
 
 
+def add_todo_page(request):
+    return render(request, 'my_app/add_todo.html')
+
+
 def add_todo(request):
     current_date = timezone.now()
     content = request.POST.get("item", False)

@@ -32,7 +32,7 @@
           More items
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Accessories</a>
+          <a class="dropdown-item" href="add_todo_page/">Add to-do</a>
           <a class="dropdown-item" href="#">Signup</a>
           <a class="dropdown-item" href="#">Login</a>
         </div>
@@ -91,14 +91,6 @@
 </div>
 </div>
 <div class="jumbotron" id="todos">
-    <h2>Add To-do Item</h2>
-    <div class="col mt-4">
-        <form action="add_todo" class="form-inline" method="post">
-            {% csrf_token %}
-            <input type="text" class="form-control mb-2 mr-sm-2" name="item" placeholder="To-do" >
-            <input type="submit" class="btn btn-primary mb-2">
-        </form>
-     </div>
     <div class="row mt-4">
         <div class="col">
             <ul class="list-group">
