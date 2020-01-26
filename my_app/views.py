@@ -15,7 +15,7 @@ def home(request):
 
 
 def about_page(request):
-    return HttpResponseRedirect("my_app/about.html")
+    return render(request, 'my_app/about.html')
 
 
 def new_search(request):
@@ -23,7 +23,7 @@ def new_search(request):
 
 
 def add_todo_page(request):
-    return HttpResponseRedirect("my_app/add_todo.html")
+    return render(request, 'my_app/add_todo.html')
 
 
 def add_todo(request):
