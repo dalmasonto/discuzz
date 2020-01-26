@@ -19,7 +19,10 @@ def add_html(request):
 
 
 def about_page(request):
-    return render(request, "my_app/about.html", )
+    todo_items = Add.objects.all().order_by("-added_date")
+    return render(request, "my_app/about.html", {
+        "todo_items": todo_items
+    })
 
 
 def new_search(request):
