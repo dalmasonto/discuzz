@@ -10,8 +10,10 @@ from django.http import HttpResponseRedirect
 
 def home(request):
     todo_items = Add.objects.all().order_by("-added_date")
+    member = UserSignup.objects.all()
     return render(request, "base.html", {
-        "todo_items": todo_items
+        "todo_items": todo_items,
+        "member": member
     })
 
 
@@ -47,6 +49,13 @@ def form_sign_up(request):
     pwd_repeat = request.POST.get("pwd-repeat", False)
     if pwd == pwd_repeat:
         UserSignup.objects.create(username=username, fname=fname, lname=lname, email=email, phone_number=phone_no, password=pwd)
+        print(username)
+        print(fname)
+        print(lname)
+        print(email)
+        print(phone_no)
+        print(pwd)
+
     return HttpResponseRedirect("/")
 
 def delete_todo(request, todo_id):

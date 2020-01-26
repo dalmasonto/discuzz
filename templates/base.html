@@ -11,6 +11,9 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <style>
+
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -114,24 +117,54 @@
 </div>
 
 <div class="container">
-    <form class="form-group" action="form_sign_up/" method="post">
+    <form class="form" action="form_sign_up/" method="post">
         {% csrf_token %}
-        <label for="username"></label>
-        <input type="text" id="username" class="form-input" name="username" placeholder="username">
-        <label for="fname"></label>
-        <input type="text" id="fname" class="form-input" name="fname" placeholder="First name">
-        <label for="lname"></label>
-        <input type="text" id="lname" class="form-input" name="lname" placeholder="Last name">
-        <label for="email"></label>
-        <input type="email" id="email" class="form-input" name="email" placeholder="E-mail">
-        <label for="phone_no"></label>
-        <input type="tel" id="phone_no" class="form-input" name="phone_number" placeholder="username">
-        <label for="password"></label>
-        <input type="password" id="password" class="form-input" name="pwd" placeholder="Password">
-        <label for="password-repeat"></label>
-        <input type="password" id="password-repeat" class="form-input" name="pwd-repeat" placeholder="Password">
-        <input type="submit" class="btn btn-primary">
+        <label for="username">Username</label>
+        <input type="text" id="username" class="form-control" name="username" placeholder="username">
+        <label for="fname">First name</label>
+        <input type="text" id="fname" class="form-control" name="fname" placeholder="First name">
+        <label for="lname">Last name</label>
+        <input type="text" id="lname" class="form-control" name="lname" placeholder="Last name">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" name="email" placeholder="E-mail">
+        <label for="phone_no">Phone number</label>
+        <input type="tel" id="phone_no" class="form-control" name="phone_number" placeholder="username">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" name="pwd" placeholder="Password">
+        <label for="password-repeat">Repeat password</label>
+        <input type="password" id="password-repeat" class="form-control" name="pwd-repeat" placeholder="Password">
+        <input type="submit" class="btn btn-primary mt-4">
     </form>
+
+   <div class="row mt-4">
+        <div class="row">Todos</div>
+        <div class="col">
+            <table class="table table-striped table-bordered table-dark">
+                <thead class="">
+                    <tr>
+                        <td>Username</td>
+                        <td>First name</td>
+                        <td>Last name</td>
+                        <td>Email</td>
+                        <td>Phone number</td>
+                        <td>Password</td>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for members in member %}
+                <tr class=" members" style="width: 100% !important;">
+                    <td>{{members.username}}</td>
+                    <td>{{members.fname}}</td>
+                    <td>{{members.lname}}</td>
+                    <td>{{members.email}}</td>
+                    <td>{{members.phone_number}}</td>
+                    <td>{{members.password}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+   </div>
 </div>
 </body>
 </html>
