@@ -37,7 +37,7 @@
            <a class="nav-link" href="todos_page">Todos</a>
         </li>
         <li class="nav-item">
-           <a class="nav-link" href="contacts">Contacts</a>
+           <a class="nav-link" href="contacts_page">Contacts</a>
         </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,12 +62,6 @@
 
 
 <div class="container">
-
-    <div class="row">
-        {% block content %}
-
-        {% endblock content %}
-    </div>
 
     <div class="row">
         <div class="col-md-4 col-sm-12 justify-content-center">
@@ -110,24 +104,11 @@
 
     </div>
 
-
     <div class="row">
+        {% block content %}
 
-        <div class="col-md-12 col-sm-12">
-            <h4 class="text-center">Add To-do Item</h4>
-            <div class="col mt-4">
-                <form action="add_todo/" class="form-inline" method="post">
-                    {% csrf_token %}
-                    <input type="text" class="form-control mb-2 mr-sm-2" name="item" placeholder="To-do" >
-                    <input type="submit" class="btn btn-primary mb-2">
-                </form>
-             </div>
-        </div>
-
-
+        {% endblock content %}
     </div>
-
-
 
 </div>
 
