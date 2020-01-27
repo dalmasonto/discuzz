@@ -54,6 +54,8 @@ def form_sign_up(request):
     if pwd == pwd_repeat:
         UserSignup.objects.create(username=username, fname=fname, lname=lname, email=email, phone_number=phone_no,
                                   password=pwd)
+    else:
+        return render(request, 'my_app/signup.html')
 
     return HttpResponseRedirect("/")
 
