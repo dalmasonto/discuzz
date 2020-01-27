@@ -32,6 +32,10 @@ def add_todo_page(request):
     return render(request, 'my_app/add_todo.html')
 
 
+def signup_page(request):
+    return render(request, 'my_app/signup.html')
+
+
 def add_todo(request):
     current_date = timezone.now()
     content = request.POST.get("item", False)
@@ -50,12 +54,6 @@ def form_sign_up(request):
     if pwd == pwd_repeat:
         UserSignup.objects.create(username=username, fname=fname, lname=lname, email=email, phone_number=phone_no,
                                   password=pwd)
-        print(username)
-        print(fname)
-        print(lname)
-        print(email)
-        print(phone_no)
-        print(pwd)
 
     return HttpResponseRedirect("/")
 
