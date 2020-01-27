@@ -9,12 +9,7 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 
 def home(request):
-    todo_items = Add.objects.all().order_by("-added_date")
-    member = UserSignup.objects.all()
-    return render(request, "base.html", {
-        "todo_items": todo_items,
-        "member": member
-    })
+    return render(request, "base.html")
 
 
 def about_page(request):
@@ -34,6 +29,20 @@ def add_todo_page(request):
 
 def signup_page(request):
     return render(request, 'my_app/signup.html')
+
+
+def todos_page(request):
+    todo_items = Add.objects.all().order_by("-added_date")
+    return render(request, 'my_app/todos.html', {
+        "todo_items": todo_items
+    })
+
+
+def contacts_page(request):
+    member = UserSignup.objects.all()
+    return render(request, 'my_app/contacts.html', {
+        "member": member
+    })
 
 
 def add_todo(request):

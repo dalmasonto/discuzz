@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="col-md-12 col-sm-12 text-center"><h4>TODOS</h4></div>
+        <div class="col-md-12 col-sm-12">
+            <ul class="list-group">
+                {% for todo_item in todo_items %}
+                     <li class="list-group-item">{{todo_item.text}}
+                         <div class="float-right">
+                             <form action="delete_todo/{{todo_item.id}}/" method="post">
+                                 {% csrf_token %}
+                                <button class="btn btn-warning btn-sm">DELETE</button>
+                             </form>
+                         </div>
+                     </li>
+                {% endfor %}
+            </ul>
+        </div>
+{% endblock content %}

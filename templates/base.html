@@ -30,6 +30,15 @@
       <li class="nav-item">
         <a class="nav-link" href="about_page">About</a>
       </li>
+        <li class="nav-item">
+           <a class="nav-link" href="add_todo_page">Add todo</a>
+        </li>
+        <li class="nav-item">
+           <a class="nav-link" href="todos">Todos</a>
+        </li>
+        <li class="nav-item">
+           <a class="nav-link" href="contacts">Contacts</a>
+        </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           More items
@@ -115,62 +124,9 @@
              </div>
         </div>
 
-        <div class="col-md-12 col-sm-12 text-center"><h4>TODOS</h4></div>
-        <div class="col-md-12 col-sm-12">
-            <ul class="list-group">
-                {% for todo_item in todo_items %}
-                     <li class="list-group-item">{{todo_item.text}}
-                         <div class="float-right">
-                             <form action="delete_todo/{{todo_item.id}}/" method="post">
-                                 {% csrf_token %}
-                                <button class="btn btn-warning btn-sm">DELETE</button>
-                             </form>
-                         </div>
-                     </li>
-                {% endfor %}
-            </ul>
-        </div>
 
     </div>
 
-
-    <div class="row mb-8">
-        <div class="col-md-12 col-sm-12 text-center"><h4>CONTACT TABLE</h4></div>
-        <div class="col-md-12 col-sm-12">
-            <table class="table table-responsive table-striped table-light table-bordered ">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Username</th>
-                        <th>First name</th>
-                        <th>Last name</th>
-                        <th>Email</th>
-                        <th>Phone number</th>
-                        <th>Password</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for members in member %}
-                <tr class=" members" style="width: 100% !important;">
-                    <td>{{members.username}}</td>
-                    <td>{{members.fname}}</td>
-                    <td>{{members.lname}}</td>
-                    <td>{{members.email}}</td>
-                    <td>{{members.phone_number}}</td>
-                    <td>{{members.password}}</td>
-                    <td>
-                        <form action="delete_contact/{{members.id}}/" method="post">
-                                 {% csrf_token %}
-                                <button class="btn btn-warning btn-sm">DELETE</button>
-                             </form>
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-    </div>
 
 
 </div>
