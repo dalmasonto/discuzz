@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from .models import Add
+from .models import Add, Quizone, Quiztwo, Quizthree, Quizfour, Quizfive, Quizsix
 from .models import UserSignup
 from django.http import HttpResponseRedirect
 
@@ -9,7 +9,20 @@ from django.http import HttpResponseRedirect
 # Create your views here.
 
 def home(request):
-    return render(request, "base.html")
+    quizone_answers = Quizone.objects.all().order_by("-added_date")
+    quiztwo_answers = Quiztwo.objects.all().order_by("-added_date")
+    quizthree_answers = Quizthree.objects.all().order_by("-added_date")
+    quizfour_answers = Quizfour.objects.all().order_by("-added_date")
+    quizfive_answers = Quizfive.objects.all().order_by("-added_date")
+    quizsix_answers = Quizsix.objects.all().order_by("-added_date")
+    return render(request, "base.html", {
+        "quizone_answers": quizone_answers,
+        "quiztwo_answers": quiztwo_answers,
+        "quizthree_answers": quizthree_answers,
+        "quizfour_answers": quizfour_answers,
+        "quizfive_answers": quizfive_answers,
+        "quizsix_answers": quizsix_answers
+    })
 
 
 def about_page(request):
@@ -76,4 +89,46 @@ def delete_todo(request, todo_id):
 
 def delete_contact(request, contact_id):
     UserSignup.objects.get(id=contact_id).delete()
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect("/#quizes")
+
+
+def quizone_answer(request):
+    current_date = timezone.now()
+    content = request.POST.get("quizone", False)
+    Quizone.objects.create(added_date=current_date, text=content)
+    return HttpResponseRedirect("/#quizes")
+
+
+def quiztwo_answer(request):
+    current_date = timezone.now()
+    content = request.POST.get("quiztwo", False)
+    Quiztwo.objects.create(added_date=current_date, text=content)
+    return HttpResponseRedirect("/#quizes")
+
+
+def quizthree_answer(request):
+    current_date = timezone.now()
+    content = request.POST.get("quizthree", False)
+    Quizthree.objects.create(added_date=current_date, text=content)
+    return HttpResponseRedirect("/#quizes")
+
+
+def quizfour_answer(request):
+    current_date = timezone.now()
+    content = request.POST.get("quizfour", False)
+    Quizfour.objects.create(added_date=current_date, text=content)
+    return HttpResponseRedirect("/#quizes")
+
+
+def quizfive_answer(request):
+    current_date = timezone.now()
+    content = request.POST.get("quizfive", False)
+    Quizfive.objects.create(added_date=current_date, text=content)
+    return HttpResponseRedirect("/#quizes")
+
+
+def quizsix_answer(request):
+    current_date = timezone.now()
+    content = request.POST.get("quizsix", False)
+    Quizsix.objects.create(added_date=current_date, text=content)
+    return HttpResponseRedirect("/#quizes")

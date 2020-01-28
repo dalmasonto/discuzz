@@ -16,4 +16,11 @@ urlpatterns = [
     path('delete_todo/<int:todo_id>/', views.delete_todo),
     path('delete_contact/<int:contact_id>/', views.delete_contact),
     # path('admin/', admin.site.urls),
+    path('quizone_answer/', views.quizone_answer, name='quizone_answer'),
+    path('quiztwo_answer/', views.quiztwo_answer, name='quiztwo_answer'),
+    path('quizthree_answer/', views.quizthree_answer, name='quizthree_answer'),
+    path('quizfour_answer/', views.quizfour_answer, name='quizfour_answer'),
+    path('quizfive_answer/', views.quizfive_answer, name='quizfive_answer'),
+    path('quizsix_answer/', views.quizsix_answer, name='quizsix_answer'),
+
 ]

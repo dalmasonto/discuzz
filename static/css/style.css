@@ -4,7 +4,7 @@ background-color: red;
 }
 
 .icon-courier{
-    background: linear-gradient(50deg, red, blue);
+    background: linear-gradient(100deg, #f6eef7, #c61ece);
     height: 300px;
     border-radius: 20px;
     justify-content: center;
@@ -16,7 +16,7 @@ background-color: red;
 .icon-courier_one{
     padding-top: 20px;
 }
-.fa-chrome , .fa-bolt, .fa-slack{
+.fa-chrome , .fa-bolt, .fa-book{
     display: flex;
     align-content: center;
     justify-content: center;
@@ -30,7 +30,7 @@ background-color: red;
     padding-bottom: 30px;
     max-width: 300px;
     margin: auto;
-    background:red;
+    background: #e007d0;
     display: block;
     align-content: center;
     justify-content: center;
@@ -45,4 +45,29 @@ background-color: red;
 }
 .icon-courier_two p{
     text-align: center;
+}
+
+
+
+.quiz1{
+     background: linear-gradient(50deg, #4d52f37a, #fff);
+}
+.quiz2{
+     background: linear-gradient(50deg, #2540c7, #fff);
+}
+
+.quiz3{
+     background: linear-gradient(50deg, #070f69e8, #fff);
+}
+
+.quiz4{
+     background: linear-gradient(50deg, #1acee0e0, #b47eb7);
+}
+
+.quiz5{
+     background: linear-gradient(50deg, #16b765e8, #fff);
+}
+
+.quiz6{
+     background: linear-gradient(50deg, #28bf15, #ad9a9a);
 }

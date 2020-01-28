@@ -26,3 +26,34 @@ class UserSignup(models.Model):
     email = models.EmailField()
     phone_number = models.IntegerField()
     password = models.CharField(max_length=300)
+
+
+class Quizone(models.Model):
+    added_date = models.DateTimeField()
+    text = models.CharField(max_length=1000)
+
+
+class Quiztwo(models.Model):
+    added_date = models.DateTimeField()
+    text = models.CharField(max_length=1000)
+
+
+class Quizthree(models.Model):
+    added_date = models.DateTimeField()
+    text = models.CharField(max_length=1000)
+
+
+class Quizfour(models.Model):
+    added_date = models.DateTimeField()
+    text = models.CharField(max_length=1000)
+
+
+class Quizfive(models.Model):
+    added_date = models.DateTimeField()
+    text = models.CharField(max_length=1000)
+
+
+class Quizsix(models.Model):
+    added_date = models.DateTimeField()
+    text = models.CharField(max_length=1000)
+
