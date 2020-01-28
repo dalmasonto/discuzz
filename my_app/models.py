@@ -43,7 +43,12 @@ class Quizthree(models.Model):
     text = models.CharField(max_length=1000)
 
 
-class Quizfour(models.Model):
+class Questionfour(models.Model):
+    added_date = models.DateTimeField()
+    text = models.CharField(max_length=1000)
+
+
+class Quizfourone(models.Model):
     added_date = models.DateTimeField()
     text = models.CharField(max_length=1000)
 
@@ -56,4 +61,3 @@ class Quizfive(models.Model):
 class Quizsix(models.Model):
     added_date = models.DateTimeField()
     text = models.CharField(max_length=1000)
-

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
-from .models import Add, Quizone, Quiztwo, Quizthree, Quizfour, Quizfive, Quizsix
+from .models import Add, Quizone, Quiztwo, Quizthree, Quizfourone, Quizfive, Quizsix, Questionfour
 from .models import UserSignup
 from django.http import HttpResponseRedirect
 
@@ -12,14 +12,14 @@ def home(request):
     quizone_answers = Quizone.objects.all().order_by("-added_date")
     quiztwo_answers = Quiztwo.objects.all().order_by("-added_date")
     quizthree_answers = Quizthree.objects.all().order_by("-added_date")
-    quizfour_answers = Quizfour.objects.all().order_by("-added_date")
+    quizfourone_answers = Questionfour.objects.all().order_by("-added_date")
     quizfive_answers = Quizfive.objects.all().order_by("-added_date")
     quizsix_answers = Quizsix.objects.all().order_by("-added_date")
     return render(request, "base.html", {
         "quizone_answers": quizone_answers,
         "quiztwo_answers": quiztwo_answers,
         "quizthree_answers": quizthree_answers,
-        "quizfour_answers": quizfour_answers,
+        "quizfour_answers": quizfourone_answers,
         "quizfive_answers": quizfive_answers,
         "quizsix_answers": quizsix_answers
     })
@@ -113,10 +113,17 @@ def quizthree_answer(request):
     return HttpResponseRedirect("/#quizes")
 
 
-def quizfour_answer(request):
+# def quizfourone_answer(request):
+#     current_date = timezone.now()
+#     content = request.POST.get("quizfourone", False)
+#     Quizfourone.objects.create(added_date=current_date, text=content)
+#     return HttpResponseRedirect("/#quizes")
+
+
+def question_four(request):
     current_date = timezone.now()
-    content = request.POST.get("quizfour", False)
-    Quizfour.objects.create(added_date=current_date, text=content)
+    content = request.POST.get("quizfourone", False)
+    Questionfour.objects.create(added_date=current_date, text=content)
     return HttpResponseRedirect("/#quizes")
 
 
