@@ -1,0 +1,66 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row mt-5 pt-5">
+    <div class="col-md-3 col-sm-12"></div>
+    <div class="col-md-6 col-sm-12 form">
+        <div class="jumbotron">
+            <div id="login_form">
+                <h4 class="text-center w-100">Create a discussion</h4>
+                {% for message in messages %}
+                <p class="text-success text-danger">{{ message }}</p>
+                {% endfor %}
+                <div class="w-100">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="form-row input">
+
+                            <div class="form-group col-md-12  inputBox">
+                                <label for="admin">Admin username</label>
+                                <input type="text" id="admin" class="bg-light form-control" name="admin" placeholder=" {{ user.username }} ">
+                            </div>
+
+                            <div class="form-group col-md-12  inputBox">
+                                <label for="pm">Payment mode</label>
+                                <input type="text" id="pm" class="bg-light form-control" name="payment_mode" placeholder="M-pesa">
+                            </div>
+
+                            <div class="form-group col-md-12  inputBox">
+                                <label for="pc">Payment code</label>
+                                <input type="text" id="pc" class="bg-light form-control" name="payment_code" placeholder="i.e NHM53GX337">
+                            </div>
+
+                            <div class="form-group col-md-12  inputBox">
+                                <label for="topic">Topic</label>
+                                <input type="text" id="topic" class="bg-light" name="topic" placeholder="Education,Technology,et.c">
+                            </div>
+
+                            <div class="form-group col-md-12  inputBox">
+                                <label for="sub">Subtopic</label>
+                                <input type="text" id="sub" class="bg-light" name="subtopic" placeholder="Software, Taxation, accounting">
+                            </div>
+
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="desc">Description</label>
+                                <textarea name="description" id="desc" class="inputBox " rows="5" cols="40" placeholder="Description about topic"></textarea>
+                            </div>
+
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="quiz">Question</label>
+                                <textarea name="question" id="quiz" class="inputBox " rows="8" cols="40" placeholder="Question for discussion"></textarea>
+                            </div>
+
+                            <div class="form-group col-md-12  inputBox">
+                                <button type="submit" name="reg-submit" class="btn btn-primary w-100">Submit</button>
+                            </div>
+
+                        </div>
+                    </form>
+                    <div class="help">
+                        <p>Want to join other discussions? <a href="{% url 'join' %}">Join</a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12"></div>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="jumbotron about">
+    <div class="row mt-5">
+        <div class="col-md-4 col-sm-12">
+            <div class="card" id="shadow-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center"> SIGN UP</h4>
+                </div>
+                <div class="card-body">
+                    <blockquote>
+                        Sign up for a free account at Dsicuzz and have a chance to add your thought to somebody's quiz
+                    </blockquote>
+                    <button class="btn btn-primary"> <a href="{% url 'signup' %}" class="card-link text-white">Signup</a> </button>
+                </div>
+                <div class="card-footer">
+                    <p class="text-info">Sign up for an account at Discuzz</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card" id="shadow-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center"><i class="fa fa-sign-in" aria-hidden="true"></i> LOGIN</h4>
+                </div>
+                <div class="card-body">
+                    <blockquote>
+                        Hopefully you have created an account in the stage before. Login and take the rest of the steps below
+                    </blockquote>
+                    <button class="btn btn-primary"> <a href="{% url 'login' %}" class="card-link text-white">Login</a> </button>
+                </div>
+                <div class="card-footer">
+                    <p class="text-secondary">Login to your account</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card" id="shadow-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center"> <i class="fa fa-creative-commons" aria-hidden="true"></i> CREATE</h4>
+                </div>
+                <div class="card-body">
+                    <blockquote>
+                        Create a discussion at the Create link on the navigation and welcome people to join and help you solve it out
+                    </blockquote>
+                    <button class="btn btn-dark"> <a href="{% url 'create' %}" class="card-link text-white">CREATE</a> </button>
+                </div>
+                <div class="card-footer">
+                    <p class="text-success">Create a quiz and enjoy others contribution</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row pt-5">
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card" id="shadow-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center">JOIN</h4>
+                </div>
+                <div class="card-body">
+                    <blockquote>
+                        Hopefully you have an account at Discuuz, now you have the chance to navigate to the homepage using the link, 'Home', and just join directly to one of the discussions listed and which you have the chance to contribute.
+                    </blockquote>
+                    <button class="btn btn-dark"> <a href="{% url 'join' %}" class="card-link text-white">JOIN</a> </button>
+                </div>
+                <div class="card-footer">
+                    <p class="text-success">Join a running discussion from a number of them</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card" id="shadow-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center">DISCUSS</h4>
+                </div>
+                <div class="card-body">
+                    <blockquote>
+                        You are at the stage in which your ideas are needed very much. In this case you are asked to bring to the front your words so that they may help the one in need of them.
+                    </blockquote>
+                    <button class="btn btn-dark"> <a href="{% url 'join' %}" class="card-link text-white">JOIN</a> </button>
+                </div>
+                <div class="card-footer">
+                    <p class="text-success">Disiscuss with ease </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card" id="shadow-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center">GET IDEAS</h4>
+                </div>
+                <div class="card-body">
+                    <blockquote>
+                        Learn from others, like your move and your decision to join Discuzz and enjoy the imporatnce of having this platform one of your likes.
+                    </blockquote>
+                    <button class="btn btn-primary"> <a href="{% url 'signup' %}" class="card-link text-white">Signup</a> </button>
+                </div>
+                <div class="card-footer">
+                    <p class="text-success">Get ideas from the words of others</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,63 +1,42 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
 
 
 # Create your models here.
 
-class Search(models.Model):
-    search = models.CharField(max_length=500)
-    created = models.DateTimeField(auto_now=True)
+
+class Create(models.Model):
+    topic = models.CharField(max_length=50)
+    admin = models.CharField(max_length=20)
+    paymentMode = models.CharField(max_length=20)
+    paymentCode = models.CharField(max_length=20)
+    subtopic = models.CharField(max_length=100)
+    description = models.CharField(max_length=200)
+    question = models.CharField(max_length=1000)
+    discussionCode = models.CharField(max_length=100, default='100NO00DISCUSSION001yet11')
+    createTime = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return '{}'.format(self.search)
+        return self.topic
 
-    class Meta:
-        verbose_name_plural = 'Searches'
-
-
-class Add(models.Model):
-    added_date = models.DateTimeField()
-    text = models.CharField(max_length=200)
+    def where(self):
+        return self.discussion_code
 
 
-class UserSignup(models.Model):
-    username = models.CharField(max_length=100)
-    fname = models.CharField(max_length=50)
-    lname = models.CharField(max_length=50)
-    email = models.EmailField()
-    phone_number = models.IntegerField()
-    password = models.CharField(max_length=300)
+class Discuzz(models.Model):
+    discussion_code = models.CharField(max_length=100, default='100NO00DISCUSSION001yet11')
+    reply = models.CharField(max_length=2000)
+    username = models.CharField(max_length=50)
+    reply_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.discussion_code
 
 
-class Quizone(models.Model):
-    added_date = models.DateTimeField()
-    text = models.CharField(max_length=1000)
+class SendEmail(models.Model):
+    email = models.CharField(max_length=50)
+    update = models.CharField(max_length=2000)
+    updateTime = models.DateTimeField(auto_now_add=True)
 
-
-class Quiztwo(models.Model):
-    added_date = models.DateTimeField()
-    text = models.CharField(max_length=1000)
-
-
-class Quizthree(models.Model):
-    added_date = models.DateTimeField()
-    text = models.CharField(max_length=1000)
-
-
-class Questionfour(models.Model):
-    added_date = models.DateTimeField()
-    text = models.CharField(max_length=1000)
-
-
-class Quizfourone(models.Model):
-    added_date = models.DateTimeField()
-    text = models.CharField(max_length=1000)
-
-
-class Quizfive(models.Model):
-    added_date = models.DateTimeField()
-    text = models.CharField(max_length=1000)
-
-
-class Quizsix(models.Model):
-    added_date = models.DateTimeField()
-    text = models.CharField(max_length=1000)
+    def __str__(self):
+        return self.email

@@ -3,24 +3,20 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 
-urlpatterns = [
-    path('', views.home, name='home'),
-    path('new_Search', views.new_search, name='new_Search'),
-    path('about_page', views.about_page, name='about_page'),
-    path('signup_page', views.signup_page, name='signup_page'),
-    path('todos_page', views.todos_page, name='todos_page'),
-    path('contacts_page', views.contacts_page, name='contacts_page'),
-    path('add_todo_page', views.add_todo_page, name='add_todo_page'),
-    path('form_sign_up/', views.form_sign_up, name='add_todo'),
-    path('add_todo/', views.add_todo, name='add_todo'),
-    path('delete_todo/<int:todo_id>/', views.delete_todo),
-    path('delete_contact/<int:contact_id>/', views.delete_contact),
-    # path('admin/', admin.site.urls),
-    path('quizone_answer/', views.quizone_answer, name='quizone_answer'),
-    path('quiztwo_answer/', views.quiztwo_answer, name='quiztwo_answer'),
-    path('quizthree_answer/', views.quizthree_answer, name='quizthree_answer'),
-    path('quizfourone_answer/', views.question_four, name='quizfourone_answer'),
-    path('quizfive_answer/', views.quizfive_answer, name='quizfive_answer'),
-    path('quizsix_answer/', views.quizsix_answer, name='quizsix_answer'),
 
+urlpatterns = [
+    path('', views.home, name='base'),
+    path('home/', views.home, name='home'),
+    path('signup/', views.signup, name='signup'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.logout_user, name='logout'),
+    path('profile/', views.profile, name='profile'),
+    path('create/', views.create, name='create'),
+    path('join/', views.join, name='join'),
+    path('c19/', views.c19, name='c19'),
+    path('wnews/', views.wnews, name='wnews'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
+    path('discuzz/<str:discussion_details>/', views.discuzz, name='discuzz'),
+    # path('join/discuzz/<str:discussion_details>/', views.discuzz, name='discuzz2'),
 ]

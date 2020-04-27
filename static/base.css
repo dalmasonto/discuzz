@@ -1,0 +1,62 @@
+.container-fluid {
+    margin-top: 50px;
+}
+
+.page-input {
+    padding-right: -10px !important;
+    padding-left: -10px !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    width: 100%;
+    background: #131419;
+    padding: 20px;
+}
+
+input[type="checkbox"]:checked~* {
+    filter: invert(1);
+}
+
+.disc-footer {
+    width: 100%;
+    background: #131419;
+    padding: 20px;
+    color: white;
+    font-size: 14px;
+}
+
+.disc-footer hr {
+    background: #123aec;
+}
+
+.b-right {
+    border-right: 1px solid rgba(5, 141, 175, 0.03);
+}
+
+.share a {
+    display: block;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.share a {
+    color: white;
+}
+
+.top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    transform: translate(0, 20px, 20px, 0);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgb(243, 4, 171);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top i {
+    color: white;
+    font-size: 40px;
+}

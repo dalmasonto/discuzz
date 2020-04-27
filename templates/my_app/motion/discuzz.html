@@ -1,0 +1,159 @@
+{% extends 'base.html' %} {% block content %}
+<div class="discuzz">
+    <div class="jumbotron mt-5 pt-5">
+        <div class="row">
+            <div class="col">
+                <h3 class="text-center text-white">Topic : {{ disc_name.topic }} <input onchange="check()" id="changeColor" type="checkbox"></h3>
+                <hr>
+                <h5 class="text-center text-white">Subtopic : {{ disc_name.subtopic }}</h5>
+                <h6 class="text-center text-white">Description : {{ disc_name.description }}</h6>
+                <h6 class="text-center text-white">Admin : {{ disc_name.admin }}</h6>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div id="shadow-card">
+                    <h4 id="query-title">Query, <span>Code: {{ disc_name.discussionCode }}</span></h4>
+                    <p id="query-text">
+                        {{ disc_name.question }}
+                    </p>
+                </div>
+
+                <div id="shadow-card">
+                    <h4 class="text-center text-white">Replies</h4>
+                    <hr> {% for reply in replies %} {% if reply.discussion_code == disc_name.discussionCode %}
+                    <div id="shadow-card-replies">
+                        <div>
+                            <h6 id="reply-uid"> {{ reply.username }}</h6>
+                        </div>
+                        <div id="{{ reply.username }}">
+                            <pre id="pre"> {{ reply.reply }} </pre>
+                        </div>
+                        <div id="options-menu">
+                            <i class="fa fa-comment"> <span>23</span> </i>
+                            <i class="fa fa-thumbs-up"> <span>12</span> </i>
+                            <i class="fa fa-thumbs-down"> <span>15</span> </i>
+                            <i class="fa fa-share"> <span>5</span> </i>
+                        </div>
+                    </div>
+                    {% endif %} {% endfor %}
+
+                    <div class="form">
+                        <div id="login-form">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <div class="form-row input">
+
+                                    <div class="form-group col-md-12 inputBox hidden">
+                                        <label for="uid">Username</label>
+                                        <input type="text" name="username" id="uid" value="{{ user.username }}" placeholder="Username">
+                                    </div>
+
+                                    <div class="form-group col-md-12 inputBox">
+                                        <label for="reply">Make reply  </label>
+                                        <textarea name="reply" id="reply" class="inputBox " accesskey="r" rows="5" cols="40" placeholder="Reply to this question"></textarea>
+                                        <div id="reply-icons">
+                                            <i class=" fa fa-redo "></i>
+                                            <i class="fa fa-undo "></i>
+                                            <i class="fa fa-arrow-left "></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 inputBox ">
+                                        <button type="submit " name=" " class="btn btn-primary w-100 ">Submit</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+            //Get all the pre elements in this discussion page
+        var pres = document.querySelectorAll("#pre");
+                /* Defining a function for use and later I will have to change this code to call for 
+                DRY(Don't Repeat Yourself rule ). 
+                Using arrays and other functions for better ad cleaner code
+                */
+        function changeColor(el) {
+                // Collect the element ready for use into this variable
+            var pre = el;
+
+            // Get the text string in the html elemnt passed in ie the pre element
+            var text = el.innerHTML;
+
+                // Decide on what to happen to each element depending on the kind of the element
+            text = text.replace(/div/g, '<span style="color: red;">div</span>');
+            text = text.replace(/script/g, '<span style="color: red;">script</span>');
+            text = text.replace(/link/g, '<span style="color: red;">link</span>');
+            text = text.replace(/button/g, '<span style="color: red;">button</span>');
+            text = text.replace(/nav/g, '<span style="color: red;">nav</span> ');
+            text = text.replace(/form\s/g, '<span style="color: red;">form </span>');
+            // text = text.replace(/\W\Wform/g, '<span style="color: red;"></form></span>');
+            text = text.replace(/fieldset/g, '<span style="color: red;">fieldset</span>');
+            text = text.replace(/input\s/g, '<span style="color: red;">input </span>');
+            text = text.replace(/textarea/g, '<span style="color: red;">textarea</span>');
+
+            text = text.replace(/label\s/g, '<span style="color: red;">label </span>');
+            text = text.replace(/\Wpre/g, '<span style="color: red;">pre</span>');
+            // text = text.replace(/span/g, '<span style="color: red;">span</span>');
+            //text = text.replace(/p/g, '<span style="color: red;">p</span>');
+            // text = text.replace(/<a[^>]*href="https?:\/\/.*"[^>]*>[^<]*<\/a>/g, '<span style="color: yellow">Some link here</span>')
+
+            text = text.replace(/h1/g, '<span style="color: red;">h1</span>');
+            text = text.replace(/h2/g, '<span style="color: red;">h2</span>');
+            text = text.replace(/h3/g, '<span style="color: red;">h3</span>');
+            text = text.replace(/h4/g, '<span style="color: red;">h4</span>');
+            text = text.replace(/h5/g, '<span style="color: red;">h5</span>');
+            text = text.replace(/h6/g, '<span style="color: red;">h6</span>');
+            // text = text.replace(/\t/g, '<span style="color: red; background: yellow; width: 200px"></span>');
+
+            text = text.replace(/\Whr/g, '<span style="color: red;">hr</span>');
+            text = text.replace(/\Wbr/g, '<span style="color: red;">br</span>');
+
+            // text = text.replace(/</g, '<span style="color: red;">&lt;</span>');
+            text = text.replace(/\/>/g, '<span style="color: red;">g</span>');
+
+            text = text.replace(/class/g, '<span style="color: blue;">class</span>');
+            text = text.replace(/accesskey/g, '<span style="color: blue;">accesskey</span>');
+            text = text.replace(/rows/g, '<span style="color: blue;">rows</span>');
+            text = text.replace(/placeholder/g, '<span style="color: blue;">placeholder</span>');
+            text = text.replace(/onchange/g, '<span style="color: blue;">onchange</span>');
+            text = text.replace(/type/g, '<span style="color: blue;">type</span>');
+            text = text.replace(/\sname/g, '<span style="color: blue;"> name</span>');
+            text = text.replace(/action/g, '<span style="color: blue;">action</span>');
+            text = text.replace(/\sid/g, '<span style="color: blue;"> id</span>');
+            text = text.replace(/\sfor/g, '<span style="color: blue;"> for</span>');
+            // text = text.replace(/\sfor\W|\S/g, '<span style="color: blue;"> for</span>');
+            text = text.replace(/\svalue/g, '<span style="color: blue;"> value</span>');
+            text = text.replace(/\ssrc/g, '<span style="color: blue;"> src</span>');
+
+            text = text.replace(/const/g, '<span style="color: blue;"> const </span>');
+
+                    //Django stuff
+            // text = text.replace(/\W\W\s/g, '<span style="color: yellow;">{#37</span>');
+            // text = text.replace(/\s\W\W/g, '<span style="color: yellow;">#37}</span>');
+
+            text = text.replace(/\sfor\s/g, '<span style="color: yellow;"> for</span>');
+            text = text.replace(/\W\W\scsrf_token\s\W\W/g, '<span style="color: yellow;"> {#37csref_token#37} //Always replace #37 with percent sign </span>')
+
+                    // Return a pre element with the edited text in it
+                return pre.innerHTML = text;
+            }
+
+                // Call the change color depending on the number of pre elements found
+            for (let i = 0; i < pres.length; i++) {
+                const element = pres[i]; 
+                changeColor(element);
+            }
+
+    </script>
+</div>
+{% endblock %}

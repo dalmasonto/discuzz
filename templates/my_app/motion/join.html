@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row mt-5 pt-5">
+    <div class="col-md-3 col-sm-12"></div>
+    <div class="col-md-6 col-sm-12 form">
+        <div class="jumbotron">
+            <div id="login_form">
+                <h4 class="text-center w-100">Join a current running discussion</h4>
+                {% for message in messages %}
+                <p class="text-success text-danger">{{ message }}</p>
+                {% endfor %}
+                <div class="w-100">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <fieldset>
+                            <div class="form-row input">
+
+                                <div class="form-group col-md-12  inputBox">
+                                    <label for="discussionid">Discussion Id</label>
+                                    <input type="text" name="discussionid" id="discussionid" placeholder="Join discussion Id">
+                                </div>
+
+                                <div class="form-group col-md-12 inputBox">
+                                    <input type="submit" name="" value="Join">
+                                </div>
+
+                            </div>
+                        </fieldset>
+                    </form>
+                    <div class="help">
+                        <p>Want to create a discussion topic? <a href="{% url 'create' %}">Create</a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12"></div>
+</div>
+{% endblock %}

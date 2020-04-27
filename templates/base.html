@@ -1,472 +1,130 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Discuzz</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'ser.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'all.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome.css' %}">
+    <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap.js' %}"></script>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Discuzzion enabled</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link text-center" href="/">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-center" href="about_page">About</a>
-      </li>
-        <li class="nav-item">
-           <a class="nav-link text-center" href="add_todo_page">Add todo</a>
-        </li>
-        <li class="nav-item">
-           <a class="nav-link text-center" href="todos_page">Todos</a>
-        </li>
-        <li class="nav-item">
-           <a class="nav-link text-center" href="contacts_page">Contacts</a>
-        </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          More items
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="add_todo_page">Add to-do</a>
-          <a class="dropdown-item" href="signup_page">Sign up</a>
-          <a class="dropdown-item" href="#">Login</a>
+    <nav>
+        <div id="toggle">
+            <div id="menu-bars">
+                <div id="bar-1" class="bar"></div>
+                <div id="bar-2" class="bar"></div>
+                <div id="bar-3" class="bar"></div>
+            </div>
+            <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#menu-bars').click(function() {
+                        $('ul').toggleClass('active');
+                        $('#menu-bars').toggleClass('change');
+                    });
+                })
+            </script>
         </div>
-      </li>
-    </ul>
-    <form class="form-inline my-2">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
-
-<div class="container">
-
-    <div class="row">
-        <div class="col-md-4 col-sm-12 justify-content-center">
-            <div class="icon-courier">
-            <div class="icon-courier_one">
-                <i class="fa fa-book" aria-hidden="true"></i>
-            </div>
-            <div class="icon-courier_two">
-                <h4>Book</h4>
-                <p>Get great ideas from the books</p>
-                <p>Share the knowledge</p>
-            </div>
-             </div>
+        <div class="title">
+            <h4>Discuzz</h4>
         </div>
+        <ul id="menu">
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}"> <i class="fa fa-user" aria-hidden="true"> {{ user.username }}</i> </a>
+            <a href="{% url 'home' %}" id="home">Home</a>
+            <a href="{% url 'create' %}">Create</a>
+            <a href="{% url 'join' %}">Join</a>
+            <a href="{% url 'c19' %}">C-19</a>
+            <a href="{% url 'wnews' %}">WNews</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'logout' %}" id="logout">Logout</a> {% else %}
+            <a href="{% url 'signup' %}">SignUp</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'contact' %}"> Contact </a>
+            <a href="{% url 'about' %}">About</a> {% endif %}
+        </ul>
+    </nav>
 
-        <div class="col-md-4 col-sm-12">
-             <div class="icon-courier">
-                <div class="icon-courier_one">
-                    <i class="fa fa-chrome" aria-hidden="true"></i>
-                </div>
-                <div class="icon-courier_two">
-                    <h4>Chrome</h4>
-                    <p>We are here for speed</p>
-                    <p>Chat with enhanced speed</p>
-                </div>
+    <div id="top"></div>
+
+    <div class="container-fluid">
+        {% block content %} {% endblock %}
+    </div>
+
+    <section class="disc-footer">
+
+        <div class="row">
+            <div class="col-md-4">
+                {% if user.is_authenticated %}
+                <p class="text-center">We are glad to have you here, {{ user.username }}</p>
+                {% endif %}
             </div>
-         </div>
-
-        <div class="col-md-4 col-sm-12">
-            <div class="icon-courier">
-                <div class="icon-courier_one">
-                    <i class="fa fa-bolt" aria-hidden="true"></i>
-                </div>
-                <div class="icon-courier_two">
-                    <h4>Bolt</h4>
-                    <p>We are here for better experience </p>
-                    <p>Text in a flash speed</p>
-                </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}"><button class="btn btn-primary btn-medium float-right">Logout</button></a> {% else %}
+                <button class="btn btn-primary btn-medium float-right">Login</button> {% endif %}
             </div>
         </div>
 
-    </div>
-        {% block content %}
+        <div class="row">
 
-        {% endblock content %}
-
-    <div class="row" id="quizes">
-        <div class="col-md-12 col-sm-12">
-            <h3 class="text-center"> <strong>Dr Karanja</strong></h3>
-            <p class="text-center text-danger"> <i>Not real answers but something you think can help us all go through this questions</i></p>
-        </div>
-        <div class="col-md-12 col-sm-12">
-        <div class="card quiz1">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                              <h5 class="card-title text-center"><strong>Question one</strong></h5>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                              <p class="card-text">It is fair to say that there are certain expectations of us as accountants by the public that we serve in return we try to fulfill these expectations.
-                                  In the right of the above statement, use a listed company in East Africa comparatively with a listed company in West Africa.
-                                  Demonstrate the auditors’ professional and social responsibility.
-                              </p>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <form action="quizone_answer/" method="post" class="was-validated">
-                                     {% csrf_token %}
-                                     <div class="mb-3">
-                                        <label for="quiz1">Answer question 1</label>
-                                        <textarea class="form-control is-invalid" name="quizone" id="quiz1" placeholder="Type your text here" required></textarea>
-                                      </div>
-                                    <input type="submit" class="btn btn-primary">
-                                </form>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <h4 class="text-center">Answers to question one</h4>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        {% for quizone_ans in quizone_answers %}
-                                             <li class="list-group-item">{{quizone_ans.text}}
-                                                 <div class="float-right">
-                                                     <form action="" method="post">
-                                                         {% csrf_token %}
-                                                        <button class="btn btn-warning btn-sm disabled">DELETE</button>
-                                                     </form>
-                                                 </div>
-                                             </li>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">Under update</small>
-                    </div>
-              </div>
-        </div>
-        </div>
-
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-        <div class="card quiz2">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                              <h5 class="card-title text-center"><strong>Question two</strong></h5>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                              <p class="card-text">Using an SME in your locality discuss the reasons why small companies create special problems for Kenyan auditors.
-                                  Consider intellectually why auditors direct their work more verification of items by physical inspection and third party evidence than when is the case of auditing larger companies.
-                              </p>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <form action="quiztwo_answer/" method="post" class="was-validated">
-                                    {% csrf_token %}
-                                     <div class="mb-3">
-                                        <label for="quiz2">Answer question 2</label>
-                                        <textarea class="form-control is-invalid" name="quiztwo" id="quiz2" placeholder="Type your text here" required></textarea>
-                                      </div>
-                                    <input type="submit" class="btn btn-primary">
-                                </form>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <h4 class="text-center">Answers to question two</h4>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        {% for quiz_ans in quiztwo_answers %}
-                                             <li class="list-group-item">{{quiz_ans.text}}
-                                                 <div class="float-right">
-                                                     <form action="" method="post">
-                                                         {% csrf_token %}
-                                                        <button class="btn btn-warning btn-sm disabled">DELETE</button>
-                                                     </form>
-                                                 </div>
-                                             </li>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">Under update</small>
-                    </div>
-              </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-        <div class="card quiz3">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                              <h5 class="card-title text-center"><strong>Question three</strong></h5>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                              <p class="card-text">Using a listed company of your choice, (listed at Dare salaam security exchange)
-                                  Demonstrate how accounting and audit interactions have changed over the last decade.
-                              </p>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <form action="quizthree_answer/" method="post" class="was-validated">
-                                    {% csrf_token %}
-                                     <div class="mb-3">
-                                        <label for="quiz3">Answer question 3</label>
-                                        <textarea class="form-control is-invalid" name="quizthree" id="quiz3" placeholder="Type your text here" required></textarea>
-                                      </div>
-                                    <input type="submit" class="btn btn-primary">
-                                </form>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <h4 class="text-center">Answers to question three</h4>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        {% for quiz_ans in quizthree_answers %}
-                                             <li class="list-group-item">{{quiz_ans.text}}
-                                                 <div class="float-right">
-                                                     <form action="" method="post">
-                                                         {% csrf_token %}
-                                                        <button class="btn btn-warning btn-sm disabled">DELETE</button>
-                                                     </form>
-                                                 </div>
-                                             </li>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                          <small class="text-muted">Under update</small>
-                    </div>
-              </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-        <div class="card quiz4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                              <h5 class="card-title text-center"><strong>Question four</strong></h5>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                              <p class="card-text">Using a listed Kenyan company,
-                                  Demonstrate how continuous audit and monitoring over the last 15 years.
-                                  In your discussion, portray why it is unique and interesting
-                              </p>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <form action="quizfourone_answer/" method="post" class="was-validated">
-                                    {% csrf_token %}
-                                     <div class="mb-3">
-                                        <label for="quizf">Answer question four</label>
-                                        <textarea class="form-control is-invalid" name="quizfourone" id="quizf" placeholder="Type your text here" required></textarea>
-                                      </div>
-                                    <input type="submit" class="btn btn-primary">
-                                </form>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <h4 class="text-center">Answers to question four</h4>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        {% for quiz_ans in quizfour_answers %}
-                                             <li class="list-group-item">{{quiz_ans.text}}
-                                                 <div class="float-right">
-                                                     <form action="" method="post">
-                                                         {% csrf_token %}
-                                                        <button class="btn btn-warning btn-sm disabled">DELETE</button>
-                                                     </form>
-                                                 </div>
-                                             </li>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">Under update</small>
-                    </div>
-              </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-        <div class="card quiz5">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                              <h5 class="card-title text-center"><strong>Question five</strong></h5>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                              <p class="card-text">Information revolution using computers in Kenyan Banking sector has made simplifying process of transfer of funds withdrawal,
-                                  payment, etc. With reference to a fully computerized bank in Kenya,
-                                  describe the control the auditor will expect to find in place to ensure that risk of errors and fraud is minimized
-                              </p>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <form action="quizfive_answer/" method="post" class="was-validated">
-                                    {% csrf_token %}
-                                     <div class="mb-3">
-                                        <label for="quiz5">Answer question 5</label>
-                                        <textarea class="form-control is-invalid" name="quizfive" id="quiz5" placeholder="Type your text here" required></textarea>
-                                      </div>
-                                    <input type="submit" class="btn btn-primary">
-                                </form>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <h4 class="text-center">Answers to question five</h4>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        {% for quiz_ans in quizfive_answers %}
-                                             <li class="list-group-item">{{quiz_ans.text}}
-                                                 <div class="float-right">
-                                                     <form action="" method="post">
-                                                         {% csrf_token %}
-                                                        <button class="btn btn-warning btn-sm disabled">DELETE</button>
-                                                     </form>
-                                                 </div>
-                                             </li>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">Under update</small>
-                    </div>
-              </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12 col-sm-12">
-        <div class="card quiz6">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12">
-                              <h5 class="card-title text-center"><strong>Question six</strong></h5>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                              <p class="card-text">“Data is the new oil” Demonstrate using a listed company in each of the east African countries
-                                  (Kenya, Uganda, Tanzania). How auditors can tap into the new oil,
-                                  (Use nil financial and non-financial data for the last five years)
-                              </p>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <form action="quizsix_answer/" method="post" class="was-validated">
-                                    {% csrf_token %}
-                                     <div class="mb-3">
-                                        <label for="quiz6">Answer question 6</label>
-                                        <textarea class="form-control is-invalid" name="quizsix" id="quiz6" placeholder="Type your text here" required></textarea>
-                                      </div>
-                                    <input type="submit" class="btn btn-primary">
-                                </form>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12">
-                                        <h4 class="text-center">Answers to question six</h4>
-                                    </div>
-                                    <div class="col-md-12 col-sm-12">
-                                        {% for quiz_ans in quizsix_answers %}
-                                             <li class="list-group-item">{{quiz_ans.text}}
-                                                 <div class="float-right">
-                                                     <form action="" method="post">
-                                                         {% csrf_token %}
-                                                        <button class="btn btn-warning btn-sm disabled">DELETE</button>
-                                                     </form>
-                                                 </div>
-                                             </li>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">Under update</small>
-                    </div>
-              </div>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="card-group">
-              <div class="card">
-                    <img src="https://images.unsplash.com/photo-1518457900604-5c973dffdedf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title"></h5>
-                      <p class="card-text"></p>
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">
-                          <i class="fa fa-phone" aria-hidden="true"></i>
-                          +254706522473
-                      </small>
-                    </div>
-              </div>
-              <div class="card">
-                    <img src="https://images.unsplash.com/photo-1525715843408-5c6ec44503b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title"></h5>
-                      <p class="card-text"></p>
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">
-                          <i class="fa fa-envelope" aria-hidden="true"></i>
-                          dalmasogembo@gmail.com
-                      </small>
-                    </div>
-              </div>
-              <div class="card">
-                    <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title"></h5>
-                      <p class="card-text"></p>
-                    </div>
-                    <div class="card-footer">
-                      <small class="text-muted">
-                          <i class="fa fa-twitter" aria-hidden="true"></i>
-                          @dalmasonto
-                      </small>
-                    </div>
-                  </div>
+            <div class="col-md-3 b-right">
+                <h4 class="text-center">DISCUZZ</h4>
+                <hr>
+                <p class="text-center">Discuzz enables you to discuss any matter that you have with the rest of the world.It is a very good place to help others expound on the ideas that they have</p>
+                <p class="text-center">Therefore, here we encourage people to join a discussion with ultmost good faith and not to go into a discussion to cause problems</p>
             </div>
-    </div>
 
-</div>
+
+            <div class="col-md-3 b-right">
+                <h4 class="text-center">Q & A</h4>
+                <hr>
+                <p>Ask a question</p>
+                <p> Invite people to help you solve it out </p>
+            </div>
+
+
+            <div class="col-md-3 b-right">
+                <h4 class="text-center">OPEN PLATFORM</h4>
+                <hr>
+                <p>This is an open platform in which you can share ideas and then learn form friends around the globe</p>
+
+            </div>
+
+
+            <div class="col-md-3 b-right share">
+                <h4 class="text-center">SHARE</h4>
+                <hr>
+                <a href=""> <i class="fab fa-facebook" aria-hidden="true"> </i> <span>facebook</span> </a>
+                <a href=""> <i class="fab fa-twitter" aria-hidden="true"> </i> <span>twitter</span> </a>
+                <a href=""> <i class="fab fa-instagram" aria-hidden="true"> </i> <span>Instagram</span> </a>
+                <a href=""> <i class="fab fa-linkedin" aria-hidden="true"> </i> <span>LinkedIn</span> </a>
+                <a href=""> <i class="fab fa-google-plus" aria-hidden="true"> </i> <span>LinkedIn</span> </a>
+                <a href=""> <i class="fab fa-google-play" aria-hidden="true"> </i> <span>Download application</span> </a>
+            </div>
+
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col text-center">
+                Website designed by <small>Dalmas Nyaboga Ogembo&copy;<small><i> dalmasogembo@gmail.com</i></small></small>
+            </div>
+        </div>
+    </section>
+    <div class="top">
+        <a href="#top"> <i class="fa fa-chevron-up" aria-hidden="true"></i> </a>
+    </div>
 
 </body>
+
 </html>

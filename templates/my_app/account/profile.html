@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="jumbotron profile">
+    <h3 class="text-center"> <i class="fa fa-user" aria-hidden="true"></i> Welcome to your account , {{ user.username }}</h3>
+
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <h4 class="text-center"> Profile picture </h4>
+            <hr>
+            <div class="img">
+                <img src="{% static 'images/biz.jpg' %}" alt="{{ user.usernme }}">
+            </div>
+            <div class="contents">
+                <button class="btn btn-info">Edit profile picture</button>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <h4 class="text-center"> Account details </h4>
+            <hr>
+            <p> First name: {{ user.first_name }} </p>
+            <p> Last name: {{ user.last_name}} </p>
+            <p> Email: {{ user.email }} </p>
+            <p> Username: {{ user.username }} </p>
+            <div class="contents">
+                <button class="btn btn-info">Edit your account information</button>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h4 class="text-center"> Your Quizes </h4>
+            <hr>
+            <div class="row">
+                <div class="col">
+
+                    {% for code in your_discussions %} {% if code.admin == user.username %} {% if code.discussionCode == '' or none %}
+                    <p>You have no discussions yet</p>
+                    {% else %}
+                    <p class="text-primary">
+                        <a href="/discuzz/{{code.discussionCode}}">
+                            <span>{{ code.discussionCode }}</span>
+                        </a>
+                        <button class="btn btn-warning btn-sm float-right">DELETE</button>
+                    </p>
+                    <hr> {% endif %} {% endif %} {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <h4 class="text-center"> Your conributions </h4>
+            <hr>
+            <p>All your messages to various discussions</p>
+            <table class="table-hover table-responsive">
+                <thead class="thead">
+                    <tr>
+                        <th class="date"> Date </th>
+                        <th class="code"> Code </th>
+                        <th class="msg"> Message </th>
+                    </tr>
+                </thead>
+                <tbody class="table-striped">
+                    {% for ty in t %} {% if ty.username == user.username %}
+                    <tr>
+                        <td> <span id="t-span">{{ ty.reply_time }}</span> </td>
+                        <td> <a class="disc-message" href="/discuzz/{{ty.discussion_code}}#{{user.username}}">{{ ty.discussion_code }} </a> </td>
+                        <td> {{ ty.reply }} </td>
+                    </tr>
+                    {% endif %} {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

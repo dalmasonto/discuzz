@@ -1,6 +1,18 @@
 from django.contrib import admin
-from .models import Search
+from .models import *
+
 
 # Register your models here.
 
-admin.site.register(Search)
+
+class CreateAdmin(admin.ModelAdmin):
+    list_display = ('topic', 'admin', 'paymentMode', 'paymentCode', 'subtopic', 'description', 'question',
+                    'discussionCode', 'createTime')
+
+
+class DiscuzzAdmin(admin.ModelAdmin):
+    list_display = ('discussion_code', 'reply', 'username', 'reply_time')
+
+
+admin.site.register(Create, CreateAdmin)
+admin.site.register(Discuzz, DiscuzzAdmin)
