@@ -25,7 +25,7 @@ class Create(models.Model):
 
 class Discuzz(models.Model):
     discussion_code = models.CharField(max_length=100, default='100NO00DISCUSSION001yet11')
-    reply = models.CharField(max_length=2000)
+    reply = models.CharField(max_length=6000)
     username = models.CharField(max_length=50)
     reply_time = models.DateTimeField(auto_now_add=True)
 
