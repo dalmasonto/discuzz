@@ -8,6 +8,7 @@
             <hr>
             <div class="img">
                 <img src="{% static 'images/biz.jpg' %}" alt="{{ user.usernme }}">
+                <p class="text-center user"> {{user.username}} </p>
             </div>
             <div class="contents">
                 <button class="btn btn-info">Edit profile picture</button>
@@ -16,10 +17,10 @@
         <div class="col-md-3 col-sm-12">
             <h4 class="text-center"> Account details </h4>
             <hr>
-            <p> First name: {{ user.first_name }} </p>
-            <p> Last name: {{ user.last_name}} </p>
-            <p> Email: {{ user.email }} </p>
-            <p> Username: {{ user.username }} </p>
+            <p> First name: <span class="float-right">{{ user.first_name }}</span> </p>
+            <p> Last name: <span class="float-right">{{ user.last_name}}</span> </p>
+            <p> Email: <span class="float-right">{{ user.email }}</span> </p>
+            <p> Username: <span class="float-right">{{ user.username }}</span> </p>
             <div class="contents">
                 <button class="btn btn-info">Edit your account information</button>
             </div>
@@ -33,12 +34,17 @@
                     {% for code in your_discussions %} {% if code.admin == user.username %} {% if code.discussionCode == '' or none %}
                     <p>You have no discussions yet</p>
                     {% else %}
-                    <p class="text-primary">
-                        <a href="/discuzz/{{code.discussionCode}}">
-                            <span>{{ code.discussionCode }}</span>
-                        </a>
-                        <button class="btn btn-warning btn-sm float-right">DELETE</button>
-                    </p>
+                    <div class="row">
+                        <div class="col-md-10 col-xs-10">
+                            <a href="/discuzz/{{code.discussionCode}}">
+                                <span class="s-text">{{ code.discussionCode }}</span>
+                            </a>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <button class="btn btn-warning btn-sm" title="delete"> <i class="fa fa-trash" aria-hidden="true"></i> </button>
+                            <button class="btn btn-warning btn-sm" title="share"> <i class="fa fa-share" aria-hidden="true"></i> </button>
+                        </div>
+                    </div>
                     <hr> {% endif %} {% endif %} {% endfor %}
                 </div>
             </div>
@@ -50,7 +56,23 @@
             <h4 class="text-center"> Your conributions </h4>
             <hr>
             <p>All your messages to various discussions</p>
-            <table class="table-hover table-responsive">
+
+            <div class="row">
+                <div class="col-md-3 col-sm-12"></div>
+                <div class="col-md-6 col-sm-12 h100">
+                    {% for ty in t %} {% if ty.username == user.username %}
+
+                    <details>
+                        <summary> <i class="fa fa-calendar" aria-hidden="true"></i>{{ ty.reply_time }} <a class="disc-message" href="/discuzz/{{ty.discussion_code}}#{{user.username}}">{{ ty.discussion_code }} </a> </summary>
+                        <p> {{ ty.reply }} </p>
+                    </details>
+
+                    {% endif %} {% endfor %}
+                </div>
+                <div class="col-md-3 col-sm-12"></div>
+            </div>
+
+            <!-- <table class="table-hover table-responsive">
                 <thead class="thead">
                     <tr>
                         <th class="date"> Date </th>
@@ -67,7 +89,7 @@
                     </tr>
                     {% endif %} {% endfor %}
                 </tbody>
-            </table>
+            </table> -->
         </div>
     </div>
 </div>

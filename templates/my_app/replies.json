@@ -1,0 +1,813 @@
+{
+    "response": [{
+            "id": 1,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "Am existing",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T12:55:24.235Z"
+        },
+        {
+            "id": 2,
+            "discussionCode": "Technology",
+            "username": "sad",
+            "reply": "Am not blank",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:07:11.360Z"
+        },
+        {
+            "id": 3,
+            "discussionCode": "Technology",
+            "username": "sad",
+            "reply": "Am not blank",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:10:43.208Z"
+        },
+        {
+            "id": 4,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "monto",
+            "reply": "Am trying my best to call for this code\r\n",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:20:40.595Z"
+        },
+        {
+            "id": 5,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "Am trying my luck here",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:28:30.953Z"
+        },
+        {
+            "id": 6,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "Yeeeeas",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:29:07.500Z"
+        },
+        {
+            "id": 7,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "user1",
+            "reply": "Am User1 new to this discussion please guide me the necessary",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:33:28.486Z"
+        },
+        {
+            "id": 8,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "user1",
+            "reply": "yees",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:34:01.261Z"
+        },
+        {
+            "id": 9,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "sad",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:35:04.570Z"
+        },
+        {
+            "id": 10,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "sad",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:36:20.141Z"
+        },
+        {
+            "id": 11,
+            "discussionCode": "62SCIENCES6DISC61u6z3Z66Di77",
+            "username": "sad",
+            "reply": "sad",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:39:25.869Z"
+        },
+        {
+            "id": 12,
+            "discussionCode": "62SCIENCES6DISC61u6z3Z66Di77",
+            "username": "user1",
+            "reply": "User1",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:40:07.312Z"
+        },
+        {
+            "id": 13,
+            "discussionCode": "62SCIENCES6DISC61u6z3Z66Di77",
+            "username": "sad",
+            "reply": "yea",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:42:06.107Z"
+        },
+        {
+            "id": 14,
+            "discussionCode": "62SCIENCES6DISC61u6z3Z66Di77",
+            "username": "user1",
+            "reply": "I will talk about it",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-04T13:42:36.726Z"
+        },
+        {
+            "id": 15,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "kjkl",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:05:39.268Z"
+        },
+        {
+            "id": 16,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "monto",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:08:49.156Z"
+        },
+        {
+            "id": 17,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "ntomo",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:10:53.398Z"
+        },
+        {
+            "id": 18,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "yea",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:13:35.696Z"
+        },
+        {
+            "id": 19,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "jkhik",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:15:31.621Z"
+        },
+        {
+            "id": 20,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "jkhik",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:17:37.530Z"
+        },
+        {
+            "id": 21,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "kuyiho",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:17:53.470Z"
+        },
+        {
+            "id": 22,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "mjgudtu o",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:18:50.021Z"
+        },
+        {
+            "id": 23,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "yea",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T14:19:02.028Z"
+        },
+        {
+            "id": 24,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "Everything is wrong here",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:00:11.077Z"
+        },
+        {
+            "id": 25,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "Starter pack",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:00:49.035Z"
+        },
+        {
+            "id": 26,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "Starter pack",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:01:39.854Z"
+        },
+        {
+            "id": 27,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "Starter pack",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:02:27.929Z"
+        },
+        {
+            "id": 28,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "hjfg",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:05:55.432Z"
+        },
+        {
+            "id": 29,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "hjfg",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:07:26.356Z"
+        },
+        {
+            "id": 30,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "hjfg",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:08:07.753Z"
+        },
+        {
+            "id": 31,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "hjfg",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:08:50.360Z"
+        },
+        {
+            "id": 32,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "hjfg",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:09:07.210Z"
+        },
+        {
+            "id": 33,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "kj",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:10:09.418Z"
+        },
+        {
+            "id": 34,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "hj\r\n",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:11:17.933Z"
+        },
+        {
+            "id": 35,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "ty",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:11:35.028Z"
+        },
+        {
+            "id": 36,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "kjh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:12:52.499Z"
+        },
+        {
+            "id": 37,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "kjh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:12:57.181Z"
+        },
+        {
+            "id": 38,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "jh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:13:04.822Z"
+        },
+        {
+            "id": 39,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "yugi",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:14:20.158Z"
+        },
+        {
+            "id": 40,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "kh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:15:06.186Z"
+        },
+        {
+            "id": 41,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "khkgh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:20:49.999Z"
+        },
+        {
+            "id": 42,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "khkgh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:21:35.147Z"
+        },
+        {
+            "id": 43,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "khkgh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:22:58.825Z"
+        },
+        {
+            "id": 44,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "khkgh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:23:56.792Z"
+        },
+        {
+            "id": 45,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "khkgh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:24:43.820Z"
+        },
+        {
+            "id": 46,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "I got the solution to my problem",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:25:20.716Z"
+        },
+        {
+            "id": 47,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "Dalmas is a real genius when it comes to programming and indeed he is ",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:26:39.018Z"
+        },
+        {
+            "id": 48,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "Yes I can conquer with you in that",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:37:18.721Z"
+        },
+        {
+            "id": 49,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "fsf\r\nsda\r\nafdsf\r\ndfsa\r\nfdaf\r\nd\r\nas",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:42:49.705Z"
+        },
+        {
+            "id": 50,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "lkjlf\\nkhfkads\\nkjdshfk\\n",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:43:05.389Z"
+        },
+        {
+            "id": 51,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "lk",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:43:49.211Z"
+        },
+        {
+            "id": 52,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "Topic one; The effects of poverty on education of most citizens in kenya  ------> To avoid redundant statements\r\n\r\nTopic two; The major factors that influence university students to engage sexual immorality ---> I f you say in order to \r\nsatisfy their you will have rolled back to one of the factors\r\n     b) Reported cases of students committing suicide and increased number of homicides",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:45:58.668Z"
+        },
+        {
+            "id": 53,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "Topic one; The effects of poverty on education of most citizens in kenya  ------> To avoid redundant statements\r\n\r\nTopic two; The major factors that influence university students to engage sexual immorality ---> I f you say in order to \r\nsatisfy their you will have rolled back to one of the factors\r\n     b) Reported cases of students committing suicide and increased number of homicides",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:46:13.251Z"
+        },
+        {
+            "id": 54,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "Topic one; The effects of poverty on education of most citizens in kenya  ------> To avoid redundant statements\r\n\r\nTopic two; The major factors that influence university students to engage sexual immorality ---> I f you say in order to \r\nsatisfy their you will have rolled back to one of the factors\r\n     b) Reported cases of students committing suicide and increased number of homicidesTopic one; The effects of poverty on education of most citizens in kenya  ------> To avoid redundant statements\r\n\r\nTopic two; The major factors that influence university students to engage sexual immorality ---> I f you say in order to \r\nsatisfy their you will have rolled back to one of the factors\r\n     b) Reported cases of students committing suicide and increased number of homicidesTopic one; The effects of poverty on education of most citizens in kenya  ------> To avoid redundant statements\r\n\r\nTopic two; The major factors that influence university students to engage sexual immorality ---> I f you say in order to \r\nsatisfy their you will have rolled back to one of the factors\r\n     b) Reported cases of students committing suicide and increased number of homicidesTopic one; The effects of poverty on education of most citizens in kenya  ------> To avoid redundant statements\r\n\r\nTopic two; The major factors that influence university students to engage sexual immorality ---> I f you say in order to \r\nsatisfy their you will have rolled back to one of the factors\r\n     b) Reported cases of students committing suicide and increased number of homicidesTopic one; The effects of poverty on education of most citizens in kenya  ------> To avoid redundant statements\r\n\r\nTopic two; The major factors that influence university students to engage sexual immorality ---> I f you say in order to \r\nsatisfy their you will have rolled back to one of the factors\r\n     b) Reported cases of students committing suicide and increased number of homicides",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:46:31.433Z"
+        },
+        {
+            "id": 55,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "user1",
+            "reply": "User1 is back and manhot\r\n",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-08T17:51:16.744Z"
+        },
+        {
+            "id": 56,
+            "discussionCode": "62SCIENCES6DISC61u6z3Z66Di77",
+            "username": "user1",
+            "reply": "Are you in Sad?",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-12T20:43:57.812Z"
+        },
+        {
+            "id": 57,
+            "discussionCode": "62SCIENCES6DISC61u6z3Z66Di77",
+            "username": "sad",
+            "reply": "Yes am in User1!",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-12T20:44:30.089Z"
+        },
+        {
+            "id": 58,
+            "discussionCode": "46OF6DISC40u1z4Z64Di98",
+            "username": "sad",
+            "reply": "reply one",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-20T10:09:36.166Z"
+        },
+        {
+            "id": 59,
+            "discussionCode": "46OF6DISC40u1z4Z64Di98",
+            "username": "sad",
+            "reply": "reply two",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-20T10:09:49.573Z"
+        },
+        {
+            "id": 60,
+            "discussionCode": "46OF6DISC40u1z4Z64Di98",
+            "username": "user1",
+            "reply": "reply three\r\n",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-20T10:10:10.478Z"
+        },
+        {
+            "id": 61,
+            "discussionCode": "46OF6DISC40u1z4Z64Di98",
+            "username": "user1",
+            "reply": "reply four<br>",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-20T10:10:30.852Z"
+        },
+        {
+            "id": 62,
+            "discussionCode": "46OF6DISC40u1z4Z64Di98",
+            "username": "user1",
+            "reply": "reply five <br> g",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-20T10:10:50.946Z"
+        },
+        {
+            "id": 63,
+            "discussionCode": "100NO00DISCUSSION001yet11",
+            "username": "sad",
+            "reply": "Start form nowhere",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-20T11:24:37.479Z"
+        },
+        {
+            "id": 64,
+            "discussionCode": "100NO00DISCUSSION001yet11",
+            "username": "sad",
+            "reply": "a.\tReliance on inquiry as a form of gathering audit evidence.\r\nb.\tPoor recognition of third party transactions assuming that the internal control systems take care of that.\r\nc.\tFailure to gather sufficient audit evidence \r\n2.1\tThe effects of the internet on accounting information systems\r\nCase study Banks within Nairobi County\r\nProblems to solve\r\na.\tInformation leakages\r\n",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-20T11:45:28.322Z"
+        },
+        {
+            "id": 65,
+            "discussionCode": "62SCIENCES6DISC61u6z3Z66Di77",
+            "username": "mercy",
+            "reply": "Am also in",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-20T15:06:46.307Z"
+        },
+        {
+            "id": 66,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": "tax\r\nis\r\nan\r\nimportant\r\nthing",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-22T10:57:44.377Z"
+        },
+        {
+            "id": 67,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": "{% extends 'base.html' %} {% block content %}<div class=\"discuzz\">    <div class=\"jumbotron mt-5 pt-5\">        <div class=\"row\">            <div class=\"col\">                <h3 class=\"text-center text-white\">Topic : {{ disc_name.topic }} <input onchange=\"check()\" id=\"changeColor\" type=\"checkbox\"></h3>                <hr>                <h5 class=\"text-center text-white\">Subtopic : {{ disc_name.subtopic }}</h5>                <h6 class=\"text-center text-white\">Description : {{ disc_name.description }}</h6>                <h6 class=\"text-center text-white\">Admin : {{ disc_name.admin }}</h6>                <hr>            </div>        </div>        <div class=\"row\">            <div class=\"col\">                <div id=\"shadow-card\">                    <h4 id=\"query-title\">Query, <span>Code: {{ disc_name.discussionCode }}</span></h4>                    <p id=\"query-text\">                        {{ disc_name.question }}                    </p>                </div>                <div id=\"shadow-card\">                    <h4 class=\"text-center text-white\">Replies</h4>                    <hr> {% for reply in replies %} {% if reply.discussion_code == disc_name.discussionCode %}                    <div id=\"shadow-card-replies\">                        <div>                            <h6 id=\"reply-uid\"> {{ reply.username }}</h6>                        </div>                        <div id=\"{{ reply.username }}\">                            <pre> {{ reply.reply }} </pre>                        </div>                        <div id=\"options-menu\">                            <i class=\"fa fa-comment\"> <span>23</span> </i>                            <i class=\"fa fa-thumbs-up\"> <span>12</span> </i>                            <i class=\"fa fa-thumbs-down\"> <span>15</span> </i>                            <i class=\"fa fa-share\"> <span>5</span> </i>                        </div>                    </div>                    {% endif %} {% endfor %}                    <div class=\"form\">                        <div id=\"login-form\">                            <form action=\"\" method=\"POST\">                                {% csrf_token %}                                <div class=\"form-row input\">                                    <div class=\"form-group col-md-12 inputBox hidden\">                                        <label for=\"uid\">Username</label>                                        <input type=\"text\" name=\"username\" id=\"uid\" value=\"{{ user.username }}\" placeholder=\"Username\">                                    </div>                                    <div class=\"form-group col-md-12 inputBox\">                                        <label for=\"reply\">Make reply  </label>                                        <textarea name=\"reply\" id=\"reply\" class=\"inputBox \" accesskey=\"r\" rows=\"5\" cols=\"40\" placeholder=\"Reply to this question\"></textarea>                                        <div id=\"reply-icons\">                                            <i class=\" fa fa-redo \"></i>                                            <i class=\"fa fa-undo \"></i>                                            <i class=\"fa fa-arrow-left \"></i>                                        </div>                                    </div>                                    <div class=\"form-group col-md-12 inputBox \">                                        <button type=\"submit \" name=\" \" class=\"btn btn-primary w-100 \">Submit</button>                                    </div>                                </div>                            </form>                        </div>                    </div>                </div>            </div>        </div>    </div>    <script type=\"text/javascript \">    </script></div>{% endblock %}",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-22T11:02:08.990Z"
+        },
+        {
+            "id": 68,
+            "discussionCode": "62SCIENCES6DISC61u6z3Z66Di77",
+            "username": "sad",
+            "reply": "const dal = Math.random()",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-22T11:15:12.554Z"
+        },
+        {
+            "id": 69,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": "a.) Download a text editor(visual studio code, sublime text, netbeans, eclipse, notepad++, for a starter sublime text if coding in HTML)\r\nb.) Download the required dependncies\r\nc.)Start coding",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-22T14:53:46.075Z"
+        },
+        {
+            "id": 70,
+            "discussionCode": "38SCIENCES6DISC32u3z3Z54Di79",
+            "username": "sad",
+            "reply": "Topic: Accounting for inventories\r\nsubtopic: Introduction\r\nWhat are inventories? These are the goods or assets a company or a business has in store for exchange of money or other goods.\r\nWhat is the importance of keeping inventories?\r\na) Fast supplies\r\nb)Better asset management \r\n",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-22T17:43:21.283Z"
+        },
+        {
+            "id": 71,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": "fdgghfg",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-25T08:37:10.564Z"
+        },
+        {
+            "id": 73,
+            "discussionCode": "47ENGINEERING5DISC41u4z4Z74Di77",
+            "username": "sad",
+            "reply": "<div>\r\n     <p>This is fun</p>\r\n</div>",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-26T18:02:09.474Z"
+        },
+        {
+            "id": 74,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": "{% extends 'base.html' %} {% block content %}\r\n<div class=\"row mt-5 pt-5\">\r\n    <div class=\"col-md-3 col-sm-12\"></div>\r\n    <div class=\"col-md-6 col-sm-12 form\">\r\n        <div class=\"jumbotron\">\r\n            <div id=\"login_form\">\r\n                <h4 class=\"text-center w-100\">Join a current running discussion</h4>\r\n                {% for message in messages %}\r\n                <p class=\"text-success text-danger\">{{ message }}</p>\r\n                {% endfor %}\r\n                <div class=\"w-100\">\r\n                    <form action=\"\" method=\"POST\">\r\n                        {% csrf_token %}\r\n                        <fieldset>\r\n                            <div class=\"form-row input\">\r\n\r\n                                <div class=\"form-group col-md-12  inputBox\">\r\n                                    <label for=\"discussionid\">Discussion Id</label>\r\n                                    <input type=\"text\" name=\"discussionid\" id=\"discussionid\" placeholder=\"Join discussion Id\">\r\n                                </div>\r\n\r\n                                <div class=\"form-group col-md-12 inputBox\">\r\n                                    <input type=\"submit\" name=\"\" value=\"Join\">\r\n                                </div>\r\n\r\n                            </div>\r\n                        </fieldset>\r\n                    </form>\r\n                    <div class=\"help\">\r\n                        <p>Want to create a discussion topic? <a href=\"{% url 'create' %}\">Create</a> </p>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div class=\"col-md-3 col-sm-12\"></div>\r\n</div>\r\n{% endblock %}",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-26T18:59:30.693Z"
+        },
+        {
+            "id": 75,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": "formmethod",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-26T19:15:20.312Z"
+        },
+        {
+            "id": 76,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": " <a href=\"http://goalkicker.com\">goalkicker</a>",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-26T19:37:27.255Z"
+        },
+        {
+            "id": 77,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": "from django.shortcuts import render\r\nfrom django.shortcuts import redirect\r\nfrom django.contrib import messages\r\nfrom django.contrib.auth import authenticate, login, logout\r\nfrom django.contrib.auth.decorators import login_required\r\nfrom django.http import HttpResponseRedirect\r\nfrom django.utils import timezone, dateformat\r\nfrom .models import *\r\nfrom .decorators import *\r\n\r\nfrom random import random, seed, randint\r\n# Create your views here.\r\nfrom .forms import UserSignUp, UserLogin\r\n\r\n\r\ndef base(request):\r\n    return render(request, \"base.html\")\r\n\r\n\r\n@login_required(login_url='login')\r\ndef home(request):\r\n    if request.method == \"POST\":\r\n        email = request.POST.get('email')\r\n        update = request.POST.get('updatemsg')\r\n        updatetime = timezone.now()\r\n        if email == '' or email is None:\r\n            messages.error(request, 'Email field is empty')\r\n        elif update is None or update == '':\r\n            messages.error(request, 'Message field is required')\r\n        else:\r\n            send_email = SendEmail(email=email, update=update, updateTime=updatetime)\r\n            send_email.save()\r\n            return redirect('home')\r\n    discussions = Create.objects.all().order_by(\"-createTime\")\r\n    context = {\r\n        \"discussions\": discussions,\r\n    }\r\n    return render(request, \"my_app/home.html\", context)\r\n\r\n\r\n@unauthenticated_user\r\ndef user_login(request):\r\n    if request.method == \"POST\":\r\n        username = request.POST.get('uid')\r\n        password = request.POST.get('pwd')\r\n\r\n        user = authenticate(username=username, password=password)\r\n\r\n        if user is not None:\r\n            login(request, user)\r\n            return redirect(\"home\")\r\n        else:\r\n            messages.error(request, 'Username or password is incorrect')\r\n\r\n    return render(request, \"my_app/account/login.html\")\r\n\r\n\r\n@unauthenticated_user\r\ndef signup(request):\r\n    if request.method == \"POST\":\r\n        form = UserSignUp(request.POST)\r\n        if form.is_valid():\r\n            form.save()\r\n            messages.success(request, 'Account created successfully')\r\n            return redirect('login')\r\n    else:\r\n        form = UserSignUp()\r\n\r\n    return render(request, \"my_app/account/signup.html\", {\"form\": form})\r\n\r\n\r\ndef logout_user(request):\r\n    logout(request)\r\n    return redirect('login')\r\n\r\n\r\n@login_required(login_url='login')\r\ndef profile(request):\r\n    your_discussions = Create.objects.all().order_by('-createTime')\r\n    y_c = Discuzz.objects.all().order_by('-reply_time')\r\n    # print(y_c)\r\n    # y_r = y_c.username\r\n    # print(y_c[0].username)\r\n    t = []\r\n    for y in y_c:\r\n        t.append(y)\r\n\r\n    return render(request, 'my_app/account/profile.html', {'your_discussions': your_discussions, 't': t})\r\n\r\n\r\ndef about(request):\r\n    return render(request, 'my_app/help/about.html')\r\n\r\n\r\ndef contact(request):\r\n    return render(request, 'my_app/help/contact.html')\r\n\r\n\r\n@login_required(login_url='login')\r\ndef join(request):\r\n    if request.method == \"POST\":\r\n        join_disc_id = request.POST.get('discussionid')\r\n\r\n        if join_disc_id is None or join_disc_id == '':\r\n            messages.error(request, \"Empty field\")\r\n\r\n        else:\r\n            try:\r\n                disc_name = Create.objects.get(discussionCode=join_disc_id)\r\n            except Create.DoesNotExist:\r\n                disc_name = None\r\n\r\n            if disc_name is None:\r\n                messages.error(request, \"Discussion ID NOT FOUND\")\r\n            else:\r\n                url = '/discuzz/%s' % join_disc_id\r\n                return redirect(url)\r\n\r\n    return render(request, 'my_app/motion/join.html')\r\n\r\n\r\n@login_required(login_url='login')\r\ndef create(request):\r\n    if request.method == 'POST':\r\n        topic = request.POST.get('topic')\r\n        admin = request.POST.get('admin')\r\n        payment_mode = request.POST.get('payment_mode')\r\n        payment_code = request.POST.get('payment_code')\r\n        subtopic = request.POST.get('subtopic')\r\n        create_random(subtopic)\r\n        discussion_code = create_random(subtopic)\r\n        print(discussion_code)\r\n        description = request.POST.get('description')\r\n        question = request.POST.get('question')\r\n        discussioncode = discussion_code\r\n        create_time = timezone.now()\r\n\r\n        if topic is None or topic == '':\r\n            messages.error(request, 'Topic field is empty')\r\n\r\n        elif admin is None or admin == '':\r\n            messages.error(request, 'The admin field is empty')\r\n\r\n        elif payment_mode is None or payment_mode == '':\r\n            messages.error(request, 'The payment mode field is empty')\r\n\r\n        elif payment_code is None or payment_code == '':\r\n            messages.error(request, 'The payment code field is empty')\r\n\r\n        elif subtopic is None or subtopic == '':\r\n            messages.error(request, 'The Sub Topic field is empty')\r\n\r\n        elif description is None or description == '':\r\n            messages.error(request, 'The description field is empty')\r\n\r\n        elif question is None or question == '':\r\n            messages.error(request, 'The question field is empty')\r\n\r\n        else:\r\n            create_query = Create(topic=topic, admin=admin, paymentMode=payment_mode, paymentCode=payment_code,\r\n                                  subtopic=subtopic, description=description, question=question,\r\n                                  discussionCode=discussioncode, createTime=create_time)\r\n            create_query.save()\r\n            messages.success(request, \"Successfully added\")\r\n            return redirect('join')\r\n\r\n    return render(request, 'my_app/motion/create.html')\r\n\r\n\r\n@login_required(login_url='login')\r\ndef discuzz(request, discussion_details):\r\n    try:\r\n        disc_name = Create.objects.get(discussionCode=discussion_details)\r\n        if request.method == 'POST':\r\n            discussioncode = disc_name.discussionCode\r\n            reply = request.POST.get('reply')\r\n            username = request.POST.get('username')\r\n            replytime = timezone.now()\r\n            reply_query = Discuzz(discussion_code=discussioncode, reply=reply, username=username, reply_time=replytime)\r\n            reply_query.save()\r\n            replies = Discuzz.objects.all()\r\n            url = '/discuzz/%s' % discussioncode\r\n            return redirect(url)\r\n        try:\r\n            replies = Discuzz.objects.all()\r\n            return render(request, 'my_app/motion/discuzz.html', {'disc_name': disc_name, \"replies\": replies})\r\n        except Discuzz.DoesNotExist:\r\n            discuzz= None\r\n\r\n    except Create.DoesNotExist:\r\n        disc_name = None\r\n        messages.error(request, \"The Discussion ID does not exist, Please check and try again\")\r\n        return render(request, 'my_app/help/not-found.html')\r\n\r\n\r\n@login_required(login_url='login')\r\ndef c19(request):\r\n    return render(request, 'my_app/news/c19.html')\r\n\r\n\r\n@login_required(login_url='login')\r\ndef wnews(request):\r\n    return render(request, 'my_app/news/wnews.html')\r\n\r\n\r\ndef create_random(subtopic):\r\n    num1 = randint(1, 9)\r\n    num2 = randint(2, 8)\r\n    num3 = randint(3, 7)\r\n    num4 = randint(4, 6)\r\n    num5 = randint(5, 11)\r\n    num6 = randint(4, 6)\r\n    num7 = randint(3, 7)\r\n    num8 = randint(2, 8)\r\n    num9 = randint(1, 9)\r\n    num10 = randint(0, 3)\r\n\r\n    sub = subtopic.split()\r\n    print(sub)\r\n    sub1 = sub[1].upper()\r\n\r\n    code = '%d%d%s%dDISC%d%du%dz%dZ%d%dDi%d%d' % (num7, num8, sub1, num6, num7, num10, num1, num2, num3, num4, num5,\r\n                                                  num9)\r\n    return code\r\n\r\n",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-26T20:39:25.235Z"
+        },
+        {
+            "id": 78,
+            "discussionCode": "53AND5DISC52u7z8Z74Di106",
+            "username": "sad",
+            "reply": "const",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-26T20:41:08.319Z"
+        },
+        {
+            "id": 79,
+            "discussionCode": "64IS5DISC61u4z5Z75Di58",
+            "username": "sad",
+            "reply": "I fsomebody is basically writing a message it should not be altered or colored any howly without fully consideration of what the person had fully texted",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-04-26T20:52:02.478Z"
+        },
+        {
+            "id": 80,
+            "discussionCode": "47ENGINEERING5DISC41u4z4Z74Di77",
+            "username": "sad",
+            "reply": "P",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-05-01T13:15:37.179Z"
+        },
+        {
+            "id": 81,
+            "discussionCode": "47ENGINEERING5DISC41u4z4Z74Di77",
+            "username": "sad",
+            "reply": "updated",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-05-01T16:07:03.939Z"
+        },
+        {
+            "id": 82,
+            "discussionCode": "47ENGINEERING5DISC41u4z4Z74Di77",
+            "username": "sad",
+            "reply": "hgfhfh",
+            "likes": 0,
+            "dislikes": 0,
+            "comments": 0,
+            "reply_time": "2020-05-05T10:54:25.257Z"
+        }
+    ]
+}

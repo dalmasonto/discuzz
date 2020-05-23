@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 <div class="discuzz">
-    <div class="jumbotron mt-5 pt-5">
+    <div class="jumbotron">
         <div class="row">
             <div class="col">
                 <h3 class="text-center text-white">Topic : {{ disc_name.topic }} <input onchange="check()" id="changeColor" type="checkbox"></h3>
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col">
                 <div id="shadow-card">
-                    <h4 id="query-title">Query, <span>Code: {{ disc_name.discussionCode }}</span></h4>
+                    <h4 id="query-title">Query, <span class="code">Code: {{ disc_name.discussionCode }}</span></h4>
                     <p id="query-text">
                         {{ disc_name.question }}
                     </p>
@@ -23,33 +23,65 @@
 
                 <div id="shadow-card">
                     <h4 class="text-center text-white">Replies</h4>
-                    <hr> {% for reply in replies %} {% if reply.discussion_code == disc_name.discussionCode %}
-                    <div id="shadow-card-replies">
-                        <div>
-                            <h6 id="reply-uid"> {{ reply.username }}</h6>
+                    <hr>
+                    <div id="all_replies">
+                        <!-- {% for reply in replies %} {% if reply.discussion_code == disc_name.discussionCode %}
+                        <div id="shadow-card-replies">
+                            <div>
+                                <h6 id="reply-uid"> {{ reply.username }}</h6>
+                            </div>
+                            <div id="{{ reply.id }}">
+                                <pre id="pre"> 
+                                {{ reply.reply }} 
+                            </pre>
+                            </div>
+                            <div id="options-menu">
+                                <form class="hide" method="POST" action="{% url 'comment'%}">
+                                    {% csrf_token %}
+                                    <button type="submit" name="comment" value="{{ reply.id }}">
+                                    <i class="fa fa-comment"> <span>{{ reply.comments.count }} </span> </i>
+                                </button>
+                                </form>
+                                <form method="POST" action="{% url 'like'%}">
+                                    {% csrf_token %}
+                                    <button type="submit" name="like" value="{{ reply.id }}">
+                                    <i class="fa fa-thumbs-up"> <span>{{ reply.likes.count }} </span> </i>
+                                </button>
+                                </form>
+
+                                <form method="POST" action="{% url 'dislike'%}">
+                                    {% csrf_token %}
+                                    <button type="submit" name="dislike" value="{{ reply.id }}">
+                                    <i class="fa fa-thumbs-down"> <span>{{ reply.dislikes.count }} </span> </i>
+                                </button>
+                                </form>
+                                <form class="hide" method="POST" action="">
+                                    {% csrf_token %}
+                                    <button disabled="disabled">
+                                    <i class="fa fa-share"> <span>5</span> </i>
+                                </button>
+                                </form>
+
+                            </div>
                         </div>
-                        <div id="{{ reply.username }}">
-                            <pre id="pre"> {{ reply.reply }} </pre>
-                        </div>
-                        <div id="options-menu">
-                            <i class="fa fa-comment"> <span>23</span> </i>
-                            <i class="fa fa-thumbs-up"> <span>12</span> </i>
-                            <i class="fa fa-thumbs-down"> <span>15</span> </i>
-                            <i class="fa fa-share"> <span>5</span> </i>
-                        </div>
+                        {% endif %} {% endfor %} -->
                     </div>
-                    {% endif %} {% endfor %}
 
                     <div class="form">
-                        <div id="login-form">
-                            <form action="" method="POST">
+                        <div class="login-form">
+                            <form id="discuzz_form" action="/discuzz_api/{{disc_name.discussionCode}}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-row input">
 
-                                    <div class="form-group col-md-12 inputBox hidden">
+                                    <div class="form-group col-md-12 inputBox response">
+                                        <!-- <p class="response-msg text-center">Some msg</p> -->
+                                    </div>
+
+
+                                    <!-- <div class="form-group col-md-12 inputBox hidden">
                                         <label for="uid">Username</label>
                                         <input type="text" name="username" id="uid" value="{{ user.username }}" placeholder="Username">
-                                    </div>
+                                    </div> -->
 
                                     <div class="form-group col-md-12 inputBox">
                                         <label for="reply">Make reply  </label>
@@ -75,22 +107,155 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-            //Get all the pre elements in this discussion page
+    <script>
+        window.onload = LoadReplies;
+
+        const discuzz_form_el = document.querySelector('#discuzz_form');
+        const all_replies_div = document.querySelector('#all_replies');
+        const discussion_code = document.querySelector('.code').textContent.split(' ')[1];
+        const responseDiv = document.querySelector('.response');
+
+        function clear_replies() {
+            all_replies_div.innerHTML = '';
+        }
+
+        function clear_error() {
+            responseDiv.innerHTML = '';
+        }
+
+        discuzz_form_el.addEventListener('submit', handleDiscuzzForm);
+
+        function handleDiscuzzForm(event) {
+            event.preventDefault();
+            const myForm = event.target;
+            const myFormData = new FormData(myForm);
+            const url = myForm.getAttribute('action');
+            const method = myForm.getAttribute('method');
+
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.onload = () => {
+                const serverResponse = xhr.response;
+                const response_ = JSON.parse(serverResponse);
+                clear_replies();
+                clear_error();
+                LoadReplies();
+                myForm.reset();
+                console.log('THE RESPONSE IS', response_);
+                responseDisplay(responseDiv, response_.response_msg, response_.response_type);
+                setTimeout(() => {
+                    clear_error();
+                }, 1500);
+            };
+            xhr.send(myFormData);
+        }
+
+        function LoadReplies() {
+            var listed_queries = [];
+
+            var page = page;
+            var resultsPerPage = resultsPerPage;
+            var start = (page - 1) * resultsPerPage;
+            var end = page * resultsPerPage;
+
+            const xhr = new XMLHttpRequest();
+            const url = `/api/discuzz/${discussion_code}/`;
+            const method = "GET";
+            const responseType = "json";
+            xhr.responseType = responseType;
+            xhr.method = method;
+            xhr.open(method, url);
+            xhr.onload = () => {
+
+                const serverResponse = xhr.response;
+                const all_replies_from_server = serverResponse.response;
+                // console.log(all_replies_from_server);
+                all_replies_from_server.forEach(reply_render);
+
+            }
+            xhr.send();
+        }
+
+
+        function reply_render(reply_obj) {
+            const reply_text = reply_obj.reply;
+            console.log('teh obj', reply_obj)
+            console.log('tefvdshfj obj', reply_text)
+            const new_reply = `
+                <div id="shadow-card-replies">
+                    <div>
+                        <h6 id="reply-uid"> ${ reply_obj.username}</h6>
+                    </div>
+                    <div id="${reply_obj.id}">
+<pre id="pre"> 
+<code>
+${reply_text} 
+</code>
+</pre>
+                    </div>
+                    <div id="options-menu">
+                        <form class="hide" method="POST" action="{% url 'comment'%}">
+                            {% csrf_token %}
+                            <button type="submit" name="comment" value="${reply_obj.id}">
+                            <i class="fa fa-comment"> <span>${ reply_obj.comments }</span> </i>
+                            </button>
+                        </form>
+                        <form method="POST" action="{% url 'like'%}">
+                            {% csrf_token %}
+                            <button type="submit" name="like" value="${reply_obj.id }">
+                            <i class="fa fa-thumbs-up"> <span>${reply_obj.likes}</span> </i>
+                            </button>
+                        </form>
+
+                        <form method="POST" action="{% url 'dislike'%}">
+                            {% csrf_token %}
+                            <button type="submit" name="dislike" value="${reply_obj.id }">
+                            <i class="fa fa-thumbs-down"> <span>${reply_obj.dislikes}</span> </i>
+                                </button>
+                        </form>
+                        <form class="hide" method="POST" action="">
+                            {% csrf_token %}
+                            <button disabled="disabled">
+                            <i class="fa fa-share"> <span>5</span> </i>
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            `;
+            all_replies_div.insertAdjacentHTML('beforeEnd', new_reply);
+        }
+
+        const responseDisplay = (parentEl, messsage, type) => {
+            const response = `
+                <p class="response-msg text-center text-${type}">${messsage}</p>
+            `;
+
+            parentEl.insertAdjacentHTML('beforeEnd', response);
+        };
+
+
+
+        //Get all the pre elements in this discussion page
         var pres = document.querySelectorAll("#pre");
-                /* Defining a function for use and later I will have to change this code to call for 
-                DRY(Don't Repeat Yourself rule ). 
-                Using arrays and other functions for better ad cleaner code
-                */
+        /* Defining a function for use and later I will have to change this code to call for 
+        DRY(Don't Repeat Yourself rule ). 
+        Using arrays and other functions for better ad cleaner code
+        */
         function changeColor(el) {
-                // Collect the element ready for use into this variable
+            // Collect the element ready for use into this variable
             var pre = el;
 
             // Get the text string in the html elemnt passed in ie the pre element
             var text = el.innerHTML;
 
-                // Decide on what to happen to each element depending on the kind of the element
+            text = text.replace(/</g, '<span style="color: red;">&lt;</span>');
+            text = text.replace(/>/g, '<span style="color: red;">&gt;</span>');
+
+            // Decide on what to happen to each element depending on the kind of the element
             text = text.replace(/div/g, '<span style="color: red;">div</span>');
+            text = text.replace(/fuck/g, '<span style="color: red;">fuck</span>');
+            text = text.replace(/p>/g, '<span style="color: red;">p</span>');
             text = text.replace(/script/g, '<span style="color: red;">script</span>');
             text = text.replace(/link/g, '<span style="color: red;">link</span>');
             text = text.replace(/button/g, '<span style="color: red;">button</span>');
@@ -102,7 +267,7 @@
             text = text.replace(/textarea/g, '<span style="color: red;">textarea</span>');
 
             text = text.replace(/label\s/g, '<span style="color: red;">label </span>');
-            text = text.replace(/\Wpre/g, '<span style="color: red;">pre</span>');
+            text = text.replace(/pre/g, '<span style="color: red;">pre</span>');
             // text = text.replace(/span/g, '<span style="color: red;">span</span>');
             //text = text.replace(/p/g, '<span style="color: red;">p</span>');
             // text = text.replace(/<a[^>]*href="https?:\/\/.*"[^>]*>[^<]*<\/a>/g, '<span style="color: yellow">Some link here</span>')
@@ -121,39 +286,57 @@
             // text = text.replace(/</g, '<span style="color: red;">&lt;</span>');
             text = text.replace(/\/>/g, '<span style="color: red;">g</span>');
 
+            // text = text.replace(/\w=\W/g, '<span style="color: green;">=</span>');
+            // Color blue
             text = text.replace(/class/g, '<span style="color: blue;">class</span>');
             text = text.replace(/accesskey/g, '<span style="color: blue;">accesskey</span>');
             text = text.replace(/rows/g, '<span style="color: blue;">rows</span>');
+            text = text.replace(/cols/g, '<span style="color: blue;">cols</span>');
+            text = text.replace(/method/g, '<span style="color: blue;">method</span>');
             text = text.replace(/placeholder/g, '<span style="color: blue;">placeholder</span>');
             text = text.replace(/onchange/g, '<span style="color: blue;">onchange</span>');
             text = text.replace(/type/g, '<span style="color: blue;">type</span>');
             text = text.replace(/\sname/g, '<span style="color: blue;"> name</span>');
             text = text.replace(/action/g, '<span style="color: blue;">action</span>');
             text = text.replace(/\sid/g, '<span style="color: blue;"> id</span>');
-            text = text.replace(/\sfor/g, '<span style="color: blue;"> for</span>');
+            text = text.replace(/\sfor[\W^\s]/g, '<span style="color: blue;"> for  </span>');
             // text = text.replace(/\sfor\W|\S/g, '<span style="color: blue;"> for</span>');
             text = text.replace(/\svalue/g, '<span style="color: blue;"> value</span>');
             text = text.replace(/\ssrc/g, '<span style="color: blue;"> src</span>');
-
+            text = text.replace(/import\s/g, '<span style="color: blue;">import </span>');
+            text = text.replace(/from/g, '<span style="color: blue;">from</span>');
             text = text.replace(/const/g, '<span style="color: blue;"> const </span>');
 
-                    //Django stuff
+            // Color yellow
+            text = text.replace(/django/g, '<span style="color: yellow;">django</span>');
+            text = text.replace(/def/g, '<span style="color: pink;">def</span>');
+
+            text = text.replace(/else/g, '<span style="color: green;">else</span>');
+            text = text.replace(/elif/g, '<span style="color: green;">elif</span>');
+            text = text.replace(/if/g, '<span style="color: green;">if</span>');
+            text = text.replace(/==/g, '<span style="color: green;">==</span>');
+            text = text.replace(/except/g, '<span style="color: red;">except</span>');
+            text = text.replace(/try/g, '<span style="color: orange;">try</span>');
+
+            text = text.replace(/return/g, '<span style="color: indigo;">return</span>');
+            text = text.replace(/\t\t/g, '<span style="background: orange !important; width: 20px;"></span>');
+
+            //Django stuff
             // text = text.replace(/\W\W\s/g, '<span style="color: yellow;">{#37</span>');
             // text = text.replace(/\s\W\W/g, '<span style="color: yellow;">#37}</span>');
 
             text = text.replace(/\sfor\s/g, '<span style="color: yellow;"> for</span>');
             text = text.replace(/\W\W\scsrf_token\s\W\W/g, '<span style="color: yellow;"> {#37csref_token#37} //Always replace #37 with percent sign </span>')
 
-                    // Return a pre element with the edited text in it
-                return pre.innerHTML = text;
-            }
+            // // Return a pre element with the edited text in it
+            return pre.innerHTML = text;
+        }
 
-                // Call the change color depending on the number of pre elements found
-            for (let i = 0; i < pres.length; i++) {
-                const element = pres[i]; 
-                changeColor(element);
-            }
-
+        // Call the change color depending on the number of pre elements found
+        for (let i = 0; i < pres.length; i++) {
+            const element = pres[i];
+            changeColor(element);
+        }
     </script>
 </div>
 {% endblock %}

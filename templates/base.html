@@ -11,12 +11,55 @@
     <link rel="stylesheet" href="{% static 'all.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome.css' %}">
     <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'alert.js' %}"></script>
     <script type="text/javascript" src="{% static 'bootstrap.js' %}"></script>
 </head>
 
 <body>
 
-    <nav>
+
+    <div class="nav">
+        <div id="toggle">
+            <div id="menu-bars">
+                <div id="bar-1" class="bar"></div>
+                <div id="bar-2" class="bar"></div>
+                <div id="bar-3" class="bar"></div>
+            </div>
+            <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#menu-bars').click(function() {
+                        $('.menu').toggleClass('active');
+                        $('#menu-bars').toggleClass('change');
+                    });
+                })
+            </script>
+        </div>
+
+        <div class="title">
+            <h4> Discuzz </h4>
+        </div>
+
+        <div class="menu">
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}"> <i class="fa fa-user" aria-hidden="true"></i> {{ user.username }} </a>
+            <a href="{% url 'home' %}" id="home"> <i class="fas fa-home"></i>Home </a>
+            <a href="{% url 'create' %}">Create</a>
+            <a href="{% url 'join' %}">Join</a>
+            <a href="{% url 'c19' %}">C-19</a>
+            <a href="{% url 'wnews' %}">WNews</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'logout' %}" id="logout">Logout</a> {% else %}
+            <a href="{% url 'signup' %}">SignUp</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'contact' %}"> Contact </a>
+            <a href="{% url 'about' %}">About</a> {% endif %}
+        </div>
+
+    </div>
+
+    <!-- <nav>
         <div id="toggle">
             <div id="menu-bars">
                 <div id="bar-1" class="bar"></div>
@@ -34,7 +77,7 @@
             </script>
         </div>
         <div class="title">
-            <h4>Discuzz</h4>
+            <h4>Discuzz </h4>
         </div>
         <ul id="menu">
             {% if user.is_authenticated %}
@@ -52,7 +95,7 @@
             <a href="{% url 'contact' %}"> Contact </a>
             <a href="{% url 'about' %}">About</a> {% endif %}
         </ul>
-    </nav>
+    </nav> -->
 
     <div id="top"></div>
 
@@ -71,7 +114,11 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 {% if user.is_authenticated %}
-                <a href="{% url 'logout' %}"><button class="btn btn-primary btn-medium float-right">Logout</button></a> {% else %}
+                <a href="{% url 'logout' %}">
+                    <button class="btn btn-primary btn-medium float-right">
+                        Logout
+                    </button>
+                </a> {% else %}
                 <button class="btn btn-primary btn-medium float-right">Login</button> {% endif %}
             </div>
         </div>
@@ -109,7 +156,7 @@
                 <a href=""> <i class="fab fa-twitter" aria-hidden="true"> </i> <span>twitter</span> </a>
                 <a href=""> <i class="fab fa-instagram" aria-hidden="true"> </i> <span>Instagram</span> </a>
                 <a href=""> <i class="fab fa-linkedin" aria-hidden="true"> </i> <span>LinkedIn</span> </a>
-                <a href=""> <i class="fab fa-google-plus" aria-hidden="true"> </i> <span>LinkedIn</span> </a>
+                <a href=""> <i class="fab fa-google-plus" aria-hidden="true"> </i> <span>Google plus</span> </a>
                 <a href=""> <i class="fab fa-google-play" aria-hidden="true"> </i> <span>Download application</span> </a>
             </div>
 
@@ -123,6 +170,14 @@
     </section>
     <div class="top">
         <a href="#top"> <i class="fa fa-chevron-up" aria-hidden="true"></i> </a>
+    </div>
+
+    <div class="go-back" onclick="goBack()"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
     </div>
 
 </body>

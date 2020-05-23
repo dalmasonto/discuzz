@@ -34,6 +34,12 @@
     margin-left: 5px;
 }
 
+#pre {
+    /* font-family: Lucida; */
+    font-size: 16px;
+    color: #797777;
+}
+
 #shadow-card-replies {
     position: relative;
     width: 100%;
@@ -74,7 +80,7 @@
     margin-top: 40px;
 }
 
-#shadow-card .form #login-form .input .inputBox textarea {
+#shadow-card .form .login-form .input .inputBox textarea {
     background: #131419 !important;
     width: 100%;
     border: none !important;
@@ -107,6 +113,12 @@
     transform: translate(5px);
 }
 
+#options-menu form button {
+    background: transparent;
+    border: none;
+    color: blue;
+}
+
 #reply-icons {
     display: flex;
     width: 50%;
@@ -115,4 +127,8 @@
 
 #reply-icons i {
     display: flex;
+}
+
+.hide {
+    display: none;
 }

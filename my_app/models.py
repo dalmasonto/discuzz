@@ -1,8 +1,9 @@
+from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
-
+from django.contrib.auth.models import AbstractBaseUser, User
 
 # Create your models here.
+from django.urls import reverse
 
 
 class Create(models.Model):
@@ -25,12 +26,20 @@ class Create(models.Model):
 
 class Discuzz(models.Model):
     discussion_code = models.CharField(max_length=100, default='100NO00DISCUSSION001yet11')
-    reply = models.CharField(max_length=6000)
+    reply = models.TextField(max_length=6000)
     username = models.CharField(max_length=50)
+
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
+    dislikes = models.ManyToManyField(User, related_name='dislikes', blank=True)
+    comments = models.ManyToManyField(User, related_name='comments', blank=True)
+
     reply_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.discussion_code
+
+    # def get_absolute_url(self):
+    #     return reverse("discuzz:discuzz", kwargs={"discussion_details": self.discussion_code})
 
 
 class SendEmail(models.Model):
@@ -40,3 +49,11 @@ class SendEmail(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class Topic(models.Model):
+    topic = models.CharField(max_length=50)
+    subtopic = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.topic
