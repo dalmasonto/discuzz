@@ -12,6 +12,10 @@ class UserSignUp(UserCreationForm):
         model = User
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
+    @property
+    def someError(self):
+        return self.errors()
+
 
 class UserLogin(LoginView):
     class Meta:

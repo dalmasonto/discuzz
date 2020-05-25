@@ -3,9 +3,13 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone, dateformat
+
+from Lib.hmac import new
 from .models import *
 from .decorators import *
 from django.utils import safestring, html
+from django.forms.utils import ErrorList
+
 
 from django.http import JsonResponse
 
@@ -171,34 +175,99 @@ def base(request):
     return render(request, "base.html")
 
 
+def api_like(request, reply_id):
+    reply = get_object_or_404(Discuzz, id=reply_id)
+
+    id_ = reply_id
+    if request.method == 'POST':
+        if reply.dislikes.filter(username=request.user).exists():
+            reply.likes.add(request.user)
+            reply.dislikes.remove(request.user)
+            liked = 'liked'
+            class_ = 'thumbs-up'
+            stroked = 'false'
+
+        elif reply.likes.filter(username=request.user).exists():
+            reply.likes.remove(request.user)
+            liked = 'unliked'
+            class_ = 'thumbs-up'
+            stroked = 'true'
+        else:
+            reply.likes.add(request.user)
+            liked = 'liked'
+            class_ = 'thumbs-up'
+            stroked = 'false'
+
+        data = {
+            'response': liked,
+            'class_': class_,
+            'stroked': stroked,
+            'id': id_
+        }
+        return JsonResponse(data, status=201)
+
+
+def api_dislike(request, reply_id):
+
+    reply = get_object_or_404(Discuzz, id=reply_id)
+
+    id_ = reply_id
+    if request.method == 'POST':
+        if reply.likes.filter(username=request.user).exists():
+            reply.dislikes.add(request.user)
+            reply.likes.remove(request.user)
+            disliked = 'disliked'
+            class_ = 'thumbs-up'
+            stroked = 'false'
+
+        elif reply.dislikes.filter(username=request.user).exists():
+            reply.dislikes.remove(request.user)
+            disliked = 'undisliked'
+            class_ = 'thumbs-up'
+            stroked = 'true'
+        else:
+            reply.dislikes.add(request.user)
+            disliked = 'disliked'
+            class_ = 'thumbs-up'
+            stroked = 'false'
+
+        data = {
+            'response': disliked,
+            'class_': class_,
+            'stroked': stroked,
+            'id': id_
+        }
+        return JsonResponse(data, status=201)
+
+
 @login_required(login_url='login')
 def home(request):
-    if request.method == "POST":
-        email = request.POST.get('email')
-        update = request.POST.get('updatemsg')
-        updatetime = timezone.now()
-        if email == '' or email is None:
-            messages.error(request, 'Email field is empty')
-        elif update is None or update == '':
-            messages.error(request, 'Message field is required')
-        else:
-            send_email = SendEmail(email=email, update=update, updateTime=updatetime)
-            send_email.save()
-            return redirect('home')
+    # if request.method == "POST":
+    #     email = request.POST.get('email')
+    #     update = request.POST.get('updatemsg')
+    #     updatetime = timezone.now()
+    #     if email == '' or email is None:
+    #         messages.error(request, 'Email field is empty')
+    #     elif update is None or update == '':
+    #         messages.error(request, 'Message field is required')
+    #     else:
+    #         send_email = SendEmail(email=email, update=update, updateTime=updatetime)
+    #         send_email.save()
+    #         return redirect('home')
 
-    if request.method == "POST":
-        topic = request.POST.get('topic')
-        subtopic = request.POST.get('subtopic')
-
-        if topic == '' or topic is None:
-            messages.error(request, 'topic field is empty')
-        elif subtopic is None or subtopic == '':
-            messages.error(request, 'Subtopic field is required')
-        else:
-            add_topic = Topic(topic=topic, subtopic=subtopic)
-            add_topic.save()
-            messages.success(request, 'Topic added successfully')
-            return redirect('home')
+    # if request.method == "POST":
+    #     topic = request.POST.get('topic')
+    #     subtopic = request.POST.get('subtopic')
+    #
+    #     if topic == '' or topic is None:
+    #         messages.error(request, 'topic field is empty')
+    #     elif subtopic is None or subtopic == '':
+    #         messages.error(request, 'Subtopic field is required')
+    #     else:
+    #         add_topic = Topic(topic=topic, subtopic=subtopic)
+    #         add_topic.save()
+    #         messages.success(request, 'Topic added successfully')
+    #         return redirect('home')
 
     discussions = Create.objects.all().order_by("-createTime")
     all_replies = Discuzz.objects.all()
@@ -233,14 +302,19 @@ def user_login(request, *args, **kwargs):
 
 @unauthenticated_user
 def signup(request):
+    form = UserSignUp()
+    errors = []
     if request.method == "POST":
         form = UserSignUp(request.POST)
+
         if form.is_valid():
             form.save()
             messages.success(request, 'Account created successfully')
             return redirect('login')
-    else:
-        form = UserSignUp()
+
+        elif not form.is_valid():
+            errors.append(form.error_messages)
+            messages.error(request, errors)
 
     return render(request, "my_app/account/signup.html", {"form": form})
 
@@ -405,8 +479,10 @@ def reply_api(request, discussion_details, *args, **kwargs):
     print('THE KWARGS ARE', kwargs)
     username = request.user.username
     discussioncode = disc_name.discussionCode
+
     response_msg = ''
     response_type = ''
+
     if request.method == 'POST':
         reply = html.escape(request.POST.get('reply'))
         if reply == '' or reply is None:
@@ -434,7 +510,7 @@ def progpage(request):
 def like(request):
     reply = get_object_or_404(Discuzz, id=request.POST.get('like'))
     url_ = '/discuzz/%s#%s' % (reply, reply.id)
-    # print("THis is the reply code", reply.reply)
+
     if reply.dislikes.filter(username=request.user).exists():
         reply.likes.add(request.user)
         reply.dislikes.remove(request.user)
@@ -443,7 +519,10 @@ def like(request):
         reply.likes.remove(request.user)
     else:
         reply.likes.add(request.user)
-    return redirect(url_)
+    data = {
+        'response': 'success'
+    }
+    # return JsonResponse(data, status=200)
 
 
 def dislike(request):

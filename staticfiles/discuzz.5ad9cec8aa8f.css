@@ -1,0 +1,134 @@
+.discuzz .jumbotron {
+    background: #131419 !important;
+}
+
+#shadow-card {
+    margin: 0 !important;
+    position: relative;
+    width: 100%;
+    padding: 4px 10px 30px;
+    background: #131419;
+    border-radius: 10px;
+    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05), 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+#shadow-card #query-title {
+    text-align: center;
+}
+
+#query-title {
+    color: white;
+}
+
+#query-title span {
+    font-size: 14px !important;
+    color: #03a9f4 !important;
+}
+
+#query-text {
+    color: rgba(207, 203, 203, 0.87);
+    margin-left: 30px;
+}
+
+#reply-uid {
+    margin-left: 5px;
+}
+
+#pre {
+    /* font-family: Lucida; */
+    font-size: 16px;
+    color: #797777;
+}
+
+#shadow-card-replies {
+    position: relative;
+    width: 100%;
+    padding: 4px 10px 10px;
+    background: #131419;
+    border-radius: 10px;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+#shadow-card-replies h6 {
+    color: #03a9f4;
+}
+
+#shadow-card-replies h6 span {
+    color: #ff0047;
+}
+
+#shadow-card-replies pre {
+    text-overflow: clip;
+    color: rgba(227, 233, 228, 0.897) !important;
+}
+
+#shadow-card-replies p {
+    color: rgba(0, 248, 21, 0.575);
+}
+
+#shadow-card .form #login-form {
+    position: relative;
+    width: 100%;
+    padding: 4px 10px 30px;
+    background: #131419;
+    border-radius: 10px;
+    box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05), 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+#shadow-card .form #login-form .input {
+    text-align: left;
+    margin-top: 40px;
+}
+
+#shadow-card .form .login-form .input .inputBox textarea {
+    background: #131419 !important;
+    width: 100%;
+    border: none !important;
+    outline: none !important;
+    border-radius: 40px !important;
+    padding: 5px 15px;
+    font-size: 18px;
+    color: #03a9f4;
+    box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.hidden {
+    display: none;
+}
+
+#options-menu {
+    display: flex;
+    justify-content: space-around;
+    width: 75%;
+}
+
+#options-menu i {
+    display: flex;
+}
+
+#options-menu i span {
+    font-size: 10px;
+    padding: 3px;
+    top: 5px;
+    transform: translate(5px);
+}
+
+#options-menu form button {
+    background: transparent;
+    border: none;
+    color: blue;
+}
+
+#reply-icons {
+    display: flex;
+    width: 50%;
+    justify-content: space-evenly;
+}
+
+#reply-icons i {
+    display: flex;
+}
+
+.hide {
+    display: none;
+}

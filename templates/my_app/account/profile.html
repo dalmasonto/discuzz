@@ -7,7 +7,7 @@
             <h4 class="text-center"> Profile picture </h4>
             <hr>
             <div class="img">
-                <img src="{% static 'images/biz.jpg' %}" alt="{{ user.usernme }}">
+                <img src="{% static 'biz.jpg' %}" alt="{{ user.usernme }}">
                 <p class="text-center user"> {{user.username}} </p>
             </div>
             <div class="contents">
@@ -71,25 +71,6 @@
                 </div>
                 <div class="col-md-3 col-sm-12"></div>
             </div>
-
-            <!-- <table class="table-hover table-responsive">
-                <thead class="thead">
-                    <tr>
-                        <th class="date"> Date </th>
-                        <th class="code"> Code </th>
-                        <th class="msg"> Message </th>
-                    </tr>
-                </thead>
-                <tbody class="table-striped">
-                    {% for ty in t %} {% if ty.username == user.username %}
-                    <tr>
-                        <td> <span id="t-span">{{ ty.reply_time }}</span> </td>
-                        <td> <a class="disc-message" href="/discuzz/{{ty.discussion_code}}#{{user.username}}">{{ ty.discussion_code }} </a> </td>
-                        <td> {{ ty.reply }} </td>
-                    </tr>
-                    {% endif %} {% endfor %}
-                </tbody>
-            </table> -->
         </div>
     </div>
 </div>

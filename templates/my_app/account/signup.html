@@ -1,10 +1,13 @@
 {% extends 'base.html' %} {% block content %}
 <div class="row">
-    <div class="col-md-3 col-sm-12"></div> 
+    <div class="col-md-3 col-sm-12"></div>
     <div class="col-md-6 col-sm-12 form">
         <div class="jumbotron">
             <div class="login_form">
                 <h4 class="text-center">Create a new account</h4>
+                {% for message in messages %}
+                <p class="text-success text-danger">{{ message }}</p>
+                {% endfor %}
                 <form method="POST" action="">
                     {% csrf_token %}
                     <fieldset>

@@ -1,0 +1,20 @@
+.contact blockquote {
+    height: 30px;
+    color: white;
+}
+
+.contact {
+    background: #131419 !important;
+}
+
+.contact #shadow-card {
+    box-shadow: -5px -5px 10px rgba(247, 244, 244, 0.05), 5px 5px 15px rgba(250, 240, 240, 0.5) !important;
+}
+
+.contact h4 {
+    color: #ff0047;
+}
+
+.contact .card:hover {
+    transform: rotateX(10deg);
+}
