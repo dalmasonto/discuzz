@@ -3,12 +3,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone, dateformat
-
-from Lib.hmac import new
 from .models import *
 from .decorators import *
 from django.utils import safestring, html
-from django.forms.utils import ErrorList
 
 
 from django.http import JsonResponse
