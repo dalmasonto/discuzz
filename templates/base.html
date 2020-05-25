@@ -12,6 +12,7 @@
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
     <script type="text/javascript" src="{% static 'bootstrap.js' %}"></script>
+    <title> Discuzz | Enjoy your forum </title>
 </head>
 
 <body>
@@ -42,7 +43,7 @@
         <div class="menu">
             {% if user.is_authenticated %}
             <a href="{% url 'profile' %}"> <i class="fa fa-user" aria-hidden="true"></i> {{ user.username }} </a>
-            <a href="{% url 'home' %}" id="home"> <i class="fas fa-home"></i>Home </a>
+            <a href="{% url 'home' %}" id="home"> <i class="fa fa-home"></i>Home </a>
             <a href="{% url 'create' %}">Create</a>
             <a href="{% url 'join' %}">Join</a>
             <a href="{% url 'c19' %}">C-19</a>
