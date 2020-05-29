@@ -21,3 +21,5 @@ class TopicAdmin(admin.ModelAdmin):
 admin.site.register(Create, CreateAdmin)
 admin.site.register(Discuzz, DiscuzzAdmin)
 admin.site.register(Topic, TopicAdmin)
+admin.site.register(Comment)
+admin.site.register(SendEmail)

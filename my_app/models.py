@@ -42,6 +42,13 @@ class Discuzz(models.Model):
     #     return reverse("discuzz:discuzz", kwargs={"discussion_details": self.discussion_code})
 
 
+class Comment(models.Model):
+    commented_to = models.ForeignKey(Discuzz, default=None, on_delete=models.SET_NULL, blank=True, null=True)
+    commented_by = models.ForeignKey(User, default=None, on_delete=models.SET_NULL, blank=True, null=True)
+    comment = models.TextField(max_length=500)
+    commented_on = models.DateTimeField(auto_now_add=True)
+
+
 class SendEmail(models.Model):
     email = models.CharField(max_length=50)
     update = models.CharField(max_length=2000)

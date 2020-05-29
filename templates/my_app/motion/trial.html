@@ -1,0 +1,64 @@
+<h4> TRIAL CHECKER </h4>
+<div id="loaded_comments">
+	
+</div>
+
+
+
+
+<script>
+	
+	window.onload = load_All;
+	function load_Comments() {
+	
+			const div = document.querySelector('#loaded_comments');
+			const el = '<p> The inner html is updating over an interval of 2 seconds </p>'
+			
+			
+			setInterval(
+				() => {
+					div.insertAdjacentHTML('beforeEnd', el);
+				}
+			, 2000);
+            /*var listed_comments = [];
+            console.log('THE CODE IS', discussion_code);
+            console.log('THE CODE IS', discussion_id);
+
+            const xhr = new XMLHttpRequest();
+            const url = `/comment/?code=${discussion_code}&id=${discussion_id}`;
+            const method = "GET";
+            const responseType = "json";
+            xhr.responseType = responseType;
+            xhr.method = method;
+            xhr.open(method, url);
+            xhr.onload = () => {
+
+                const serverResponse = xhr.response;
+                serverResponse.all_comments.forEach(showCommntsAsPerReply);
+                console.log('all the comments are as follows', serverResponse.all_comments);
+            }
+            xhr.send(); */
+			
+			
+        }
+		
+		function load_All() {
+            var listed_comments = [];
+
+            const xhr = new XMLHttpRequest();
+            const url = `/comment/`;
+            const method = "GET";
+            const responseType = "json";
+            xhr.responseType = responseType;
+            xhr.method = method;
+            xhr.open(method, url);
+            xhr.onload = () => {
+
+                const serverResponse = xhr.response;
+                serverResponse.all_comments.forEach(showCommntsAsPerReply);
+                console.log('all the comments are as follows', serverResponse.all_comments);
+            }
+            xhr.send();
+
+        }
+</script>

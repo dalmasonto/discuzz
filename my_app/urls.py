@@ -21,11 +21,14 @@ urlpatterns = [
     path('api/create/topics_subtopics/', views.api_topic_subtopic_render, name='api/create'),
     path('join/', views.join, name='join'),
 
+    path('comments/<str:reply_id>/', views.comments_api),
+
     path('c19/', views.c19, name='c19'),
     path('wnews/', views.wnews, name='wnews'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
 
+    path('trial', views.trial_loader, name='trial'),
 
     path('discuzz/<str:discussion_details>/', views.discuzz, name='discuzz'),
 
@@ -36,10 +39,11 @@ urlpatterns = [
 
     path('like/', views.like, name='like'),
     path('dislike/', views.dislike, name='dislike'),
-    path('comment/', views.comments, name='comment'),
+    path('comment/', views.all_comments_api, name='comment'),
 
     path('api/like/<int:reply_id>/', views.api_like),
     path('api/dislike/<int:reply_id>/', views.api_dislike),
+    path('emails/', views.email, name='emails'),
 
 
     path('prog/', views.progpage, name='prog'),

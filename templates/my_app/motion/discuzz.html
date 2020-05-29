@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col">
                 <div id="shadow-card">
-                    <h4 id="query-title">Query, <span class="code">Code: {{ disc_name.discussionCode }}</span></h4>
+                    <h4 id="query-title">Query, <span class="code">Code: {{ disc_name.discussionCode }}</span> <span class="code_id">{{ disc_name.id }}</span> </h4>
                     <p id="query-text">
                         {{ disc_name.question }}
                     </p>
@@ -49,7 +49,7 @@
                                     </div>
 
                                     <div class="form-group col-md-12 inputBox ">
-                                        <button type="submit" name=" " class="btn btn-primary w-100 ">Submit</button>
+                                        <button type="submit" name=" " class="btn btn-primary w-100 ">Reply</button>
                                     </div>
 
                                 </div>
@@ -63,11 +63,16 @@
     </div>
 
     <script>
-        window.onload = LoadReplies;
+        window.onload = (event) => {
+            console.log('The event is', event);
+            event.preventDefault();
+            LoadReplies();
+        }
 
         const discuzz_form_el = document.querySelector('#discuzz_form');
         const all_replies_div = document.querySelector('#all_replies');
         const discussion_code = document.querySelector('.code').textContent.split(' ')[1];
+        const discussion_id = document.querySelector('.code_id').textContent;
         const responseDiv = document.querySelector('.response');
 
         function clear_replies() {
@@ -131,19 +136,29 @@
 
                 const serverResponse = xhr.response;
                 const all_replies_from_server = serverResponse.response;
-                LoadReplies;
+                // LoadReplies;
                 all_replies_from_server.forEach(reply_render);
+                // load_Comments();
                 const like_form = document.querySelectorAll('.likeform');
-                // like_form.addEventListener('submit', handleLikeForm);
+
                 like_form.forEach(element => {
                     element.addEventListener('submit', handleLikeForm);
                 });
 
                 const dis_like_form = document.querySelectorAll('.dislikeform');
-                // like_form.addEventListener('submit', handleLikeForm);
+
                 dis_like_form.forEach(element => {
                     element.addEventListener('submit', handleDisLikeForm);
                 });
+
+                const comment_form = document.querySelectorAll('.commmentform');
+
+                comment_form.forEach(element => {
+                    element.addEventListener('submit', handleCommentForm);
+                });
+                setTimeout(() => {
+                    load_Comments();
+                }, 1500);
 
             }
             xhr.send();
@@ -209,6 +224,87 @@
             xhr.send(myFormData);
         }
 
+        function handleCommentForm(event) {
+            event.preventDefault();
+            const myForm = event.target;
+
+            const myFormData = new FormData(myForm);
+            const id = myForm.getAttribute('id').split('-')[1];
+            // console.log('THE FORM ID IS', id);
+
+            const url = myForm.getAttribute('action');
+            console.log('THE FORM ACTION IS', url);
+
+            const method = myForm.getAttribute('method');
+
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+            xhr.onload = () => {
+                const serverResponse = xhr.response;
+                //const dislike_btn = document.querySelector(`.dislikess-${id}`);
+
+                const response_ = JSON.parse(serverResponse);
+                console.log('THE SERVER RESPONSE ON COMMENT TO THIS REPLY IS', response_);
+                const comments_div = document.querySelector(`.comments-${id}`);
+                const comment_el = `
+                    <span class="w-100">${response_.user}</span>
+                    <p>${response_.comment}</p>
+                `;
+                console.log('THE COMMENT DIV IS: ', comments_div);
+                comments_div.insertAdjacentHTML('beforeEnd', comment_el);
+                myForm.reset();
+
+                // var num_dislikes = parseInt(dislike_btn.innerHTML);
+                // if (l_u === 'disliked') {
+                //     num_dislikes++;
+                // } else if (l_u === 'undisliked') {
+                //     num_dislikes--;
+                // }
+                // dislike_btn.innerHTML = num_dislikes;
+
+            };
+            xhr.send(myFormData);
+        }
+
+
+        function load_Comments() {
+            var listed_comments = [];
+            console.log('THE CODE IS', discussion_code);
+            console.log('THE CODE IS', discussion_id);
+
+            const xhr = new XMLHttpRequest();
+            const url = `/comment/?code=${discussion_code}&id=${discussion_id}`;
+            const method = "GET";
+            const responseType = "json";
+            xhr.responseType = responseType;
+            xhr.method = method;
+            xhr.open(method, url);
+            xhr.onload = () => {
+
+                const serverResponse = xhr.response;
+                serverResponse.all_comments.forEach(showCommntsAsPerReply);
+                console.log('all the comments are as follows', serverResponse.all_comments);
+            }
+            xhr.send();
+
+        }
+
+        function showCommntsAsPerReply(comment) {
+            console.log('The comment to is', comment.commented_to);
+            const comment_el = `
+                    <span class="w-100">${comment.commented_by}</span>
+                    <p>${comment.comment}</p>
+                `;
+            const id__ = comment.commented_to;
+            const comments_div = document.querySelector(`.comments-${id__}`);
+
+            if (comments_div === null) {
+                console.log('COMMENT DIV NOT FOUND')
+            } else {
+                console.log('This makes the comment div', comments_div);
+                comments_div.insertAdjacentHTML('beforeEnd', comment_el);
+            }
+        }
 
 
         function reply_render(reply_obj) {
@@ -217,7 +313,7 @@
             const new_reply = `
                 <div id="shadow-card-replies">
                     <div>
-                        <h6 id="reply-uid"> ${ reply_obj.username}</h6>
+                        <h6 id="reply-uid"> ${ reply_obj.username} ${reply_obj.id}</h6>
                     </div>
                     <div id="${reply_obj.id}">
 <pre id="pre"> 
@@ -227,7 +323,8 @@ ${reply_text}
 </pre>
                     </div>
                     <div id="options-menu">
-                        <form class="commmentform" class="hide" method="POST" action="{% url 'comment'%}">
+
+                        <form class="hide" method="POST" action="{% url 'comment'%}">
                             {% csrf_token %}
                             <button type="submit" name="comment" value="${reply_obj.id}">
                             <i class="fa fa-comment"> <span>${ reply_obj.comments }</span> </i>
@@ -246,7 +343,7 @@ ${reply_text}
                             <i class="fa fa-thumbs-down"> <span class='dislikess-${reply_obj.id }' >${reply_obj.dislikes}</span> </i>
                                 </button>
                         </form>
-                        <form class="shareform" class="hide" method="POST" action="">
+                        <form class="shareform" id="share-${reply_obj.id }" class="hide" method="POST" action="">
                             {% csrf_token %}
                             <button disabled="disabled">
                             <i class="fa fa-share"> <span>5</span> </i>
@@ -254,6 +351,43 @@ ${reply_text}
                         </form>
 
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12"></div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="comments-${reply_obj.id}">
+                                
+                            </div>
+                            <div>
+                                <div class="form">
+                                    <div class="login-form">
+                                        <form class="commmentform" id="comment-${reply_obj.id}" action="/comments/${reply_obj.id}/" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-row input">
+
+                                                <div class="form-group col-md-12 inputBox comment-reponse">
+                                                    
+                                                </div>
+
+                                                <div class="form-group col-md-12 inputBox">
+                                                    <label for="reply">Make comment  </label>
+                                                    <textarea name="comment" class="inputBox " rows="3" cols="35" placeholder="Make a comment to this reply" required="required"></textarea>
+                                                </div>
+
+                                                <div class="form-group col-md-12 inputBox ">
+                                                    <button type="submit" name="" class="btn btn-success w-100 ">Comment</button>
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12"></div>
+                    </div>
+
+
                 </div>
             `;
             all_replies_div.insertAdjacentHTML('beforeEnd', new_reply);

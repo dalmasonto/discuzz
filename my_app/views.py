@@ -7,7 +7,6 @@ from .models import *
 from .decorators import *
 from django.utils import safestring, html
 
-
 from django.http import JsonResponse
 
 from random import random, seed, randint
@@ -45,7 +44,6 @@ def api_discuzz_details(request, discussion_details, *args, **kwargs):
 
 
 def api_message_us(request):
-
     response_msg = ''
     response_type = ''
     if request.method == "POST":
@@ -72,7 +70,6 @@ def api_message_us(request):
 
 
 def api_home_topic_form(request):
-
     if request.method == "POST":
         topic = request.POST.get('topic')
         subtopic = request.POST.get('subtopic')
@@ -96,7 +93,6 @@ def api_home_topic_form(request):
 
 
 def api_create_topic(request):
-
     response_msg = ''
     if request.method == 'POST':
         topic = request.POST.get('topic')
@@ -205,7 +201,6 @@ def api_like(request, reply_id):
 
 
 def api_dislike(request, reply_id):
-
     reply = get_object_or_404(Discuzz, id=reply_id)
 
     id_ = reply_id
@@ -503,6 +498,10 @@ def progpage(request):
     return render(request, 'my_app/motion/prog.html')
 
 
+def trial_loader(request):
+    return render(request, 'my_app/motion/trial.html')
+
+
 # pk = primary key, so as to identify the primary key that is the ID to add a like to it
 def like(request):
     reply = get_object_or_404(Discuzz, id=request.POST.get('like'))
@@ -557,6 +556,56 @@ def wnews(request):
     return render(request, 'my_app/news/wnews.html')
 
 
+def comments_api(request, reply_id):
+    print('THE DISCUSSION DETAILS ARE and the id is ' + reply_id)
+
+    reply = Discuzz.objects.get(id=reply_id)
+    id_ = reply_id
+    discussioncode = reply.discussion_code
+
+    if request.method == 'POST':
+        commented_by = request.user
+        commented_to = reply
+        comment = request.POST.get('comment')
+        commented_on = timezone.now()
+        comment_query = Comment(
+            commented_to=commented_to,
+            commented_by=commented_by,
+            comment=comment,
+            commented_on=commented_on
+        )
+        comment_query.save()
+        url = '/discuzz/%s' % discussioncode
+        data = {
+            'user': commented_by.username,
+            'comment': comment
+        }
+        return JsonResponse(data, status=200)
+
+
+def all_comments_api(request):
+    disc_code = request.GET.get('code')
+    disc_id = request.GET.get('id')
+    query = Discuzz.objects.get(id=disc_id)
+    print('THE QUERY IS ', query)
+    comms = Comment.objects.filter(commented_to=query)
+    print('THE COMMENTS FOR THIS QUERY IS ', comms)
+
+    all_comments = Comment.objects.all()
+    # print(all_comments)
+    data_for_front_end = [{"id": comment.id,
+                           "commented_by": comment.commented_by.username,
+                           "commented_to": comment.commented_to.id,
+                           "comment": comment.comment,
+                           "commented_on": comment.commented_on} for comment in all_comments]
+
+    data = {
+        'all_comments': data_for_front_end,
+        'status': 201
+    }
+    return JsonResponse(data)
+
+
 def create_random():
     num1 = randint(1, 9)
     num2 = randint(2, 8)
@@ -573,3 +622,13 @@ def create_random():
         num7, num8, 'TALK', num6, num7, num10, num1, num2, num3, num4, num5,
         num9)
     return code
+
+
+def email(request):
+    all_emails = SendEmail.objects.all()
+
+    context = {
+        'all_emails': all_emails
+    }
+
+    return render(request, 'my_app/news/emails.html', context)
