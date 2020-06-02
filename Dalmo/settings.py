@@ -24,7 +24,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = 'pb#*khm^kzn*@k+74o3_6k7qo5k#lc7-3hnfojs+@b$_&9*ii!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'discuzz.herokuapp.com']
 
