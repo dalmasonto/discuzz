@@ -456,7 +456,8 @@ def discuzz(request, discussion_details):
             return redirect(url)
         try:
             replies = Discuzz.objects.all()
-            return render(request, 'my_app/motion/discuzz.html', {'disc_name': disc_name, "replies": replies})
+            comments = Comment.objects.all()
+            return render(request, 'my_app/motion/discuzz.html', {'disc_name': disc_name, "replies": replies, 'comments': comments})
         except Discuzz.DoesNotExist:
             discuzz = None
 

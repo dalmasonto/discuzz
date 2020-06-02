@@ -19,6 +19,21 @@
 #query-title {
     color: white;
 }
+.field{
+    background-color: #0099e0 !important;
+    border-radius: 10%;
+    padding: 0 0 10px 0;
+}
+pre{
+    padding: 0 !important;
+}
+code{
+    padding: 0 !important;
+}
+.w-wrap{
+    word-wrap: normal;
+    white-space: nowrap;
+}
 
 #query-title span {
     font-size: 14px !important;

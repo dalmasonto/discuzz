@@ -11,7 +11,7 @@
 
             {% for email in all_emails %}
                 <div class="card">
-                    <p class="text text-dark"> {{email.update}} </p>
+                    <p class="text text-dark"> <span class="float-left">{{email.update}}</span><span class="float-right"> {{email.email}} </span> </p>
                 </div>
             {% endfor %}
         </div>
@@ -67,7 +67,7 @@
             var cleaned_data = JSON.parse(e.data);
             var new_mail = `
                 <div class="card">
-                    <p class="text text-dark"> ${cleaned_data.message} </p>
+                    <p class="text text-dark"> <span class="float-left"> ${cleaned_data.message}</span><span class="float-right"> ${cleaned_data.email} </span> </p>
                 </div>
                 `;
             all_mails_div.insertAdjacentHTML('beforeEnd', new_mail);
