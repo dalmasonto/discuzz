@@ -56,6 +56,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Dalmo.urls'
 ASGI_APPLICATION = 'Dalmo.routing.application'
+# chatworker: python manage.py runworker
 
 TEMPLATES = [
     {
@@ -72,8 +73,7 @@ TEMPLATES = [
         },
     },
 ]
-
-# WSGI_APPLICATION = 'Dalmo.wsgi.application'
+WSGI_APPLICATION = 'Dalmo.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
@@ -134,10 +134,9 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)],
-            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
+            "hosts": [("localhost", 6379)]
+            # "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
         },
-        "symmetric_encryption_keys": [SECRET_KEY],
     },
 }
 

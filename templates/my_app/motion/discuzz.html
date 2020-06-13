@@ -62,12 +62,13 @@
                                         <h5 class="text-center">Comments</h5>
                                         {% for comment in comments %} {% if comment.commented_to.id == x.id %}
                                         <span class="w-100">{{comment.commented_by.username}}</span>
-<pre class="w-100 w-wrap">
-    <code>
-        {{comment.comment}}
-    </code>
+                                        <pre class="w-100 w-wrap">
+<code>
+    {{comment.comment}}
+</code>
 </pre>
-                                        {% endif %} {% endfor %}
+                                        <hr class="comment-divider"> {% endif %} {% endfor %}
+
                                     </div>
                                     <div>
                                         <div class="form">
@@ -128,6 +129,48 @@
 
                                 </div>
                             </form>
+                           
+                        </div>
+
+                        <script src="{% static 'jquery.js' %}" charset="utf-8"></script>
+                        <script src="{% static 'bootstrap.js' %}" charset="utf-8"></script>
+
+                        <div class="row">
+                            <div class="col">
+        
+                                <div class="show-emoji" id="show-emojis">
+                                    <ul class="nav nav-tabs emoji-div" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#home1">&#128512;</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#menu11">&#129295;</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#menu22">&#128650;</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#menu33">&#119808; - &#120808; </a>
+                                        </li>
+                                    </ul>
+                    
+                                    <div class="tab-content">
+                                        <div id="home1" class="container tab-pane emojis fixed-emoji-div">
+                                            <!-- <div class="emojis fixed-emoji-div"></div> -->
+                                        </div>
+                                        <div id="menu11" class="container tab-pane emojis-one fixed-emoji-div">
+                                            <!-- <div class="emojis-one fixed-emoji-div"></div> -->
+                                        </div>
+                                        <div id="menu22" class="container tab-pane emojis-two fixed-emoji-div">
+                                            <!-- <div class="emojis-two fixed-emoji-div"></div> -->
+                                        </div>
+                    
+                                        <div id="menu33" class="container tab-pane emojis-more fixed-emoji-div">
+                                            <!-- <div class="emojis-more fixed-emoji-div"></div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -136,9 +179,61 @@
         </div>
     </div>
 
+    <script type="text/javascript">
+        const emojis = document.querySelector('.emojis');
+        const emojis_one = document.querySelector('.emojis-one');
+        const emojis_two = document.querySelector('.emojis-two');
+        const emojis_more = document.querySelector('.emojis-more');
+        var text = document.querySelector('#reply');
 
+        function createEmojis(index) {
+            var num = 128512 + index;
+            var emoji = `<span class="spaced" onclick='addEmoji(this)'>&#${num};</span>`;
+            emojis.insertAdjacentHTML('beforeEnd', emoji);
+        }
 
-    <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+        function createEmojisOne(index) {
+            var num = 129293 + index;
+            var emoji = `<span class="spaced" onclick='addEmoji(this)'>&#${num};</span>`;
+            emojis_one.insertAdjacentHTML('beforeEnd', emoji);
+        }
+
+        function createEmojisTwo(index) {
+            var num = 128650 + index;
+            var emoji = `<span class="spaced primary" onclick='addEmoji(this)'>&#${num};</span>`;
+            emojis_two.insertAdjacentHTML('beforeEnd', emoji);
+        }
+
+        function MoreEmojis(index) {
+            var num = 119808 + index;
+            var emoji = `<span class="spaced" onclick='addEmoji(this)'>&#${num};</span>`;
+            emojis_more.insertAdjacentHTML('beforeEnd', emoji);
+        }
+
+        for (let index = 0; index < 80; index++) {
+            createEmojis(index);
+        }
+        for (let index = 0; index < 243; index++) {
+            createEmojisOne(index);
+        }
+        for (let index = 0; index < 100; index++) {
+            createEmojisTwo(index);
+        }
+        for (let index = 0; index < 1024; index++) {
+            MoreEmojis(index);
+        }
+
+        function addEmoji(num) {
+            window.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            });
+            var inner = text.textContent;
+            var em = `&#${num}`;
+            text.value += num.textContent
+        }
+        
+    </script>
+
     <script>
         var reply_form = $('#discuzz_form');
         const all_replies_div = document.querySelector('#all_replies');
@@ -159,16 +254,22 @@
 
         socket.onmessage = (e) => {
             var cleaned_data = JSON.parse(e.data);
-            console.log('THE FUCKING DATA IS', cleaned_data);
+            console.log('THE INCOMING DATA IS', cleaned_data);
             if (cleaned_data.type === 'reply') {
                 const incomingtone = new Audio('../../../static/incomingreply.wav');
                 incomingtone.play();
                 reply_renderer(cleaned_data);
             } else if (cleaned_data.type === 'comment') {
+                const incomingtone = new Audio('../../../static/incoming1.wav');
+                incomingtone.play();
                 comment_renderer(cleaned_data);
             } else if (cleaned_data.type === 'like') {
+                const incomingtone = new Audio('../../../static/incoming2.wav');
+                incomingtone.play();
                 like_renderer(cleaned_data);
             } else if (cleaned_data.type === 'dislike') {
+                const incomingtone = new Audio('../../../static/incoming3.wav');
+                incomingtone.play();
                 dislike_renderer(cleaned_data);
             }
 
@@ -236,7 +337,7 @@
 
         function handleLikes() {
             var likeForms = document.querySelectorAll('.likeform');
-            
+
             likeForms.forEach((form) => {
                 var counter = 1;
                 form.addEventListener('submit', (event) => {
@@ -248,24 +349,24 @@
                         'id': ID,
                         'type': 'like'
                     });
-                    if(counter === 1 && ID !== 'x') {
+                    if (counter === 1 && ID !== 'x') {
                         console.log(counter)
                         socket.send(addOrRemoveLike);
                         event.stopImmediatePropagation();
                         ID = 'x';
                         counter = null;
                         return false;
-                    }else{
+                    } else {
                         return;
                     }
-                    
+
                 });
             });
         }
 
         function handleDislikes() {
             const disLikeForms = document.querySelectorAll('.dislikeform');
-            
+
             disLikeForms.forEach((form) => {
                 var counter = 1;
                 form.addEventListener('submit', (event) => {
@@ -276,13 +377,13 @@
                         'id': ID,
                         'type': 'dislike'
                     });
-                    if(counter === 1 && ID !== 'x') {
+                    if (counter === 1 && ID !== 'x') {
                         socket.send(addOrRemoveDisLike);
                         event.stopImmediatePropagation();
                         ID = 'x';
                         counter = null;
                         return false;
-                    }else{
+                    } else {
                         return;
                     }
 
@@ -326,12 +427,16 @@ ${reply_obj.reply}
                     <div class="row">
                         <div class="col-md-3 col-sm-12"></div>
                         <div class="col-md-6 col-sm-12">
-                            <div class="comments-${reply_obj.id}">
+                            <div class="comments-${reply_obj.id} field">
                                 <h5 class="text-center">Comments</h5>
                                     {% for comment in comments %}
                                     {% if comment.commented_to.id ==  x.id %}
-                                        <span class="w-100">{{comment.commented_by.username}}</span>
-                                        <p>{{comment.comment}}</p>
+<pre class="w-100 w-wrap">
+<code>
+    {{comment.comment}}
+</code>
+</pre>
+<hr class="comment-divider">
                                     {% endif %}
                                     {% endfor %}
                             </div>
@@ -371,37 +476,39 @@ ${reply_obj.reply}
         }
 
         function comment_renderer(comment) {
-            const comment_div = document.querySelector(`.comments-${comment.id}`); 
+            const comment_div = document.querySelector(`.comments-${comment.id}`);
             console.log('THE COMMENT IS: ', comment.comment);
             const comment_to_render = `
                 <span class="w-100">${comment.username}</span>
 <pre class="w-100 w-wrap">
-    <code>
-        ${comment.comment}
-    </code>
+<code>
+${comment.comment}
+</code>
 </pre>
+<hr class="comment-divider">
             `;
             comment_div.insertAdjacentHTML('beforeEnd', comment_to_render);
         }
+
         function like_renderer(like) {
-            var like_el = document.querySelector(`.likess-${like.id}`); 
+            var like_el = document.querySelector(`.likess-${like.id}`);
             var dislike_el = document.querySelector(`.dislikess-${like.id}`);
-            if(like_el === ''){
+            if (like_el === '') {
                 return;
             }
             like_el.innerHTML = 'Likes ' + ' ' + like.likes;
             dislike_el.innerHTML = 'Dislikes ' + ' ' + like.dislikes;
         }
+
         function dislike_renderer(like) {
-            var dislike_el = document.querySelector(`.dislikess-${like.id}`); 
-            var like_el = document.querySelector(`.likess-${like.id}`); 
-            if(dislike_el === ''){
+            var dislike_el = document.querySelector(`.dislikess-${like.id}`);
+            var like_el = document.querySelector(`.likess-${like.id}`);
+            if (dislike_el === '') {
                 return;
             }
             dislike_el.innerHTML = 'Dislikes ' + ' ' + like.dislikes;
             like_el.innerHTML = 'Likes ' + ' ' + like.likes;
         }
-        
     </script>
 </div>
 {% endblock %}
