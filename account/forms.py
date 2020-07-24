@@ -26,7 +26,6 @@ class PicForm(forms.ModelForm):
         model = UserExtension
         fields = ['style_sheet',
                   'mode_sheet',
-                  'profile_pic',
                   'location',
                   'phone_number',
                   'bio',

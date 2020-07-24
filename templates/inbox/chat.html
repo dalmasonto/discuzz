@@ -112,11 +112,32 @@
             });
         }
         socket.onerror = (e) => {
-            console.log('ERROR',e)
+    console.log('ERROR', e)
+    async function presentToast() {
+            const toast = document.createElement('ion-toast');
+            toast.message = `<strong> Connection lost </strong>`;
+            toast.color = 'danger';
+            toast.duration = 3000;
+
+            document.body.appendChild(toast);
+            return toast.present();
         }
-        socket.onclose = (e) => {
-            console.log('CLOSE',e)
+        presentToast();
+}
+socket.onclose = (e) => {
+    console.log('CLOSE', e)
+    async function presentToast() {
+            const toast = document.createElement('ion-toast');
+            toast.message = `<strong> Connection closed </strong>`;
+            toast.color = 'warning';
+            toast.duration = 3000;
+
+            document.body.appendChild(toast);
+            return toast.present();
         }
+        presentToast();
+
+}
 
     </script>
 
