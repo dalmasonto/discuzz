@@ -142,12 +142,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 django_heroku.settings(locals())
 
 # Channel layers configuration settings
+import redis
+redis_host = redis.Redis(host='redis-18157.c15.us-east-1-4.ec2.cloud.redislabs.com', port=18157)
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("localhost", 6379)]
+            # "hosts": [("localhost", 6379)]
             # "hosts": [os.environ.get('REDIS_URL')]
+            "hosts": [redis_host]
         },
     },
 }
