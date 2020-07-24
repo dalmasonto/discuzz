@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row">
+
+    <div class="col-md-3 col-sm-12"></div>
+    <div class="col-md-6 col-sm-12 form">
+        <ion-card color="dark">
+        <ion-card-header>
+            <h4 class="text-center">Log in to your account</h4>
+                {% for message in messages %}
+                <p class="text-success text-danger">{{ message }}</p>
+                {% endfor %}
+        </ion-card-header>
+        <ion-card-content>
+        <div class="jumbotron">
+            <div class="login_form">
+
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div class="form-row input">
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="uid">Username</label>
+                                <input type="text" class="" name="uid" id="uid" placeholder="Username">
+                            </div>
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="pwd">Password</label>
+                                <input type="password" class="" name="pwd" id="pwd" placeholder="Password">
+                            </div>
+                            <div class="form-group col-md-12 inputBox">
+                                <input type="submit" name="" value="Sign In">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <script>
+                    let form_inputs = document.getElementsByTagName("input");
+                    form_inputs[1].placeholder = 'Username';
+                    form_inputs[2].placeholder = 'Password';
+                </script>
+                <div class="help">
+                    <ion-chip color="primary">
+                        <p>Don't have an account? <a href="{% url 'signup' %}">Signup</a> </p>
+                    </ion-chip>
+                    <ion-chip color="success">
+                        <p>Forgot password?
+                            <a href="{% url 'signup' %}"> <span> Click here </span> </a>
+                        </p>
+                    </ion-chip>
+                </div>
+            </div>
+        </div>
+           </ion-card-content>
+    </ion-card>
+    </div>
+    <div class="col-md-3 col-sm-12"></div>
+</div>
+{% endblock %}

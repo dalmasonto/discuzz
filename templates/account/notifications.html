@@ -1,0 +1,198 @@
+{% extends 'base.html' %} {% load static %}
+{% block content %}
+    <ion-card color="dark" class="ion-no-padding">
+        <ion-card-header>
+            <ion-card-title class="text-center">
+                NOTIFICATIONS
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-card-subtitle class="text-center ion-no-padding ion-no-margin"> Requests </ion-card-subtitle> <hr>
+
+                <ion-card color="dark" class="ion-no-padding ion-no-margin">
+
+                    {% for req in notifications %}
+                        {% if req.type == 'request' %}
+                            <ion-item color="dark">
+                                <ion-avatar slot="start">
+                                    <img src="{{ req.by.profile_pic }}">
+                                </ion-avatar>
+                                <ion-label>
+                                    {{ req.by.user.username }}
+                                </ion-label>
+                                <ion-button class="non-friend-{{req.by.user.username}}" color="primary" onclick="addUserAsFriend(this)" data-name="{{req.by.user.username}}" data-hide="parent" data-id="btn-add-{{my_user.person.username}}" data-url="/api/add/{{req.by.user.username}}/">
+                                    <ion-icon slot="start" name="add" ></ion-icon>
+                                    Accept
+                                </ion-button>
+                                <ion-icon name="trash" color="danger" data-what="request by {{req.by.user.username}}" onclick="presentAlertConfirm(this)" data-url="/notification/{{req.id}}/"></ion-icon>
+                            </ion-item>
+                        {% elif req.type == 'now_friends' %}
+                            <ion-item color="dark">
+                                <ion-avatar slot="start">
+                                    <img src="{{ req.by.profile_pic }}">
+                                </ion-avatar>
+                                <ion-label>
+                                    Now friends with {{ req.by.user.username }}
+                                </ion-label>
+                                <ion-icon name="trash" color="danger" data-what="Now friends with {{req.by.user.username}}" onclick="presentAlertConfirm(this)" data-hide="parent" data-url="/notification/{{req.id}}/"></ion-icon>
+                             </ion-item>
+                        {% endif %}
+
+                    {% endfor %}
+
+                </ion-card>
+
+
+                    <ion-card color="dark" class="ion-no-padding ion-no-margin">
+                        <ion-card-subtitle class="text-center"> Messages </ion-card-subtitle> <hr>
+                    {% for req in notifications %}
+                        {% if req.type == 'message' %}
+                            <ion-item color="dark">
+                                <ion-avatar slot="start">
+                                    <img src="{{ req.by.profile_pic }}">
+                                </ion-avatar>
+                                <ion-label>
+                                    {{ req.by.user.username }}
+                                </ion-label>
+                                <ion-button color="success" ion-link="/chat/{{req.by.user.username}}/" href="/chat/{{req.by.user.username}}/">
+                                    Read
+                                </ion-button>
+                                <ion-icon name="trash" color="danger" data-what="Message from {{req.by.user.username}}" data-hide="parent" onclick="presentAlertConfirm(this)" data-url="/notification/{{req.id}}/"></ion-icon>
+                             </ion-item>
+                        {% endif %}
+                    {% endfor %}
+                    </ion-card>
+
+            <ion-card-subtitle class="text-center"> Question notifications </ion-card-subtitle> <hr>
+
+
+                    {% for req in notifications %}
+                        {% if req.type == 'question' %}
+                            <ion-card color="dark" class="ion-no-padding ion-no-margin ion-margin-bottom">
+                                <div class="col">
+                                    <ion-fab vertical="top" horizontal="end" slot="fixed" data-hide="parent2" data-what="Question posted by {{req.by.user.username}}" onclick="presentAlertConfirm(this)"  data-url="/notification/{{req.id}}/">
+                                        <ion-fab-button color="danger">
+                                          <ion-icon name="trash"></ion-icon>
+                                        </ion-fab-button>
+                                    </ion-fab>
+                                </div>
+
+                                <ion-card-header>
+
+                                    <ion-avatar slot="" style="margin: auto">
+                                    <img src="{{ req.by.profile_pic }}">
+                                    </ion-avatar>
+
+                                    <ion-card-subtitle class="text-center">
+                                        {{ req.by.user.username | title}} posted a new question
+                                    </ion-card-subtitle>
+
+                                </ion-card-header>
+                                <ion-card-content>
+                                    <ion-button color="success" fill="outline" expand="block" ion-link="/discuzz/{{req.by.user.username}}/" href="/chat/{{req.by.user.username}}/">
+                                        <ion-label> Join </ion-label>
+                                    </ion-button>
+                                </ion-card-content>
+                             </ion-card>
+                        {% endif %}
+                    {% endfor %}
+
+            <ion-card-subtitle class="text-center"> Mentions </ion-card-subtitle> <hr>
+        </ion-card-content>
+    </ion-card>
+
+<script>
+    /* function deleteNotification(el) {
+        const method = 'GET';
+        const url = el.dataset.url;
+        console.log('THE URL TO DELETE NOTIFICATION IS ', url)
+        const xhr = new XMLHttpRequest();
+
+        xhr.open(method, url);
+        xhr.onload = () => {
+            console.log(xhr.response)
+        }
+        xhr.send()
+    } */
+
+    function addUserAsFriend(el){
+        const url = el.dataset.url;
+        const method = 'GET';
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = () => {
+            const response = JSON.parse(xhr.response);
+            if(response.sent === 'request sent'){
+
+                var non_friend = document.querySelectorAll(`.non-friend-${el.dataset.name}`);
+                var friend = document.querySelectorAll(`.friend-${el.dataset.name}`);
+
+                for(var i = 0; i < non_friend.length; i++){
+                    non_friend[i].style.display = 'none';
+                    friend[i].style.display = 'block';
+                    console.log('adjusted');
+                }
+
+
+            }
+        }
+        xhr.send();
+    }
+
+
+    function presentAlertConfirm(el) {
+        const alert = document.createElement('ion-alert');
+        alert.cssClass = 'my-custom-class';
+        alert.header = 'Are you sure you want to delete this notification?';
+        alert.mode = 'ios';
+        alert.message = ` ${el.dataset.what} !`;
+        alert.buttons = [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: (blah) => {
+              console.log('Canceled');
+            }
+          }, {
+            text: 'Okay',
+            handler: () => {
+                const method = 'GET';
+                const url = el.dataset.url;
+                const xhr = new XMLHttpRequest();
+
+                xhr.open(method, url);
+                xhr.onload = () => {
+
+                     async function presentToast() {
+                        const toast = document.createElement('ion-toast');
+                        toast.message = `Notification ${el.dataset.what} successfully deleted`;
+                        toast.color = 'success';
+                        toast.duration = 3000;
+
+                        document.body.appendChild(toast);
+                        return toast.present();
+                    }
+                    presentToast();
+                    const what_to_hide = el.dataset.hide;
+                    if(what_to_hide === 'parent'){
+                        el.parentNode.style.display = 'none';
+                    }
+                    else if(what_to_hide === 'parent2'){
+                        el.parentNode.parentNode.style.display = 'none';
+                        el.style.display = 'none';
+                    }
+
+                }
+                xhr.send()
+            }
+          }
+        ];
+
+        document.body.appendChild(alert);
+        return alert.present();
+    }
+
+</script>
+
+{% endblock %}

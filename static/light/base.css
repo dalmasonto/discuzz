@@ -1,0 +1,94 @@
+.container-fluid {
+    margin-top: 50px !important;
+}
+
+.page-input {
+    padding-right: -10px !important;
+    padding-left: -10px !important;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    width: 100%;
+    background: #f0f0f0;
+    padding: 20px;
+}
+
+input[type="checkbox"]:checked~* {
+    filter: invert(1);
+}
+
+.disc-footer {
+    width: 100%;
+    background: #f0f0f0;
+    padding: 20px;
+    color: white;
+    font-size: 14px;
+}
+
+.disc-footer hr {
+    background: #123aec;
+}
+
+.b-right {
+    border-right: 1px solid #f0f0f0;
+}
+
+.share a {
+    display: block;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.share a {
+    color: white;
+}
+
+.top {
+    position: fixed;
+    bottom: 10px;
+    right: 20px;
+    transform: translate(0, 20px, 10px, 0);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgb(243, 4, 171);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.top i {
+    font-size: 20px;
+}
+
+.go-back {
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    transform: translate(0, 20px, 10px, 0);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgb(243, 4, 171);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.go-back i {
+    font-size: 20px;
+}
+
+.bg{
+    background: url(m6.jpg);
+    background-color: red;
+}
+
+.centered {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 50vw;
+    height: 50vh;
+    background-color: red;
+}

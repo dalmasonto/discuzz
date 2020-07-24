@@ -1,0 +1,116 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<div class="jumbotron wnews">
+    <div class="row mt-3 pt-3">
+        <div class="col">
+            <h4 class="text-center"> ALL INCOMING MESSAGES </h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-ms-12 all_mails">
+
+            {% for email in all_emails %}
+                <div class="card">
+                    <p class="text text-dark"> <span class="float-left">{{email.update}}</span><span class="float-right"> {{email.email}} </span> </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="login_form_improve">
+            <h4 class="text-center">Create new topic</h4>
+
+            <form method="POST" action="/api/messageUs/" id="send_us_message_form">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="form-group col-md-12 inputBox response-message-us">
+
+                    </div>
+                    <div class="form-row input">
+                        <div class="form-group col-md-12 inputBox">
+                            <label for="uid">Email</label>
+                            <input type="email" class="" name="email" id="uid" required placeholder="{{ user.email }}">
+                        </div>
+                        <div class="form-group col-md-12 inputBox">
+                            <label for="reply">Message</label>
+                            <textarea name="updatemsg" id="reply" class="inputBox " accesskey="r" rows="5" cols="40" placeholder="Write message" required></textarea>
+                        </div>
+                        <div class="form-group col-md-12 inputBox">
+                            <input type="submit" name="" value="Send">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="field"></div>
+    </div>
+    <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+
+    <script>
+        const field = document.querySelector('.field');
+        for (let index = 0; index < 1000; index++) {
+                var num = 9700 + index;
+                var emoji = `<span class="spaced" onclick='addCommentEmoji(this)'>&#${num};</span>`;
+                field.insertAdjacentHTML('beforeEnd', emoji);
+            }
+    </script>
+
+    <script>
+
+        var form = $('#send_us_message_form');
+        var email = $('#uid');
+        var mssg = $('#reply');
+        const all_mails_div = document.querySelector('.all_mails');
+
+        var loc = window.location;
+        var wSStart = 'ws://'
+        if(loc.protocol === 'https:'){
+            wSStart = 'wss://';
+        }
+
+        var endPoint = wSStart + loc.host + loc.pathname;;
+        var socket =new WebSocket(endPoint);
+
+        socket.onmessage = (e) => {
+            // console.log('Message', e);
+            console.log(e.data);
+            var cleaned_data = JSON.parse(e.data);
+            var new_mail = `
+                <div class="card">
+                    <p class="text text-dark"> <span class="float-left"> ${cleaned_data.message}</span><span class="float-right"> ${cleaned_data.email} </span> </p>
+                </div>
+                `;
+            all_mails_div.insertAdjacentHTML('beforeEnd', new_mail);
+        }
+        socket.onopen = (e) => {
+            console.log('OPEN',e);
+            form.submit((event) => {
+                event.preventDefault();
+                var em = email.val();
+                var msg = mssg.val();
+
+                // Serialized form
+                // var formSerialized = form.serialize();
+
+                var sendMsg = JSON.stringify({'email': em, 'message': msg});
+
+                socket.send(sendMsg);
+                email.val('');
+                mssg.val('');
+            });
+        }
+        socket.onerror = (e) => {
+            console.log('ERROR',e)
+        }
+        socket.onclose = (e) => {
+            console.log('CLOSE',e)
+        }
+
+    </script>
+
+</div>
+{% endblock %}

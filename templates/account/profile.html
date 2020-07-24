@@ -1,0 +1,458 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="jumbotron profile">
+    <h3 class="text-center"> <i class="fa fa-user" aria-hidden="true"></i> Welcome to your account , {{ user.username }}</h3>
+
+    <div class="row">
+
+        <div class="col-md-3 col-sm-12">
+
+            <ion-card color="dark" class="ion-padding ion-no-margin ion-margin-bottom">
+                <ion-card-header>
+                    <h4 class="text-center"> Profile picture </h4>
+                    <hr>
+                </ion-card-header>
+                <ion-card-body >
+                    <ion-fab onclick="show()" horizontal="end" slot="fixed">
+                        <ion-fab-button>
+                          <ion-icon name="pencil-outline"></ion-icon>
+                        </ion-fab-button>
+                    </ion-fab>
+                    <ion-avatar style="width: 180px; height: 180px; margin: auto;" class="profile-pic">
+                        <img src="{{ user.userextension.profile_pic.url }}" >
+                        <p class="text-center user"> {{user.username}} </p>
+                    </ion-avatar>
+
+                    <div class="login_form pic" style="display: none; padding: 0;">
+
+                        <form class="pic-form" method="POST" action="/update/profilepic/" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <fieldset>
+                                <div class="form-row input">
+                                    <div class="form-group col-md-12 inputBox">
+                                        <h6 class="text-center"> Update  </h6>
+                                        {{ pic_form }}
+                                    </div>
+                                    <div class="form-group col-md-12 inputBox">
+                                        <input type="submit" name="">
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                    </div>
+
+                </ion-card-body>
+                <ion-card-footer>
+
+                </ion-card-footer>
+            </ion-card>
+
+            <ion-card color="dark" class="ion-padding ion-no-margin ion-margin-bottom">
+                <ion-card-header>
+                    <h4 class="text-center"> Account details </h4>
+                    <hr>
+                    <ion-card-subtitle> Your info </ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> First name </ion-badge>
+                        <ion-label class="ion-padding"> {{ user.first_name }} </ion-label>
+                    </ion-chip>
+
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Last name </ion-badge>
+                        <ion-label class="ion-padding float-right"> {{ user.last_name }} </ion-label>
+                    </ion-chip>
+
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Email </ion-badge>
+                        <ion-label class="ion-padding float-right"> {{ user.email }} </ion-label>
+                    </ion-chip>
+
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Username </ion-badge>
+                        <ion-label class="ion-padding"> {{ user.username }} </ion-label>
+                    </ion-chip>
+
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Gender </ion-badge>
+                        <ion-label class="ion-padding"> {{ user.userextension.gender }} </ion-label>
+                    </ion-chip>
+
+                </ion-card-content>
+
+                <ion-card-footer>
+                    <ion-button expand="block"> Edit </ion-button>
+                </ion-card-footer>
+            </ion-card>
+
+
+        </div>
+
+        <div class="col-md-3 col-sm-12">
+
+            <ion-card color="dark" class="ion-padding ion-no-margin ion-margin-bottom">
+                <ion-card-header>
+                    <h4 class="text-center"> More account details </h4>
+                    <hr>
+                </ion-card-header>
+                <ion-card-body>
+
+                    <ion-card-subtitle> Your modes </ion-card-subtitle>
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Mode </ion-badge>
+                        <ion-label class="ion-padding"> {{ user.userextension.mode_sheet }} mode </ion-label>
+                    </ion-chip>
+
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Syntax highlighting </ion-badge>
+                        <ion-label class="ion-padding float-right"> {{ user.userextension.style_sheet }} </ion-label>
+                    </ion-chip>
+
+                    <ion-grid>
+                        <ion-col>
+                            <div class="">
+                                <ion-chip color="warning" class="w-100">
+                                    <ion-badge color="warning"> Remember</ion-badge>
+                                </ion-chip>
+                                <p class="ion-padding float-right text-warning"> Syntax highlighting only takes place on computer science related topics </p>
+                            </div>
+                        </ion-col>
+                    </ion-grid>
+
+                    <ion-card-subtitle> More info </ion-card-subtitle>
+
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Phone number </ion-badge>
+                        <ion-label class="ion-padding"> {{ user.userextension.phone_number }} </ion-label>
+                    </ion-chip>
+
+                    <ion-grid>
+                        <ion-col>
+                            <div class="">
+                                <ion-chip color="primary" class="w-100">
+                                    <ion-badge color=""> Bio </ion-badge>
+                                </ion-chip>
+                                <p class="ion-padding float-right ">  {{ user.userextension.bio }} </p>
+                            </div>
+                        </ion-col>
+                    </ion-grid>
+
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Location </ion-badge>
+                        <ion-label class="ion-padding float-right"> {{ user.userextension.location }} </ion-label>
+                    </ion-chip>
+
+                    <ion-chip color="primary" class="w-100">
+                        <ion-badge> Date joined </ion-badge>
+                        <ion-label class="ion-padding"> {{ user.date_joined }} </ion-label>
+                    </ion-chip>
+                </ion-card-body>
+
+                <ion-card-footer>
+                    <div>
+
+                    </div>
+                    <ion-button expand="block"> Edit </ion-button>
+                </ion-card-footer>
+            </ion-card>
+
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+
+            <ion-card color="dark" class="ion-padding ion-no-margin ion-margin-bottom">
+                <ion-card-header>
+                    <h4 class="text-center"> Participation details </h4>
+                    <hr>
+                </ion-card-header>
+
+                <ion-card-body>
+
+                    <ion-chip class="w-100" color="primary">
+                        <ion-badge> {{ questions_count }} </ion-badge>
+                        <ion-label class="ion-padding"> Questions posted </ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100" color="warning">
+                        <ion-badge> {{ hidden_questions_count }} </ion-badge>
+                        <ion-label class="ion-padding"> Hidden questions </ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100" color="primary">
+                        <ion-badge> {{ topics_count }} </ion-badge>
+                        <ion-label class="ion-padding"> Topics raised </ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100" color="warning">
+                        <ion-badge> {{ hidden_topics_count }} </ion-badge>
+                        <ion-label class="ion-padding"> Hidden topics </ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100" color="primary">
+                        <ion-badge> {{ replies_count }} </ion-badge>
+                        <ion-label class="ion-padding"> Replies made </ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100" color="warning">
+                        <ion-badge> {{ hidden_replies_count }} </ion-badge>
+                        <ion-label class="ion-padding"> Hidden replies</ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100" color="primary">
+                        <ion-badge> {{ comments_count }} </ion-badge>
+                        <ion-label class="ion-padding"> Comments count </ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100" color="warning">
+                        <ion-badge> {{ hidden_comments_count }} </ion-badge>
+                        <ion-label class="ion-padding"> Hidden comments</ion-label>
+                    </ion-chip>
+
+                </ion-card-body>
+            </ion-card>
+
+            <ion-card color="dark" class="ion-no-padding ion-no-margin ion-margin-bottom">
+                <ion-card-header>
+                    <h4 class="text-center"> Programming languages
+                        <ion-chip>
+                            <ion-badge> {{ lang_count }} </ion-badge>
+                        </ion-chip>
+                    </h4>
+                    <hr>
+                </ion-card-header>
+
+                <ion-card-content>
+                    {% if lang_count == 0 %}
+                        <ion-card>
+                            <ion-chip class="w-100" color="warning">
+                                <ion-label class="w-100 text-center"> You have no programming languages set </ion-label>
+                            </ion-chip>
+                        </ion-card>
+                    {% endif %}
+                    {% for lang in languages %}
+                    <ion-chip color="success">
+                        <ion-icon name="logo-javascript"></ion-icon>
+                        <ion-label> {{ lang }} </ion-label>
+                    </ion-chip>
+                    {% endfor %}
+
+                </ion-card-content>
+            </ion-card>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 col-sm-12">
+            <ion-card color="dark" class="ion-no-padding ion-no-margin ion-margin-bottom">
+                <ion-card-header>
+                    <h4 class="text-center"> Friends
+                        <ion-chip>
+                            <ion-badge> {{ friends_count }} </ion-badge>
+                        </ion-chip>
+                        <ion-chip onclick="addFriends()" color="primary">
+                            <ion-icon name="add"></ion-icon>
+                            <ion-label> Add more friends </ion-label>
+                        </ion-chip>
+                    </h4>
+                    <hr>
+                </ion-card-header>
+
+                <ion-card-content class="ion-no-padding ion-no-margin">
+                    {% if friends_count == 0 %}
+                        <ion-card>
+                            <ion-chip class="w-100" color="warning">
+                                <ion-label class="w-100 text-center"> You have no friends </ion-label>
+                            </ion-chip>
+                        </ion-card>
+                    {% endif %}
+                    {% for friend in friends %}
+                    {% if friend.username == user.username %}
+                    {% else %}
+<ion-card class="ion-margin-bottom">
+                    <ion-item-sliding>
+                        <ion-item-options side="start">
+                              <ion-item-option onClick="favorite(item)">
+                                  <ion-icon name="heart-outline"></ion-icon>
+                              </ion-item-option>
+                              <ion-item-option color="danger" onClick="share(item)">
+                                  <ion-icon name="share-social-outline"></ion-icon>
+                              </ion-item-option>
+                        </ion-item-options>
+
+
+                            <ion-item color="dark">
+                                <ion-avatar slot="start" style="width: 50px; height: 50px; margin: auto;" class="profile-pic">
+                                    <img src="{{friend.userextension.profile_pic.url}}" style="border-radius: 50%;">
+                                </ion-avatar>
+                                <ion-label class="ion-padding"> {{ friend.username }}
+                                    <ion-chip color="primary">
+                                        <ion-label > {{ friend.email }} </ion-label>
+                                    </ion-chip>
+                                </ion-label>
+                                <ion-button color="success" href="/chat/{{friend.username}}/">
+                                    <ion-icon name="send-outline" slot="start"></ion-icon>
+                                    <ion-label> Send message</ion-label>
+                                </ion-button>
+                            </ion-item>
+
+
+                        <ion-item-options side="end">
+                            <ion-item-option onclick="open(this)" href="/chat/{{friend.username}}/" router-direction="forwad" router-link="/chat/{{friend.username}}/">
+                                <ion-icon name="send-outline"></ion-icon>
+                            </ion-item-option>
+                        </ion-item-options>
+                  </ion-item-sliding>
+ </ion-card>
+                    {% endif %}
+                    {% endfor %}
+
+                </ion-card-content>
+            </ion-card>
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <div class="jumbotron">
+                <h3 class="text-center"> Ad column </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-12 col-sm-12">
+
+            <div class="row">
+                <ion-card color="dark" class="w-100">
+                    <ion-card-header>
+                        <h4 class="text-center"> Your Quizes </h4>
+                        <hr>
+                    </ion-card-header>
+
+                    <ion-card-body class="">
+
+                        {% if questions_count == 0 %}
+                        <ion-chip class="w-100" color="warning">
+                            <ion-label class="w-100 text-center"> You have no questions yet </ion-label>
+                        </ion-chip>
+                        {% else %}
+                        <table class="table table-responsive table-striped table-light">
+                            <thead>
+                                <tr>
+                                    <th> ID </th>
+                                    <th> Code </th>
+                                    <th> ________________________________________Question________________________________________ </th>
+                                    <th> Topic </th>
+                                    <th> Subtopic </th>
+                                    <th> Status </th>
+                                    <th> _______Created__on_______ </th>
+                                    <th> Share </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for quiz in my_quizes %}
+                                <tr id="{{ quiz.id }}">
+                                    {% if quiz.status == 'hidden' %}
+                                    <td class="bg-warning"> {{ quiz.id }} </td>
+                                    {% else %}
+                                    <td class="bg-success"> {{ quiz.id }} </td>
+                                    {% endif %}
+                                    <td>
+                                        <a href="/discuzz/{{quiz.discussionCode}}">
+                                            <ion-chip color="tertiary">
+                                                {{ quiz.discussionCode }}
+                                            </ion-chip>
+                                        </a>
+                                    </td>
+                                    <td> {{ quiz.question }} </td>
+                                    <td> {{ quiz.topic }} </td>
+                                    <td> {{ quiz.subtopic }}  </td>
+                                    {% if quiz.status == 'hidden' %}
+                                    <td class="text-warning"> {{ quiz.status }} </td>
+                                    {% else %}
+                                    <td class="text-success"> {{ quiz.status }} </td>
+                                    {% endif %}
+                                    <td> {{ quiz.createTime }}  </td>
+                                    <td>
+                                        <ion-fab horizontal="end">
+                                            <ion-fab-button>
+                                              <ion-icon name="share"></ion-icon>
+                                            </ion-fab-button>
+                                            <ion-fab-list side="start">
+                                                <ion-fab-button><ion-icon onclick="whatsapp(this)" color="success" name="logo-whatsapp"></ion-icon></ion-fab-button>
+                                                <ion-fab-button><ion-icon color="primary" name="logo-facebook"></ion-icon></ion-fab-button>
+                                                <ion-fab-button><ion-icon color="secondary" name="logo-twitter"></ion-icon></ion-fab-button>
+                                                <ion-fab-button><ion-icon color="warning" name="logo-instagram"></ion-icon></ion-fab-button>
+                                            </ion-fab-list>
+                                      </ion-fab>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% endif %}
+                    </ion-card-body>
+
+                    <ion-card-footer>
+
+                    </ion-card-footer>
+                </ion-card>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+
+    </div>
+    <script>
+        function whatsapp(el){
+            console.log('THE ELEMENT IS ', el.parentElement.parentElement.parentElement.parentElement.parentElement.id);
+        }
+    </script>
+    <script>
+                            const pic_update = document.querySelector('.pic');
+                            const pic_form = document.querySelector('.pic-form');
+                            function show(){
+                                if(pic_update.style.display === 'none'){
+                                    pic_update.style.display = 'block';
+
+                                } else if(pic_update.style.display === 'block'){
+                                    pic_update.style.display = 'none';
+                                }
+                            }
+                            function handlePicForm(event) {
+                                event.preventDefault();
+                                const myForm = event.target;
+                                const myFormData = new FormData(myForm);
+                                const url = myForm.getAttribute('action');
+                                const method = myForm.getAttribute('method');
+
+                                const xhr = new XMLHttpRequest();
+                                xhr.open(method, url);
+                                xhr.onload = () => {
+                                    const serverResponse = xhr.response;
+                                    console.log(serverResponse)
+                                };
+                                xhr.send(myFormData);
+                            }
+                            pic_form.addEventListener('submit', handlePicForm(event));
+                        </script>
+    <script>
+        const clear_checkbox = document.querySelector('#profile_pic-clear_id');
+        clear_checkbox.style.display = 'none';
+        clear_checkbox.nextElementSibling.style.display = 'none';
+    </script>
+    <script>
+        function addFriends(){
+            window.location.href = '/account/friends/';
+        }
+    </script>
+    <script>
+        function open(el){
+            window.href.location = el.href;
+        }
+    </script>
+</div>
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<ion-card>
+    <ion-card-header>
+
+        <ion-avatar onclick="gotToMyProfile()" slot="" style="margin: auto; cursor: pointer;">
+                <img src="{{user.userextension.profile_pic.url}}">
+            </ion-avatar>
+
+        <ion-card-title class="text-center">Add or remove friends </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-body>
+        {% for my_user in users_who_are_friends_and_requests %}
+
+            {% if my_user.person == user %}
+
+            {% elif my_user.user_case == 'friend' %}
+                <ion-item class="" lines="">
+                        <ion-avatar slot="start">
+                            <img src="{{my_user.person.userextension.profile_pic.url}}">
+                        </ion-avatar>
+                        <ion-label> {{ my_user.person.username }} </ion-label>
+
+                        <ion-badge>
+                            {{ my_user.mutual_friends }}
+                        </ion-badge>
+
+                        <ion-button class="friend-{{my_user.person.username}}" color="danger" onclick="RemoveUserAsFriend(this)" data-name="{{my_user.person.username}}" data-url="/api/remove/{{my_user.person.username}}/">
+                            <ion-icon slot="start" name="close" ></ion-icon>
+                            Remove
+                        </ion-button>
+
+                </ion-item>
+
+            {% elif my_user.user_case == 'request' %}
+                <ion-item class="" lines="">
+                        <ion-avatar slot="start">
+                            <img src="{{my_user.person.userextension.profile_pic.url}}">
+                        </ion-avatar>
+                        <ion-label> {{ my_user.person.username }} </ion-label>
+
+                        <ion-badge>
+                            {{ my_user.mutual_friends }}
+                        </ion-badge>
+
+                        <ion-button class="non-friend-{{my_user.person.username}}" color="primary" onclick="addUserAsFriend(this)" data-name="{{my_user.person.username}}" data-id="btn-add-{{my_user.person.username}}" data-url="/api/add/{{my_user.person.username}}/">
+                            <ion-icon slot="start" name="add" ></ion-icon>
+                            Accept
+                        </ion-button>
+
+                </ion-item>
+
+            {% elif my_user.user_case == 'awaiting' %}
+                <ion-item class="" lines="">
+                        <ion-avatar slot="start">
+                            <img src="{{my_user.person.userextension.profile_pic.url}}">
+                        </ion-avatar>
+                        <ion-label> {{ my_user.person.username }} </ion-label>
+
+                        <ion-badge>
+                            {{ my_user.mutual_friends }}
+                        </ion-badge>
+
+                        <ion-button color="warning" onclick="cancelFriendRequest(this)" data-name="{{my_user.person.username}}" data-id="btn-add-{{my_user.person.username}}" data-url="/api/send_friend_request/{{my_user.person.username}}/">
+                            <ion-icon slot="start" name="close" ></ion-icon>
+                            Cancel request
+                        </ion-button>
+
+                </ion-item>
+
+            {% elif my_user.user_case == 'new' %}
+                <ion-item class="" lines="">
+                        <ion-avatar slot="start">
+                            <img src="{{my_user.person.userextension.profile_pic.url}}">
+                        </ion-avatar>
+                        <ion-label> {{ my_user.person.username }} </ion-label>
+
+                        <ion-badge>
+                            {{ my_user.mutual_friends }}
+                        </ion-badge>
+
+                        <ion-button color="success" onclick="sendFriendRequest(this)" data-name="{{my_user.person.username}}" data-id="btn-add-{{my_user.person.username}}" data-url="/api/send_friend_request/{{my_user.person.username}}/">
+                            <ion-icon slot="start" name="send-outline" ></ion-icon>
+                            Send request
+                        </ion-button>
+
+                </ion-item>
+            {% endif %}
+
+        {% endfor %}
+
+    </ion-card-body>
+</ion-card>
+<script>
+
+    function sendFriendRequest(el){
+        const url = el.dataset.url;
+        const method = 'GET';
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = () => {
+            const response = JSON.parse(xhr.response);
+            if(response.response === 'Request sent'){
+                console.log('request sent')
+            }
+        }
+        xhr.send();
+    }
+
+    function addUserAsFriend(el){
+        const url = el.dataset.url;
+        const method = 'GET';
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = () => {
+            const response = JSON.parse(xhr.response);
+            if(response.sent === 'request sent'){
+
+                var non_friend = document.querySelectorAll(`.non-friend-${el.dataset.name}`);
+                var friend = document.querySelectorAll(`.friend-${el.dataset.name}`);
+
+                for(var i = 0; i < non_friend.length; i++){
+                    non_friend[i].style.display = 'none';
+                    friend[i].style.display = 'block';
+                    console.log('adjusted');
+                }
+
+
+            }
+        }
+        xhr.send();
+    }
+    function RemoveUserAsFriend(el){
+        const url = el.dataset.url;
+        const method = 'GET';
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = () => {
+            // const response = JSON.parse(xhr.response);
+            console.log(xhr.response)
+            if(response.removed === 'removed'){
+
+            }
+        }
+        xhr.send();
+
+    }
+
+    function gotToMyProfile(){
+        window.location.href = '/profile/';
+    }
+</script>
+<script>
+    function open(){
+
+        // window.href.location = el.dataset.href;
+        console.log('nammh');
+    }
+</script>
+{% endblock %}

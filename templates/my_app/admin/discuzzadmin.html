@@ -1,0 +1,768 @@
+{% extends 'base.html' %}{% block content %}
+<div class="mt-2 pt-3">
+    <ion-card>
+        <ion-card-header>
+            <h5  class="text-center">Welcome to the admin page, Mr {{ request.user.username | title }}</h5>
+        </ion-card-header>
+        <ion-card-body>
+
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center text-dark"> The discuzz admin page </h3>
+
+
+            <blockquote class="blockquote card pt-4 pr-2 pl-5 pb-4">
+                <p class="text-dark"> This makes the admin panel to control the views so as everything is taken into account </p>
+                Please do not mess around since you might cause irreversible problems,
+                you might consider reconsidering your decisions
+            </blockquote>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <h6 class="text-center"> Search through discuzz </h6>
+                </div>
+            </div>
+            <div class="card">
+                <form class="form pl-2 pr-2">
+
+                    <div class="form-row">
+                        {% csrf_token %}
+
+                        <div class="form-group col-md-4 col-sm-12">
+                            <label for="username">Username</label>
+                            <input class="form-control" id="username">
+                        </div>
+
+                        <div class="form-group col-md-4 col-sm-12">
+                            <label for="email">Email</label>
+                            <input class="form-control" id="email">
+                        </div>
+
+                        <div class="form-group col-md-4 col-sm-12">
+                            <label for="reply">Reply</label>
+                            <input class="form-control" id="reply">
+                        </div>
+
+                        <div class="form-group col-md-4 col-sm-12">
+                            <label for="comment">Comment</label>
+                            <input class="form-control" id="comment">
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-primary btn-small">Search</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+
+            <div class="card">
+                <div class="card-header bg-dark">
+                    <h3 class="text-white text-center"> Discuzz </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-primary display-4 text-center"> The ultimate discussion forum </p>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-dark">
+                    <h3 class="text-white text-center"> Super users </h3>
+                </div>
+                <div class="card-body bg-grey">
+                    <p class="text-dark display-2 text-center super-users"> {{ superuser_users }} </p>
+                </div>
+                <div class="card-footer">
+                    Number of admins
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-dark">
+                    <h3 class="text-white text-center"> Staff users</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-dark display-2 text-center staff-users"> {{ staff_users }} </p>
+                </div>
+                <div class="card-footer">
+                    Staff users
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="text-white text-center"> Users </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-primary display-2 text-center total-users"> {{ total_users }} </p>
+                </div>
+                <div class="card-footer">
+                    All users count
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="text-white text-center"> Active users</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-success display-2 text-center active-users"> {{ active_users }} </p>
+                </div>
+                <div class="card-footer">
+                    Active users count
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-danger">
+                    <h3 class="text-white text-center"> Inactive users</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-danger display-2 text-center inactive-users"> {{ inactive_users }} </p>
+                </div>
+                <div class="card-footer">
+                    Inactive users count
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row pt-3">
+        <div class="col-md-4 col-sm-12">
+
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="text-white text-center"> All received updates</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-primary display-2 text-center total-emails"> {{ total_emails }} </p>
+                </div>
+                <div class="card-footer">
+                    Sent via emails
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="text-white text-center"> Read updates</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-success display-2 text-center read-emails"> {{ read_emails }} </p>
+                </div>
+                <div class="card-footer">
+                    All emails marked as read
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-secondary">
+                    <h3 class="text-white text-center"> Unread updates</h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-secondary display-2 text-center unread-emails"> {{ unread_emails }} </p>
+                </div>
+                <div class="card-footer">
+                    All emails not yet marked as read
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="text-white text-center"> Topics  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-primary display-2 text-center total-topics"> {{ total_topics }} </p>
+                </div>
+                <div class="card-footer">
+                    Replies to various questions
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h3 class="text-white text-center"> Visible topics  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-info display-2 text-center visible-topics"> {{ visible_topics }} </p>
+                </div>
+                <div class="card-footer">
+                    Topics and subtopics raised by users
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h3 class="text-white text-center"> Hidden topics  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-warning display-2 text-center hidden-topics"> {{ hidden_topics }} </p>
+                </div>
+                <div class="card-footer">
+                    Topics hidden from viewers
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row mt-3">
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="text-white text-center"> Questions  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-primary display-2 text-center total-questions"> {{ total_questions }} </p>
+                </div>
+                <div class="card-footer">
+                    Questions posted by users
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h3 class="text-white text-center"> Visible questions  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-info display-2 text-center visible-questions"> {{ visible_questions }} </p>
+                </div>
+                <div class="card-footer">
+                    Questions that are visible
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h3 class="text-white text-center"> Hidden questions  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-warning display-2 text-center hidden-questions"> {{ hidden_questions }} </p>
+                </div>
+                <div class="card-footer">
+                    Hidden questions
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row mt-3">
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="text-white text-center"> Replies  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-primary display-2 text-center total-replies"> {{ total_replies }} </p>
+                </div>
+                <div class="card-footer">
+                    Replies to various questions
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h3 class="text-white text-center"> Visible replies  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-info display-2 text-center visible-replies"> {{ visible_replies }} </p>
+                </div>
+                <div class="card-footer">
+                    Replies visible in various questions
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h3 class="text-white text-center"> Hidden replies  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-warning display-2 text-center hidden-replies"> {{ hidden_replies }} </p>
+                </div>
+                <div class="card-footer">
+                    Replies hidden from participants
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-3">
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <h3 class="text-white text-center"> Comments  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-primary display-2 text-center total-comments"> {{ total_comments }} </p>
+                </div>
+                <div class="card-footer">
+                    Total comments
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h3 class="text-white text-center"> Visible comments  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-info display-2 text-center visible-comments"> {{ visible_comments }} </p>
+                </div>
+                <div class="card-footer">
+                    Comments visible in various replies
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h3 class="text-white text-center"> Hidden comments  </h3>
+                </div>
+                <div class="card-body">
+                    <p class="text-warning display-2 text-center hidden-comments"> {{ hidden_comments }} </p>
+                </div>
+                <div class="card-footer">
+                    Comments hidden from viewers
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center text-dark">Mails for Discuzz update</h3>
+            <table class="table table-responsive table-striped table-light" style="width: 98% !important; margin: auto !important;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>__ID__</th>
+                        <th>________________________________TheUpDateMessage________________________________</th>
+                        <th>Status</th>
+                        <th>Sent by</th>
+                        <th>_________Date_sent_______</th>
+                        <th class="">Read/Unread</th>
+                        <th class="text-secondary">Reply</th>
+                    </tr>
+                <tbody class=" table-dark table-hover">
+                    {% for email in all_emails %}
+                        {% if email.status == 'unread' %}
+                            <tr class="text-warning" style="width: 100% !important;">
+                                <td class=""> {{ email.id }} </td>
+                                <td>
+<pre class="text-warning">
+{{ email.update }}
+</pre>
+                                </td>
+                                <td> {{ email.status }}  </td>
+                                <td> {{ email.email.email }} </td>
+                                <td> {{ email.updateTime }} </td>
+                                <td>
+                                    <form action="/read_reply_email_message/{{ email.id }}/?type=read" method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-success">Read</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="/read_reply_email_message/{{ email.id }}/?type=reply" method="POST">
+                                        {% csrf_token %}
+                                        {% if email.state == 'reply' %}
+                                            <button class="btn btn-sm btn-secondary">Reply</button>
+                                        {% else %}
+                                            <button class="btn btn-sm btn-success">Replied</button>
+                                        {% endif %}
+                                    </form>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr class="text-success" style="width: 100% !important;">
+                                <td> {{ email.id }} </td>
+                                <td>
+<pre class="text-success">
+{{ email.update }}
+</pre>
+                                </td>
+                                <td> {{ email.status }}  </td>
+                                <td> {{ email.email.email }} </td>
+                                <td> {{ email.updateTime }} </td>
+                                <td>
+                                    <form action="/read_reply_email_message/{{ email.id }}/?type=unread" method="POST">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-warning">Unread</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="/read_reply_email_message/{{ email.id }}/?type=reply" method="POST">
+                                        {% csrf_token %}
+                                        {% if email.state == 'reply' %}
+                                            <button class="btn btn-sm btn-secondary">Reply</button>
+                                        {% else %}
+                                            <button class="btn btn-sm btn-success">Replied</button>
+                                        {% endif %}
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center text-dark"> All topics posted by different users </h3>
+            <table class="table table-responsive table-striped table-light" style="width: 98% !important; margin: auto !important;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th> ID</th>
+                        <th> __Created_by__ </th>
+                        <th> Topic </th>
+                        <th> ___________Subtopic___________ </th>
+                        <th class="text-warning"> Hide </th>
+                        <th class="text-danger"> Delete </th>
+                    </tr>
+                <tbody class=" table-dark table-hover">
+                    {% for topic in all_topics %}
+                            <tr class="" style="width: 100% !important;">
+                                <td> {{ topic.id }} </td>
+                                <td> <button class="btn btn-sm btn-info"> {{ topic.user.username }} </button> </td>
+                                <td> {{ topic.topic }} </td>
+                                <td> {{ topic.subtopic }}  </td>
+                                <td>
+                                    {% if topic.status == 'visible' %}
+                                        <form method="POST" action="/hide_show_reply_comment/{{ topic.id }}/?type=topic&status=hide">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-warning"> Hide </button>
+                                        </form>
+                                    {% else %}
+                                        <form method="POST" action="/hide_show_reply_comment/{{ topic.id }}/?type=topic&status=show">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-secondary"> Show </button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form method="POST" action="/delete_reply_topic_comment_question/{{ topic.id }}/?type=topic">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center text-dark"> Questions posted to Discuzz </h3>
+            <table class="table table-responsive table-striped table-light" style="width: 98% !important; margin: auto !important;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Admin</th>
+                        <th>Topic</th>
+                        <th>Subtopic</th>
+                        <th> ________________________________Question________________________________ </th>
+                        <th>Replies</th>
+                        <th>Discussion Code</th>
+                        <th>_________DateCreated_______</th>
+                        <th> Status </th>
+                        <th>Hide</th>
+                        <th class="text-danger">Delete</th>
+                    </tr>
+                <tbody class=" table-dark table-hover">
+                    {% for quiz in all_discussions %}
+                            <tr class="" style="width: 100% !important;">
+                                <td> {{ quiz.id }} </td>
+                                <td> <button class="btn btn-sm btn-primary"> {{ quiz.admin.username }} </button> </td>
+                                <td> {{ quiz.topic }} </td>
+                                <td> {{ quiz.subtopic }}  </td>
+                                <td> {{ quiz.question }} </td>
+                                <td>
+                                    {% for count in  reply_count %}
+                                        {% if count.id == quiz.discussionCode%}
+                                            <span> {{ count.replies }} </span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td> <a href="/discuzz/{{ quiz.discussionCode }}/"> {{ quiz.discussionCode }} </a> </td>
+                                <td> {{ quiz.createTime }} </td>
+                                <td> {{ quiz.status }} </td>
+                                <td>
+                                    {% if quiz.status == 'visible' %}
+                                        <form method="POST" action="/hide_show_reply_comment/{{ quiz.id }}/?type=question&status=hide">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-warning"> Hide </button>
+                                        </form>
+                                    {% else %}
+                                        <form method="POST" action="/hide_show_reply_comment/{{ quiz.id }}/?type=question&status=show">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-secondary"> Show </button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form method="POST" action="/delete_reply_topic_comment_question/{{ quiz.id }}/?type=question">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center text-dark"> Replies to various questions </h3>
+            <table class="table table-responsive table-striped table-light" style="width: 98% !important; margin: auto !important;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th> ID </th>
+                        <th> Username </th>
+                        <th> ________________________________Reply________________________________ </th>
+                        <th> Discussion Code </th>
+                        <th> Likes </th>
+                        <th> Dislikes </th>
+                        <th> Comments </th>
+                        <th> ______ReplyTime______ </th>
+                        <th> Status </th>
+                        <th class="text-warning"> Hide </th>
+                        <th class="text-danger"> Delete </th>
+                    </tr>
+                <tbody class=" table-dark table-hover">
+                    {% for reply in all_replies %}
+                            <tr class="" style="width: 100% !important;">
+                                <td> {{ reply.id }} </td>
+                                <td> <button class="btn btn-sm btn-primary"> {{ reply.username.username }} </button> </td>
+                                <td> {{ reply.reply }} </td>
+                                <td> <a href="/discuzz/{{ reply.discussion_code }}/"> {{ reply.discussion_code.discussionCode }} </a>  </td>
+                                <td> {{ reply.likes.count }} </td>
+                                <td> {{ reply.dislikes.count }} </td>
+                                <td>
+                                    {% for count in  comment_count %}
+                                        {% if count.id == reply.id%}
+                                            <span> {{ count.comments }} </span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td> {{ reply.reply_time }} </td>
+                                <td> {{ reply.status }} </td>
+                                <td>
+                                    {% if reply.status == 'visible' %}
+                                        <form method="POST" action="/hide_show_reply_comment/{{ reply.id }}/?type=reply&status=hide">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-warning"> Hide </button>
+                                        </form>
+                                    {% else %}
+                                        <form method="POST" action="/hide_show_reply_comment/{{ reply.id }}/?type=reply&status=show">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-secondary"> Show </button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form method="POST" action="/delete_reply_topic_comment_question/{{ reply.id }}/?type=reply">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <h3 class="text-center text-dark"> All comments to various replies in various questions </h3>
+            <table class="table table-responsive table-striped table-light" style="width: 98% !important; margin: auto !important;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th> ID </th>
+                        <th> __Comment_by__ </th>
+                        <th> ________________________________Comment________________________________ </th>
+                        <th> __Comment_to__ </th>
+                        <th> __Main_question__ </th>
+                        <th> _______Commented_on_______ </th>
+                        <th> Status </th>
+                        <th class="text-warning"> Hide </th>
+                        <th class="text-danger"> Delete </th>
+                    </tr>
+                <tbody class=" table-dark table-hover">
+                    {% for comment in all_comments %}
+                            <tr class="" style="width: 100% !important;">
+                                <td> {{ comment.id }} </td>
+                                <td> {{ comment.commented_by.username }} </td>
+                                <td> {{ comment.comment }} </td>
+                                <td> {{ comment.commented_to.id }}  </td>
+                                <td> <a href="/discuzz/{{ comment.commented_to }}"> {{ comment.commented_to }} </a>  </td>
+                                <td> {{ comment.commented_on }} </td>
+                                <td> {{ comment.status }} </td>
+                                <td>
+                                    {% if comment.status == 'visible' %}
+                                        <form method="POST" action="/hide_show_reply_comment/{{ comment.id }}/?type=comment&status=hide">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-warning"> Hide </button>
+                                        </form>
+                                    {% else %}
+                                        <form method="POST" action="/hide_show_reply_comment/{{ comment.id }}/?type=comment&status=show">
+                                            {% csrf_token %}
+                                            <button class="btn btn-sm btn-secondary"> Show </button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <form method="POST" action="/delete_reply_topic_comment_question/{{ comment.id }}/?type=comment">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                            <tr>
+                                <td class="text-center" colspan="7">
+                                    <ion-chip color="primary">
+                                        <ion-icon name="add"></ion-icon>
+                                        <ion-label> {{ total_comments }} </ion-label>
+                                    </ion-chip>
+                                </td>
+                            </tr>
+                </tbody>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+<script type="text/javascript">
+   !function(a,b){"function"==typeof define&&define.amd?define([],b):"undefined"!=typeof module&&module.exports?module.exports=b():a.ReconnectingWebSocket=b()}(this,function(){function a(b,c,d){function l(a,b){var c=document.createEvent("CustomEvent");return c.initCustomEvent(a,!1,!1,b),c}var e={debug:!1,automaticOpen:!0,reconnectInterval:1e3,maxReconnectInterval:3e4,reconnectDecay:1.5,timeoutInterval:2e3};d||(d={});for(var f in e)this[f]="undefined"!=typeof d[f]?d[f]:e[f];this.url=b,this.reconnectAttempts=0,this.readyState=WebSocket.CONNECTING,this.protocol=null;var h,g=this,i=!1,j=!1,k=document.createElement("div");k.addEventListener("open",function(a){g.onopen(a)}),k.addEventListener("close",function(a){g.onclose(a)}),k.addEventListener("connecting",function(a){g.onconnecting(a)}),k.addEventListener("message",function(a){g.onmessage(a)}),k.addEventListener("error",function(a){g.onerror(a)}),this.addEventListener=k.addEventListener.bind(k),this.removeEventListener=k.removeEventListener.bind(k),this.dispatchEvent=k.dispatchEvent.bind(k),this.open=function(b){h=new WebSocket(g.url,c||[]),b||k.dispatchEvent(l("connecting")),(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","attempt-connect",g.url);var d=h,e=setTimeout(function(){(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","connection-timeout",g.url),j=!0,d.close(),j=!1},g.timeoutInterval);h.onopen=function(){clearTimeout(e),(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","onopen",g.url),g.protocol=h.protocol,g.readyState=WebSocket.OPEN,g.reconnectAttempts=0;var d=l("open");d.isReconnect=b,b=!1,k.dispatchEvent(d)},h.onclose=function(c){if(clearTimeout(e),h=null,i)g.readyState=WebSocket.CLOSED,k.dispatchEvent(l("close"));else{g.readyState=WebSocket.CONNECTING;var d=l("connecting");d.code=c.code,d.reason=c.reason,d.wasClean=c.wasClean,k.dispatchEvent(d),b||j||((g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","onclose",g.url),k.dispatchEvent(l("close")));var e=g.reconnectInterval*Math.pow(g.reconnectDecay,g.reconnectAttempts);setTimeout(function(){g.reconnectAttempts++,g.open(!0)},e>g.maxReconnectInterval?g.maxReconnectInterval:e)}},h.onmessage=function(b){(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","onmessage",g.url,b.data);var c=l("message");c.data=b.data,k.dispatchEvent(c)},h.onerror=function(b){(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","onerror",g.url,b),k.dispatchEvent(l("error"))}},1==this.automaticOpen&&this.open(!1),this.send=function(b){if(h)return(g.debug||a.debugAll)&&console.debug("ReconnectingWebSocket","send",g.url,b),h.send(b);throw"INVALID_STATE_ERR : Pausing to reconnect websocket"},this.close=function(a,b){"undefined"==typeof a&&(a=1e3),i=!0,h&&h.close(a,b)},this.refresh=function(){h&&h.close()}}return a.prototype.onopen=function(){},a.prototype.onclose=function(){},a.prototype.onconnecting=function(){},a.prototype.onmessage=function(){},a.prototype.onerror=function(){},a.debugAll=!1,a.CONNECTING=WebSocket.CONNECTING,a.OPEN=WebSocket.OPEN,a.CLOSING=WebSocket.CLOSING,a.CLOSED=WebSocket.CLOSED,a});
+</script>
+
+<script>
+/*
+        var loc = window.location;
+        var wSStart = 'ws://'
+        if(loc.protocol === 'https:'){
+            wSStart = 'wss://';
+        }
+
+        var endPoint = wSStart + loc.host + loc.pathname;;
+        var socket =new WebSocket(endPoint);
+
+        socket.onmessage = (e) => {
+            console.log('Message', e);
+            // console.log(e.data);
+
+        }
+        socket.onopen = (e) => {
+            console.log('OPEN',e);
+
+        }
+        socket.onerror = (e) => {
+            console.log('ERROR',e)
+        }
+        socket.onclose = (e) => {
+            console.log('CLOSE',e)
+        }
+*/
+    </script>
+
+<script>
+
+    const super_users = document.querySelector('.super-users');
+    const staff = document.querySelector('.staff_users');
+    const total_users = document.querySelector('.total-users');
+    const emails = document.querySelector('.all-emails');
+    
+
+    const xhr = new XMLHttpRequest();
+    const url = "/api/all_numbers/";
+    const method = "GET";
+    const responseType = "json";
+    xhr.responseType = responseType;
+    xhr.method = method;
+    xhr.open(method, url);
+    xhr.onload = () => {
+
+        const serverResponse = xhr.response;
+        var all_numbers = serverResponse.response;
+        console.log('The server response is ', serverResponse.comment_count)
+
+    }
+
+    xhr.send();
+</script>
+    </ion-card-body>
+    </ion-card>
+</div>
+{% endblock %}

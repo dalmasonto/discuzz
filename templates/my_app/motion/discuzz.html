@@ -1,0 +1,371 @@
+{% extends 'base.html' %} {% block content %} {% load static %}
+<a class="participants-link d-none" href="/api/participants/{{ disc_name.discussionCode }}/"></a>
+<a class="discussion-link d-none" href="/api/discuzz/{{ disc_name.discussionCode }}/"></a>
+<span class="d-none csrf-comment">{% csrf_token %}</span>
+<span class="d-none csrf-like">{% csrf_token %}</span>
+<span class="d-none csrf-dislike">{% csrf_token %}</span>
+<span class="d-none profile-pic-url">{{ user.userextension.profile_pic.url }}</span>
+<ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-fab-button>
+        <ion-icon name="share"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+        <ion-fab-button onclick="presentToast()">
+            <ion-icon color="success" name="logo-whatsapp"></ion-icon>
+        </ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="bottom">
+
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+            <ion-fab-button>
+                <ion-icon color="primary" name="logo-facebook"></ion-icon>
+            </ion-fab-button>
+        </a>
+
+    </ion-fab-list>
+    <ion-fab-list side="end">
+
+        <a
+            href="https://twitter.com/intent/tweet?url={{request.build_absolute_uri}}&amp;text=CreateAndDiscuzz">
+            <ion-fab-button>
+                <ion-icon color="secondary" name="logo-twitter"></ion-icon>
+            </ion-fab-button>
+        </a>
+
+        <ion-fab-button>
+            <ion-icon color="warning" name="logo-instagram"></ion-icon>
+        </ion-fab-button>
+    </ion-fab-list>
+</ion-fab>
+
+
+<div class="discuzz">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <h3 class="text-center topic" ion-color="primary">Topic : {{ disc_name.topic }}</h3>
+                <hr>
+                <h5 class="text-center text-white subtopic">Subtopic : {{ disc_name.subtopic }}</h5>
+                <h6 class="text-center text-white">Admin :
+                    <ion-chip onclick="view(this)" color="primary">
+                        <ion-avatar>
+                            {% for pic in pics %}
+                            {% if pic.user == disc_name.admin %}
+                            <img src="{{ pic.profile_pic.url }}">
+                            {% endif %}
+                            {% endfor %}
+                        </ion-avatar>
+                        <ion-label class="admin">
+                            {{ disc_name.admin }}
+                        </ion-label>
+                    </ion-chip>
+                </h6>
+                <h6 class="text-center text-white">Created {{ disc_name.createTime | timesince }} ago</h6>
+                <p class="text-center">
+                    <ion-chip color="primary" onclick="presentAnalyticsModal()">
+                        <ion-icon name="analytics-outline"></ion-icon>
+                        <ion-label> Analytics </ion-label>
+                    </ion-chip>
+                </p>
+
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div id="shadow-card">
+                    <h4 id="query-title">Query, Code:<span class="code"> {{ disc_name.discussionCode }}</span> <span
+                            class="code_id">{{ disc_name.id }}</span> </h4>
+                            <p class="ion-no-padding description"> {{ disc_name.description }} </p>
+<pre class="ion-no-padding" id="query-text">
+<code class="prettyprint">
+{{ disc_name.question }}
+</code>                        
+</pre>
+                    <div class="participants">
+
+                    </div>
+                </div>
+
+                <div id="shadow-card">
+                    <h4 class="text-center text-white">Replies</h4>
+                    <hr>
+                    <div class="all_replies" id="all_replies">
+                        {% for x in replies %} {% if x.discussion_code.discussionCode == disc_name.discussionCode %}
+                        <div id="shadow-card-replies">
+                            <div>
+                                <h6 id="reply-uid">
+
+                                    {% if x.username not in my_pic %}
+                                    <ion-chip onclick="view(this)" color="primary">
+                                        <ion-avatar>
+                                            <img
+                                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU">
+                                        </ion-avatar>
+                                        <ion-label>
+                                            {% if x.username is None or x.username == '' %}
+                                            Anonymous
+                                            {% else %}
+                                            {{x.username.username}}
+                                            {% endif %}
+                                        </ion-label>
+                                    </ion-chip>
+
+                                    {% else %}
+                                    {% for pic in pics %}
+                                    {% if pic.user == x.username %}
+                                    <ion-chip onclick="view(this)" color="primary">
+                                        <ion-avatar>
+                                            <img src="{{ pic.profile_pic.url }}">
+                                        </ion-avatar>
+                                        <ion-label>
+                                            {% if x.username is None or x.username == '' %}
+                                            Anonymous
+                                            {% else %}
+                                            {{x.username.username}}
+                                            {% endif %}
+                                        </ion-label>
+                                    </ion-chip>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+
+                                    <ion-chip color="primary">
+                                        <ion-icon name="timer"></ion-icon>
+                                        <ion-label>
+                                            {{ x.reply_time | timesince }}
+                                        </ion-label>
+                                    </ion-chip>
+                                </h6>
+                            </div>
+                            <div id="{{ x.id }}">
+<pre id="pre">
+<code class="">
+{{ x.reply }} 
+</code>
+</pre>
+                            </div>
+                            <div id="options-menu">
+
+                                <form class="likeform" id="like-{{ x.id }}" method="POST" action="/api/like/{{ x.id }}/"
+                                    data-likes="{{ x.likes }}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary btn-small bg-primary" name="like"
+                                        value="{{reply_obj.id }}">
+                                        <span class='likess-{{ x.id }} text-light'>
+                                            <ion-icon name="thumbs-up-sharp"></ion-icon> Likes {{ x.likes.count }}
+                                        </span>
+                                    </button>
+                                </form>
+
+                                <form class="dislikeform" id="dislike-{{ x.id }}" method="POST"
+                                    action="/api/dislike/{{ x.id }}/">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning btn-small bg-warning" name="dislike"
+                                        value="{{ x.id }}">
+                                        <span class='dislikess-{{ x.id }} text-light'>
+                                            <ion-icon name="thumbs-down-sharp"> 10 </ion-icon> Dislikes
+                                            {{ x.dislikes.count }}
+                                        </span>
+                                    </button>
+                                </form>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 col-sm-12"></div>
+                                <div class="col-md-6 col-sm-12">
+                                    <ion-card class="comments-{{ x.id }} ion-no-margin ion-no-padding ion-padding-left" color="dark">
+                                        <h5 class="text-center">Comments</h5>
+                                        {% for comment in comments %} {% if comment.commented_to.id == x.id %}
+                                        <span class="w-100">
+
+                                            {% if comment.commented_by not in my_pic %}
+                                            <ion-chip onclick="view(this)">
+                                                <ion-avatar>
+                                                    <img
+                                                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU">
+                                                </ion-avatar>
+                                                <ion-label>
+                                                    {% if comment.commented_by is None or comment.commented_by == '' %}
+                                                    Anonymous
+                                                    {% else %}
+                                                    {{comment.commented_by.username}}
+                                                    {% endif %}
+                                                </ion-label>
+                                            </ion-chip>
+
+                                            {% else %}
+                                            {% for pic in pics %}
+                                            {% if pic.user == comment.commented_by %}
+                                            <ion-chip onclick="view(this)" color="primary">
+                                                <ion-avatar>
+                                                    <img src="{{ pic.profile_pic.url }}">
+                                                </ion-avatar>
+                                                <ion-label>
+                                                    {% if comment.commented_by is None or comment.commented_by == '' %}
+                                                    Anonymous
+                                                    {% else %}
+                                                    {{comment.commented_by.username}}
+                                                    {% endif %}
+                                                </ion-label>
+                                            </ion-chip>
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endif %}
+
+                                            <ion-chip onclick="view(this)" color="primary">
+                                                <ion-icon name="timer"></ion-icon>
+                                                <ion-label>
+                                                    {{comment.commented_on | timesince}}
+                                                </ion-label>
+                                            </ion-chip>
+                                        </span>
+                                        <pre class="w-100">
+<code class="">
+    {{comment.comment}}
+</code>
+</pre>
+                                        <hr class="comment-divider"> {% endif %} {% endfor %}
+
+                                    </ion-card>
+                                    <div>
+                                        <div class="form">
+                                            <div class="login-form">
+                                                <form class="commentform" id="comment-{{ x.id }}" method="POST">
+                                                    {% csrf_token %}
+                                                    <div class="form-row input">
+
+                                                        <div class="form-group col-md-12 inputBox comment-reponse">
+
+                                                        </div>
+
+                                                        <div class="form-group col-md-12 inputBox">
+                                                            <label for="reply">Make comment </label>
+                                                            <textarea name="comment" id='com{{ x.id }}'
+                                                                class="inputBox " rows="3" cols="35"
+                                                                placeholder="Make a comment to this reply"
+                                                                required="required"></textarea>
+                                                        </div>
+
+                                                        <div class="form-group col-md-12 inputBox ">
+                                                            <button type="submit" name=""
+                                                                class="btn btn-success w-100 ">Comment</button>
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-12"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <ion-button onclick="showEmojis(this)" class="emoji-show" expand="block"
+                                        fill="outline">
+                                        <ion-chip>
+                                            &#128512;
+                                        </ion-chip>
+                                        <ion-label> Show emojis </ion-label>
+                                    </ion-button>
+                                </div>
+                                <div class="comment-emojis fixed-emoji-div" style="display: none;"></div>
+                            </div>
+                        </div>
+                        {% endif %} {% endfor %}
+                    </div>
+
+                    <div class="form">
+                        <div class="login-form">
+                            <form id="discuzz_form" method="POST">
+                                {% csrf_token %}
+                                <div class="form-row input">
+
+                                    <div class="form-group col-md-12 inputBox response">
+
+                                    </div>
+
+                                    <div class="form-group col-md-12 inputBox">
+                                        <label for="reply">Make reply </label>
+                                        <textarea name="reply" id="reply" class="inputBox " accesskey="r" rows="5"
+                                            cols="40" placeholder="Reply to this question"
+                                            required='required'></textarea>
+                                        <div id="reply-icons">
+                                            <i class=" fa fa-redo "></i>
+                                            <i class="fa fa-undo "></i>
+                                            <i class="fa fa-arrow-left "></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-md-12 inputBox ">
+                                        <button type="submit" name=" " class="btn btn-primary w-100 ">Reply</button>
+                                    </div>
+
+                                </div>
+                            </form>
+
+                        </div>
+
+                        <script src="{% static 'jquery.js' %}" charset="utf-8"></script>
+                        <script src="{% static 'bootstrap.js' %}" charset="utf-8"></script>
+
+                        <div class="row">
+                            <div class="col">
+
+                                <div class="show-emoji" id="show-emojis">
+                                    <ul class="nav nav-tabs emoji-div" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#home1">&#128512;</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#menu11">&#129295;</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#menu22">&#128650;</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#menu33">&#119808; - &#120808;
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div id="home1" class="container tab-pane emojis fixed-emoji-div">
+                                            <!-- <div class="emojis fixed-emoji-div"></div> -->
+                                        </div>
+                                        <div id="menu11" class="container tab-pane emojis-one fixed-emoji-div">
+                                            <!-- <div class="emojis-one fixed-emoji-div"></div> -->
+                                        </div>
+                                        <div id="menu22" class="container tab-pane emojis-two fixed-emoji-div">
+                                            <!-- <div class="emojis-two fixed-emoji-div"></div> -->
+                                        </div>
+
+                                        <div id="menu33" class="container tab-pane emojis-more fixed-emoji-div">
+                                            <!-- <div class="emojis-more fixed-emoji-div"></div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'canvasjs.min.js'  %}"></script>
+    <script src="{% static 'discuzz/discuzz.modals.js'  %}"></script>
+    <script type="text/javascript">
+        !function (a, b) { "function" == typeof define && define.amd ? define([], b) : "undefined" != typeof module && module.exports ? module.exports = b() : a.ReconnectingWebSocket = b() }(this, function () { function a(b, c, d) { function l(a, b) { var c = document.createEvent("CustomEvent"); return c.initCustomEvent(a, !1, !1, b), c } var e = { debug: !1, automaticOpen: !0, reconnectInterval: 1e3, maxReconnectInterval: 3e4, reconnectDecay: 1.5, timeoutInterval: 2e3 }; d || (d = {}); for (var f in e) this[f] = "undefined" != typeof d[f] ? d[f] : e[f]; this.url = b, this.reconnectAttempts = 0, this.readyState = WebSocket.CONNECTING, this.protocol = null; var h, g = this, i = !1, j = !1, k = document.createElement("div"); k.addEventListener("open", function (a) { g.onopen(a) }), k.addEventListener("close", function (a) { g.onclose(a) }), k.addEventListener("connecting", function (a) { g.onconnecting(a) }), k.addEventListener("message", function (a) { g.onmessage(a) }), k.addEventListener("error", function (a) { g.onerror(a) }), this.addEventListener = k.addEventListener.bind(k), this.removeEventListener = k.removeEventListener.bind(k), this.dispatchEvent = k.dispatchEvent.bind(k), this.open = function (b) { h = new WebSocket(g.url, c || []), b || k.dispatchEvent(l("connecting")), (g.debug || a.debugAll) && console.debug("ReconnectingWebSocket", "attempt-connect", g.url); var d = h, e = setTimeout(function () { (g.debug || a.debugAll) && console.debug("ReconnectingWebSocket", "connection-timeout", g.url), j = !0, d.close(), j = !1 }, g.timeoutInterval); h.onopen = function () { clearTimeout(e), (g.debug || a.debugAll) && console.debug("ReconnectingWebSocket", "onopen", g.url), g.protocol = h.protocol, g.readyState = WebSocket.OPEN, g.reconnectAttempts = 0; var d = l("open"); d.isReconnect = b, b = !1, k.dispatchEvent(d) }, h.onclose = function (c) { if (clearTimeout(e), h = null, i) g.readyState = WebSocket.CLOSED, k.dispatchEvent(l("close")); else { g.readyState = WebSocket.CONNECTING; var d = l("connecting"); d.code = c.code, d.reason = c.reason, d.wasClean = c.wasClean, k.dispatchEvent(d), b || j || ((g.debug || a.debugAll) && console.debug("ReconnectingWebSocket", "onclose", g.url), k.dispatchEvent(l("close"))); var e = g.reconnectInterval * Math.pow(g.reconnectDecay, g.reconnectAttempts); setTimeout(function () { g.reconnectAttempts++, g.open(!0) }, e > g.maxReconnectInterval ? g.maxReconnectInterval : e) } }, h.onmessage = function (b) { (g.debug || a.debugAll) && console.debug("ReconnectingWebSocket", "onmessage", g.url, b.data); var c = l("message"); c.data = b.data, k.dispatchEvent(c) }, h.onerror = function (b) { (g.debug || a.debugAll) && console.debug("ReconnectingWebSocket", "onerror", g.url, b), k.dispatchEvent(l("error")) } }, 1 == this.automaticOpen && this.open(!1), this.send = function (b) { if (h) return (g.debug || a.debugAll) && console.debug("ReconnectingWebSocket", "send", g.url, b), h.send(b); throw "INVALID_STATE_ERR : Pausing to reconnect websocket" }, this.close = function (a, b) { "undefined" == typeof a && (a = 1e3), i = !0, h && h.close(a, b) }, this.refresh = function () { h && h.close() } } return a.prototype.onopen = function () { }, a.prototype.onclose = function () { }, a.prototype.onconnecting = function () { }, a.prototype.onmessage = function () { }, a.prototype.onerror = function () { }, a.debugAll = !1, a.CONNECTING = WebSocket.CONNECTING, a.OPEN = WebSocket.OPEN, a.CLOSING = WebSocket.CLOSING, a.CLOSED = WebSocket.CLOSED, a });
+    </script>
+
+    <script src="{% static 'discuzz/discuzz.emojis.js'  %}"></script>
+    <script src="{% static 'discuzz/discuzz.replies.js'  %}"></script>
+    
+</div>
+{% endblock %}

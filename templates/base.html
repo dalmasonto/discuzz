@@ -1,0 +1,375 @@
+<html>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'google-code-prettify/run_prettify.js' %}"></script>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+
+    <link rel="stylesheet" href="{% static 'ser.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="/static/google-code-prettify/skins/{{ user.userextension.style_sheet }}.css">
+    <title> Discuzz | Enjoy your forum </title>
+
+    <style>
+    ion-slides {
+      height: 100%;
+    }
+
+    .swiper-slide {
+      display: block;
+    }
+
+    .swiper-slide h2 {
+      margin-top: 2.8rem;
+    }
+
+    .swiper-slide img {
+      max-height: 50%;
+      max-width: 80%;
+      margin: 60px 0 40px;
+      pointer-events: none;
+    }
+
+    b {
+      font-weight: 500;
+    }
+
+    p {
+      padding: 0 40px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ion-color-step-600, #60646b);
+    }
+
+    p b {
+      color: var(--ion-text-color, #000000);
+    }
+  </style>
+
+
+    <style>
+    :root {
+      --ion-safe-area-top: 20px;
+      --ion-safe-area-bottom: 22px;
+    }
+
+    .my-custom-class .action-sheet-group {
+      background: #e5e5e5;
+    }
+
+  </style>
+  <script type="module">
+    import { menuController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
+    window.menuController = menuController;
+  </script>
+
+  <script type="module">
+    import { modalController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
+    window.modalController = modalController;
+  </script>
+
+    <title> Discuzz | Enjoy your forum </title>
+</head>
+<body>
+
+    <ion-app>
+    <ion-menu side="start" content-id="main-content" mode="ios">
+      <ion-header>
+        <ion-toolbar color="dark">
+          <ion-title color="primary"> Discuzz </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+
+        <ion-list mode="ios" no-lines>
+            {% if user.is_authenticated %}
+          <ion-card color="primary" href="{% url 'profile' %}" router-direction="forward">
+
+                <ion-card-content>
+                    <ion-card-subtitle class="text-center" href="{% url 'profile' %}" router-link="{% url 'profile' %}" router-direction="forward">
+                        Profile
+                    </ion-card-subtitle>
+
+                    <ion-chip>
+                        <ion-avatar>
+                            <img src="{{ user.userextension.profile_pic.url }}">
+                        </ion-avatar>
+                        <ion-label>
+                            {{ user.username }}
+                        </ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100">
+                        <ion-badge> Page </ion-badge>
+                        <ion-label class="ion-float-right"> {{ page }} </ion-label>
+                    </ion-chip>
+
+                    <ion-chip class="w-100">
+                        <ion-icon name="mail"></ion-icon>
+                        <ion-label> {{ user.email }} </ion-label>
+                    </ion-chip>
+
+                </ion-card-content>
+            </ion-card>
+
+            {% if user.is_superuser %}
+            <ion-item href="{% url 'myadmin' %}">
+                <ion-icon name="person" slot="start"></ion-icon>
+                <ion-label> Myadmin </ion-label>
+            </ion-item>
+            {% endif %}
+
+          <ion-item href="/" router-direction="forward">
+            <ion-icon name="home" slot="start"></ion-icon>
+            <ion-label>
+                Home
+            </ion-label>
+          </ion-item>
+
+
+          <ion-item href="{% url 'join' %}">
+                <ion-icon slot="start" name="text-outline" slot="start"></ion-icon>
+                <ion-icon slot="end" name="pencil-outline" slot="start"></ion-icon>
+                <ion-label> Create or join </ion-label>
+          </ion-item>
+
+
+          <ion-item href="{% url 'wnews' %}">
+            <ion-icon name="newspaper-outline" slot="start"></ion-icon>
+            <ion-label> WNews </ion-label>
+          </ion-item>
+
+
+          <ion-item href="{% url 'c19' %}">
+            <ion-icon name="trending-up-outline" slot="start"></ion-icon>
+            <ion-label> C-19 </ion-label>
+          </ion-item>
+
+
+          <ion-item href="{% url 'contact' %}">
+            <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+            <ion-label> Contact </ion-label>
+          </ion-item>
+
+
+            <ion-item href="{% url 'about' %}">
+            <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+            <ion-label> About | help </ion-label>
+          </ion-item>
+
+
+          <ion-item href="{% url 'logout' %}">
+            <ion-icon name="log-out-outline" slot="start"></ion-icon>
+            <ion-label> Logout </ion-label>
+          </ion-item>
+            {% else %}
+
+           <ion-item href="{% url 'contact' %}">
+            <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+            <ion-label> Contact </ion-label>
+          </ion-item>
+
+           <ion-item href="{% url 'signup' %}">
+            <ion-icon name="person-add" slot="start"></ion-icon>
+            <ion-label> Signup </ion-label>
+          </ion-item>
+
+           <ion-item href="{% url 'login' %}">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            <ion-label> Login </ion-label>
+          </ion-item>
+            {% endif %}
+
+
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <div class="ion-page" id="main-content">
+
+      <ion-header mode="ios">
+        <ion-toolbar color="dark">
+
+          <ion-buttons slot="start">
+                <ion-menu-button color="primary"></ion-menu-button>
+          </ion-buttons>
+
+          <ion-title>
+              {{ page }}
+          </ion-title>
+
+            <ion-buttons slot="end">
+                <ion-chip color="primary">
+                    <ion-icon name="home" onclick="goHome()"></ion-icon>
+                    <ion-icon name="person" onclick="goToProfile()"></ion-icon>
+                    <ion-badge onclick="goToNotifications()" color="danger">
+                        <ion-icon name="mail"></ion-icon>
+                        <ion-label id="notify">  </ion-label>
+                    </ion-badge>
+                </ion-chip>
+            </ion-buttons>
+
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content  class="ion-no-padding bg-dark" style="--background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQupxCtmNK363uI4A5U9DPHEg9TmMz3brVokA&usqp=CAU);background-position: center; background-repeat: no-repeat; background-size: auto;">
+        {% block content %} {% endblock %}
+
+        <section class="disc-footer">
+        <div class="row">
+            <div class="col-md-4">
+                {% if user.is_authenticated %}
+                <p class="text-center">We are glad to have you here, {{ user.username }}</p>
+                {% endif %}
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}">
+                    <button class="btn btn-primary btn-medium float-right">
+                        Logout
+                    </button>
+                </a> {% else %}
+                <button class="btn btn-primary btn-medium float-right">Login</button> {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3 b-right">
+                <h4 class="text-center">DISCUZZ</h4>
+                <hr>
+                <p class="text-center">Discuzz enables you to discuss any matter that you have with the rest of the world.It is a very good place to help others expound on the ideas that they have</p>
+                <p class="text-center">Therefore, here we encourage people to join a discussion with ultmost good faith and not to go into a discussion to cause problems</p>
+            </div>
+
+
+            <div class="col-md-3 b-right">
+                <h4 class="text-center">Q & A</h4>
+                <hr>
+                <p>Ask a question</p>
+                <p> Invite people to help you solve it out </p>
+            </div>
+
+
+            <div class="col-md-3 b-right">
+                <h4 class="text-center">OPEN PLATFORM</h4>
+                <hr>
+                <p>This is an open platform in which you can share ideas and then learn form friends around the globe</p>
+
+            </div>
+
+
+            <div class="col-md-3 b-right share">
+                <h4 class="text-center">SHARE</h4>
+                <hr>
+                <a href=""> <ion-icon name="logo-facebook" color="primary"></ion-icon> Facebook </a>
+                <a href=""> <ion-icon name="logo-twitter" color="secondary"></ion-icon> Twitter</a>
+                <a href=""> <ion-icon name="logo-instagram" color="warning"></ion-icon> Instagram </a>
+                <a href=""> <ion-icon name="logo-linkedin" class="indigo"></ion-icon> LinkedIn </a>
+                <a href=""> <ion-icon name="logo-google" color="danger"></ion-icon> Google plus </a>
+                <a href=""> <ion-icon name="logo-google-playstore" class="text-yellow"></ion-icon>Download application </a>
+            </div>
+
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col text-center">
+                Website designed by <small>Dalmas Nyaboga Ogembo&copy;<small><i> dalmasogembo@gmail.com</i></small></small>
+            </div>
+        </div>
+        </section>
+      </ion-content>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+
+        <ion-fab-list side="top">
+            <ion-fab-button onclick="goToTop()" color="success"><ion-icon name="arrow-up-circle"></ion-icon></ion-fab-button>
+        </ion-fab-list>
+
+        <ion-fab-list side="start">
+
+            <ion-fab-button color="danger">
+                <ion-icon name="arrow-down-circle"></ion-icon>
+            </ion-fab-button>
+
+            <ion-fab-button color="primary" onclick="goBack()">
+              <ion-icon name="arrow-back-circle"></ion-icon>
+                
+            </ion-fab-button>
+
+        </ion-fab-list>
+
+    </ion-fab>
+        <div id="bottom"></div>
+
+    </div>
+  </ion-app>
+
+  <script src="{% static 'discuzz/discuzz.base.js'  %}"></script>
+    <script>
+        function goToProfile(){
+            window.location.href = '/profile/';
+        }
+
+        function goBack(){
+            window.history.back();
+        }
+        function goHome(){
+            window.location.href = '';
+        }
+        function goToNotifications(){
+            window.location.href = '/profile/notifications/';
+        }
+
+        const notification_btn = document.querySelector('#notify');
+
+        function notificationsHandler() {
+
+            setInterval(() => {
+
+                // notificationChecker();
+            }, 2000);
+        }
+        // notificationsHandler();
+        notificationChecker()
+
+        function notificationChecker(){
+
+            const url = '/profile/get/notifications/';
+            const method = 'GET';
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, url);
+
+            xhr.onload = () => {
+
+                const notifications = JSON.parse(xhr.response);
+                console.log(parseInt(notification_btn.innerHTML), notifications.notifications_count);
+                if(parseInt(notification_btn.innerHTML) === notifications.notifications_count){
+                    return;
+                }
+                else {
+                    notification_btn.innerHTML = notifications.notifications_count;
+                    return;
+                }
+                console.log(notification_btn.innerHTML);
+            }
+            xhr.send();
+        }
+    </script>
+
+</body>
+</html>
