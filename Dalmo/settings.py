@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'channels',
     'multiselectfield',
     'rest_framework',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'Dalmo.urls'
@@ -75,6 +78,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -113,6 +119,22 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend'
+)
+
+SOCIAL_AUTH_GITHUB_KEY = 'ae1030ba364956e9325b'
+SOCIAL_AUTH_GITHUB_SECRET = 'c034527b579038fdedbaff1d117bb415e7584bba'
+
+SOCIAL_AUTH_GITHUB_ORG_NAME = 'discuzz'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '572796436929596'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'cd06bee766b2027339c58c2ab7a165c8'
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -143,14 +165,26 @@ django_heroku.settings(locals())
 
 # Channel layers configuration settings
 import redis
-redis_host = redis.Redis(host='redis-18157.c15.us-east-1-4.ec2.cloud.redislabs.com', port=18157)
+
+redis_host = redis.Redis(host='redis-18157.c15.us-east-1-4.ec2.cloud.redislabs.com', port=18157,
+                         password='KngTsmw0Mpm5vPBuzhdQEWro20zm2E48')
+host = {
+    'host': 'redis-18157.c15.us-east-1-4.ec2.cloud.redislabs.com',
+    'password': 'KngTsmw0Mpm5vPBuzhdQEWro20zm2E48'
+}
+REDIS_LABS = {
+    "host": 'redis-18157.c15.us-east-1-4.ec2.cloud.redislabs.com',
+    "port": 18157,
+    "password": 'KngTsmw0Mpm5vPBuzhdQEWro20zm2E48'
+}
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
+        # 'AUTH': 'KngTsmw0Mpm5vPBuzhdQEWro20zm2E48',
         "CONFIG": {
-            # "hosts": [("localhost", 6379)]
+            "hosts": [("localhost", 6379)]
             # "hosts": [os.environ.get('REDIS_URL')]
-            "hosts": [redis_host]
+            # "hosts": [("https://heroku.com/redis-18157.c15.us-east-1-4.ec2.cloud.redislabs", 18157)],
         },
     },
 }

@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
 
     path('', views.home, name='base'),
@@ -15,6 +17,7 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
 
     path('profile/', views.profile, name='profile'),
+    path('accounts/profile/', views.profile),
     path('profile/notifications/', views.notifications, name='notifications'),
     path('profile/get/notifications/', views.get_notifications),
     path('update/profilepic/', views.profile_pic_update, name='update/profilepic'),
@@ -29,6 +32,5 @@ urlpatterns = [
 
     path('api/send_friend_request/<str:username>/', views.api_add_friend_request),
     path('api/<str:option>/<str:username>/', views.api_add_remove_friend),
-
 
 ]

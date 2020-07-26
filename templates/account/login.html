@@ -1,17 +1,32 @@
 {% extends 'base.html' %} {% block content %}
 <div class="row">
 
-    <div class="col-md-3 col-sm-12"></div>
+    <div class="col-md-3 col-sm-12 full">
+
+        <div class="social-login">
+            <a href="{% url 'social:begin' 'facebook' %}" class="fb btn">
+                <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+            </a>
+
+            <a href="#" class="twitter btn">
+                <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+            </a>
+
+            <a href="{% url 'social:begin' 'github' %}" class="google btn">
+                <i class="fa fa-github fa-fw"></i> Login with Github
+            </a>
+
+        </div>
+
+    </div>
     <div class="col-md-6 col-sm-12 form">
         <ion-card color="dark">
         <ion-card-header>
-            <h4 class="text-center">Log in to your account</h4>
-                {% for message in messages %}
-                <p class="text-success text-danger">{{ message }}</p>
-                {% endfor %}
+            <h4 class="text-center"> Or login manually </h4>
         </ion-card-header>
         <ion-card-content>
         <div class="jumbotron">
+
             <div class="login_form">
 
                 <form method="POST" action="">
@@ -38,6 +53,7 @@
                     form_inputs[2].placeholder = 'Password';
                 </script>
                 <div class="help">
+
                     <ion-chip color="primary">
                         <p>Don't have an account? <a href="{% url 'signup' %}">Signup</a> </p>
                     </ion-chip>

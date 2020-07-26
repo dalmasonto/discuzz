@@ -22,6 +22,7 @@ from my_app.views import page_not_found, handler_500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('oauth/', include('social_django.urls', namespace='social')),
     path('', include('my_app.urls')),
     path('', include('inbox.urls')),
     path('', include('account.urls'))
@@ -30,3 +31,7 @@ urlpatterns = [
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = page_not_found
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
