@@ -182,8 +182,8 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         # 'AUTH': 'KngTsmw0Mpm5vPBuzhdQEWro20zm2E48',
         "CONFIG": {
-            "hosts": [("localhost", 6379)]
-            # "hosts": [os.environ.get('REDIS_URL')]
+            # "hosts": [("localhost", 6379)]
+            "hosts": [os.environ.get('REDIS_URL')]
             # "hosts": [("https://heroku.com/redis-18157.c15.us-east-1-4.ec2.cloud.redislabs", 18157)],
         },
     },
