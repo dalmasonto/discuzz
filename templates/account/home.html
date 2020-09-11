@@ -1,39 +1,34 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
-<div class="jumbotron home">
-    <div class="row mt-15">
-        <div class="col-md-3 col-sm-12">
-            <h3 class="text-center"> Welcome to the discussion forum, {{ user.username }} </h3>
-            <p class="text-lead">For more info about discuzz, goto
-                <a class="about" href="{% url 'about' %}">About DISCUZZ</a>
-            </p>
-            <div id="carouselId" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
+
+<div class="row">
+    <div class="col">
+
+            <ion-card class="ion-no-margin ion-no-padding" style="background: url('../../static/m6.jpg')">
+                <ion-card-header>
+                    <h1 class="text-center text-white display-2"> Discuzz </h1>
+                </ion-card-header>
+                <ion-card-content class="ion-no-margin ion-no-padding">
+
+                    <div class="container">
+                        <div class="row p-2">
+                        </div>
+                    </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 col-sm-12">
+                        <h2 class="text-center text-white" style="font-size: 40px"> Newly posted questions </h2>
+
+                        <div id="carouselId" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators mt-2">
                     <li data-target="#carouselId" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselId" data-slide-to="1"></li>
                     <li data-target="#carouselId" data-slide-to="2"></li>
                 </ol>
-                <div class="carousel-inner" role="listbox">
-                    <div class="carousel-item active">
-                        <img src="{% static 'ideashare.png' %}" alt="First slide">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h6>Learn to share with others</h6>
-                            <p>Enhance you capacity</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'ideashare.png' %}" alt="Second slide">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h6>Learn to share with others</h6>
-                            <p>Enhance you capacity</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'ideashare.png' %}" alt="Third slide">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h6>Learn to share with others</h6>
-                            <p>Enhance you capacity</p>
-                        </div>
-                    </div>
+                <div class="carousel-inner list-1" role="listbox">
+
+                    <ion-title class="text-center display-4 "> Loading... </ion-title>
+
                 </div>
                 <a class="carousel-control-prev" href="#carouselId" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -45,68 +40,90 @@
                 </a>
             </div>
 
+                    </div>
 
-            <div class="login_form_improve">
-                <h4 class="text-center">Raise a topic</h4>
+                    <div class="col-md-6 col-sm-12">
+                        <ion-card-subtitle> <h2 class="text-center text-white" style="font-size: 40px"> Hot discussions </h2> </ion-card-subtitle>
 
-                <form method="POST" action="/api/create/topic/" id="topic_creation_form">
-                    {% csrf_token %}
-                    <fieldset>
-                        <div class="form-group col-md-12 inputBox response-topic-creation">
-                            <!-- <p class="response-msg text-center">Some msg</p> -->
-                        </div>
-                        <div class="form-row input">
-                            <div class="form-group col-md-12 inputBox">
-                                <label for="topic">Topic</label>
-                                <input type="text" class="" name="topic" id="topic" required placeholder="Topic">
-                            </div>
-                            <div class="form-group col-md-12 inputBox">
-                                <label for="subtopic">Subtopic</label>
-                                <input type="text" class="" name="subtopic" id="subtopic" required placeholder="Subtopic">
-                            </div>
-                            <div class="form-group col-md-12 inputBox">
-                                <input type="submit" name="" value="Send">
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+                        <div id="carouselId1" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselId" data-slide-to="2" class="active"></li>
+                    <li data-target="#carouselId" data-slide-to="1"></li>
+                    <li data-target="#carouselId" data-slide-to="0"></li>
+                </ol>
+                <div class="carousel-inner list-2" role="listbox">
 
+                    <ion-title class="text-center display-4"> Loading... </ion-title>
+
+                </div>
+                <a class="carousel-control-prev" href="#carouselId1" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselId1" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
 
-        </div>
+                    </div>
 
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7 col-sm-12">
+                <h1 class="text-center"> Currently running discussions </h1>
+                <div class="row p-2">
+                    <div class="col-md-5 col-sm-12">
+                        <div class="form-group">
+                            <select class="form-select" id="search-option-param" onchange="search()">
+                                <option class="option" value="topic"> Topics </option>
+                                <option value="subtopic"> Subtopics </option>
+                                <option value="description"> Descriptions </option>
+                                <option value="question"> Questions </option>
+                                <option value="date"> Date </option>
+                                <option value="discussion_code"> Discussion codes </option>
+                                <option value="author"> Author </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-11">
+                                <input class="form-control" id="question-search" type="text" oninput="search()" onchange="search()" />
 
-        <div class="col-md-5 col-sm-12">
-            <h3 id="titler" class="text-center"> Currently running discussions</h3>
-
-            <hr>
-            
-            <div class="queries">
-
-                <div class="spinner">
-                    <div>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                            </div>
+                            <div class="col-md-1 col-sm-1">
+                                <ion-badge class="res-count float-right display-4"> 0 </ion-badge>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="d-row">
+                <div class="queries p-2">
+
+                    <div class="spinner">
+                        <div>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="d-row">
+
+                </div>
 
             </div>
 
-        </div>
-
-
-        <div class="col-md-4 col-sm-12">
-            <div class="row">
-                <div class="col">
-                    <h3 class="text-center">Improve our site</h3>
-                    <div class="login_form_improve">
-                        <h4 class="text-center">Send us email</h4>
-
-                        <form method="POST" action="/api/messageUs/" id="send_us_message_form">
+            <div class="col-md-5 col-sm-12">
+                <h2 class="text-center"> Help improve Discuzz </h2>
+                <form class="form p-2" method="POST" action="/api/messageUs/" id="send_us_message_form">
                             {% csrf_token %}
                             <fieldset>
                                 <div class="form-group col-md-12 inputBox response-message-us">
@@ -114,57 +131,65 @@
                                 </div>
                                 <div class="form-row input">
                                     <div class="form-group col-md-12 inputBox">
-                                        <label for="uid">Email</label>
-                                        <input type="email" class="" name="email" id="uid" required placeholder="d@gmail.com">
                                     </div>
                                     <div class="form-group col-md-12 inputBox">
-                                        <label for="reply">Message</label>
-                                        <textarea name="updatemsg" id="reply" class="inputBox " accesskey="r" rows="5" cols="40" placeholder="Write message" required></textarea>
+                                        <label for="reply">Message us</label>
+                                        <textarea name="updatemsg" id="reply" class="form-control" rows="5" cols="40" placeholder="Write message" required></textarea>
                                     </div>
                                     <div class="form-group col-md-12 inputBox">
-                                        <input type="submit" name="" value="Send">
+                                        <button class="btn btn-secondary w-100"> Send us message </button>
                                     </div>
                                 </div>
                             </fieldset>
-                        </form>
-                        <script>
-                        </script>
-                    </div>
-                </div>
+                </form>
+                <h4 class="text-center"> Or </h4>
+                <h6 class="text-center"> <a href="mailto:dalmasogembo@gmail.com" class=""> Email us at dalmasogembo@gmail.com </a> </h6>
             </div>
         </div>
-
-
     </div>
 </div>
+
 <script>
     window.onload = setTimeout(() => {
         LoadQueries(1, 5);
-    }, 3000);
+    }, 10);
 
+    let questions;
+
+    const list_1 = document.querySelector('.list-1');
+    const list_2 = document.querySelector('.list-2');
+
+    const search_param = document.querySelector('#search-option-param');
+    const search_value = document.querySelector('#question-search');
+
+    const res_count_show_el = document.querySelector('.res-count');
 
     const btnRow = document.querySelector('.d-row');
     const queriesEl = document.querySelector(".queries");
-
-    const topic_creation_form = document.querySelector('#topic_creation_form');
-    const topic_creation_div = document.querySelector('.response-topic-creation')
 
     const send_us_message_form = document.querySelector('#send_us_message_form');
     const msg_us_div = document.querySelector('.response-message-us');
 
     function clear_errors() {
-        topic_creation_div.innerHTML = '';
         msg_us_div.innerHTML = '';
     }
 
+    function renderQuizCount(num){
+        if(num > 1000){
+            let ren_num = num / 1000;
+            res_count_show_el.innerHTML = ren_num + 'k';
+        }
+        res_count_show_el.innerHTML = num;
+    }
 
-    topic_creation_form.addEventListener('submit', handleCreateTopicForm);
     send_us_message_form.addEventListener('submit', handleMessageUsForm);
 
     const clearParentEls = () => {
 
         btnRow.innerHTML = '';
         queriesEl.innerHTML = '';
+
+
     };
 
     btnRow.addEventListener('click', (e) => {
@@ -227,26 +252,38 @@
         var desc2 = desc1.replace(/\</g, '&lt');
         var desc3 = desc2.replace(/\>/g, '&gt');
         const newA = `
-        <ion-card class="ion-no-margin ion-margin-bottom ion-no-padding" color="dark" href="/discuzz/${discussion.discussionCode}" router-direction="forwad" router-link="/discuzz/${discussion.discussionCode}" mode='ios'>
+        <ion-card class="ion-no-margin ion-margin-bottom ion-no-padding" href="/discuzz/${discussion.discussionCode}/" router-direction="forward" router-link="/discuzz/${discussion.discussionCode}" mode='ios'>
+            <ion-chip class="" style="position: absolute; right: 2px; top: 2px;">24 likes</ion-chip>
             <ion-card-header class="card-header">
                 <ion-card-title> ${discussion.topic }, ${discussion.subtopic }  </ion-card-title>
+
             </ion-card-header>
 
         <ion-card-content class="ion-no-padding">
-            <p class="text-info"> ${desc3}</p>
-            <p class=""> Question: ${quiz3} </p>
-            <p class="card-text"> The discussion code is: <span class="code">${discussion.discussionCode }</span></p>
+            <div class="w-100">
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <ion-card-subtitle class="text-center"> Description </ion-card-subtitle>
+                    <blockquote class=""> ${desc3}</blockquote>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <ion-card-subtitle class="text-center"> Question </ion-card-subtitle>
+                    <blockquote class=""> ${quiz3}</blockquote>
+                </div>
+            </div>
+            <div class=""> The discussion joining code is: <span class="code">${discussion.discussionCode }</span></div>
 
           <div class="">
             <p class="ion-no-padding">
               <span class="float-right">
-                by
                 <ion-chip color="primary">
                   <ion-avatar>
-                    <img src="${discussion.pic}">
+                    <img src="${discussion.admin.userextension.profile_pic}">
                   </ion-avatar>
                   <ion-label>
-                    ${admin } <span class="text-warning">${discussion.replies} replies </span>
+                    ${admin.username } <span class="text-warning">${discussion.replies_count} replies </span>
                   </ion-label>
                 </ion-chip>
               </span>
@@ -257,8 +294,68 @@
       </ion-card>
 
         `;
-        console.log(newA)
         queriesEl.insertAdjacentHTML("beforeEnd", newA);
+    }
+
+
+    function renderSpecificQuestion(parent, discussion, active=false){
+        let active_state = '';
+        if(active === true){
+            active_state = 'active';
+        }
+
+        var admin = discussion.admin;
+        var quiz1 = discussion.question;
+        var quiz2 = quiz1.replace(/\</g, '&lt');
+        var quiz3 = quiz2.replace(/\>/g, '&gt');
+        var quiz4 = quiz3.substring(0, 100) + ' ...';
+
+        var desc1 = discussion.description;
+        var desc2 = desc1.replace(/\</g, '&lt');
+        var desc3 = desc2.replace(/\>/g, '&gt');
+        var desc4 = desc3.substring(0, 50) + ' ...';
+
+        let what_to_render = `
+            <div class="carousel-item ${active_state}">
+
+                        <ion-card class="ion-margin-bottom ion-no-padding" href="/discuzz/${discussion.discussionCode}" router-direction="forward" router-link="/discuzz/${discussion.discussionCode}" mode='ios'>
+                            <ion-card-header class="card-header">
+                                <ion-card-title> ${discussion.topic} </ion-card-title>
+                                <ion-card-subtitle> ${discussion.subtopic}  </ion-card-subtitle>
+                            </ion-card-header>
+
+                        <ion-card-content class="ion-padding">
+                            <p class="text-info" style="height: 70px; width: 100%; overflow-y: visible;"> ${desc4} </p>
+                            <p class="" style="height: 70px; overflow-y: visible;"> Question: ${quiz4} </p>
+                            <p class="card-text"> The discussion code is: <span class="code"> ${discussion.discussionCode} </span></p>
+
+                          <div class="">
+                            <p class="ion-no-padding">
+                              <span class="float-right">
+                                by
+                                <ion-chip color="primary">
+                                  <ion-avatar>
+                                       <img src=" ${discussion.admin.userextension.profile_pic} " />
+                                  </ion-avatar>
+                                  <ion-label>
+                                    ${discussion.admin.username} <span class="text-warning"> ${discussion.replies_count} Replies </span>
+                                  </ion-label>
+                                </ion-chip>
+                              </span>
+                            </p>
+                          </div>
+                        </ion-card-content>
+
+                      </ion-card>
+                      <div class="mb-5">
+                          <ion-button expand="block" color="primary" class="io-margin-bottom" href="/discuzz/${discussion.discussionCode}" router-direction="forward" router-link="/discuzz/${discussion.discussionCode}"> Answer </ion-button>
+                      </div>
+
+                    </div>
+
+        `;
+
+        parent.insertAdjacentHTML('beforeEnd', what_to_render)
     }
 
 
@@ -271,7 +368,7 @@
         var end = page * resultsPerPage;
 
         const xhr = new XMLHttpRequest();
-        const url = "/api/all_discussions/";
+        const url = "/mapi/questions/";
         const method = "GET";
         const responseType = "json";
         xhr.responseType = responseType;
@@ -280,11 +377,48 @@
         xhr.onload = () => {
 
             const serverResponse = xhr.response;
-            var listed_queries = serverResponse.response;
+            var listed_queries = serverResponse;
+            questions = serverResponse;
+            let what_to_sort = serverResponse;
+            let sorted_array_with_most_replies = what_to_sort.sort((a, b) => a.replies_count - b.replies_count).reverse();
 
             clearParentEls();
+
+            renderQuizCount(serverResponse.length)
+
             listed_queries.slice(start, end).forEach(queryTagRender);
             renderButtons(page, listed_queries.length, resultsPerPage);
+
+             list_1.innerHTML = '';
+             list_2.innerHTML = '';
+
+            let b = true;
+            for(let i = listed_queries.length - 1; i > 0; i--){
+
+                if(b){
+                    renderSpecificQuestion(list_1, listed_queries[i], true)
+                }
+                else{
+                    renderSpecificQuestion(list_1, listed_queries[i], false)
+                }
+
+                b = false
+            }
+
+            let c = true;
+
+            for(let i = 0; i < 3; i++){
+
+                if(c){
+                    renderSpecificQuestion(list_2, sorted_array_with_most_replies[i], true)
+                }
+                else{
+                    renderSpecificQuestion(list_2, sorted_array_with_most_replies[i], false)
+                }
+
+                c = false
+            }
+
 
         }
 
@@ -305,28 +439,7 @@
             const response_ = JSON.parse(serverResponse);
             clear_errors();
             myForm.reset();
-            console.log('THE RESPONSE IS', response_);
             responseDisplay(msg_us_div, response_.response_msg, response_.response_type);
-        };
-        xhr.send(myFormData);
-    }
-
-    function handleCreateTopicForm(event) {
-        event.preventDefault();
-        const myForm = event.target;
-        const myFormData = new FormData(myForm);
-        const url = myForm.getAttribute('action');
-        const method = myForm.getAttribute('method');
-
-        const xhr = new XMLHttpRequest();
-        xhr.open(method, url);
-        xhr.onload = () => {
-            const serverResponse = xhr.response;
-            const response_ = JSON.parse(serverResponse);
-            clear_errors();
-            myForm.reset();
-            console.log('THE RESPONSE IS', response_);
-            responseDisplay(topic_creation_div, response_.response_msg, response_.response_type);
         };
         xhr.send(myFormData);
     }
@@ -338,5 +451,178 @@
 
         parentEl.insertAdjacentHTML('beforeEnd', response);
     };
+
+    function search(){
+        let param = search_param.value;
+        let query = search_value.value;
+        let search_in = [...questions]
+
+        if(query === ''){
+        res_count_show_el.innerHTML = '';
+            LoadQueries(1, 5);
+        }
+        else{
+
+            clearParentEls();
+            let search_regex = RegExp(query, 'gi');
+
+            if(param === 'topic'){
+                let searched = [];
+                let res = search_in.filter(quiz => {
+                    if( quiz.topic.match(search_regex) ) {
+                        searched.push(quiz)
+                    }
+                });
+                if(searched.length === 0){
+                    renderQuizCount(searched.length)
+                    queryTagRenderZeroRes(query, param);
+                }
+                else{
+                     renderQuizCount(searched.length)
+                    searched.map(res => queryTagRender(res))
+                }
+            }
+            else if(param === 'subtopic'){
+                let searched = [];
+                let res = search_in.filter(quiz => {
+                    if( quiz.subtopic.match(search_regex) ) {
+                        searched.push(quiz)
+                    }
+                });
+                if(searched.length === 0){
+                     renderQuizCount(searched.length)
+                    queryTagRenderZeroRes(query, param);
+                }
+                else{
+                     renderQuizCount(searched.length)
+                    searched.map(res => queryTagRender(res))
+                }
+            }
+
+            else if(param === 'description'){
+                let searched = [];
+                let res = search_in.filter(quiz => {
+                    if( quiz.description.match(search_regex) ) {
+                        searched.push(quiz)
+                    }
+                });
+                if(searched.length === 0){
+                     renderQuizCount(searched.length)
+                    queryTagRenderZeroRes(query, param);
+                }
+                else{
+                     renderQuizCount(searched.length)
+                    searched.map(res => queryTagRender(res))
+                }
+            }
+
+            else if(param === 'question'){
+                let searched = [];
+                let res = search_in.filter(quiz => {
+                    if( quiz.question.match(search_regex) ) {
+                        searched.push(quiz)
+                    }
+                });
+                if(searched.length === 0){
+                     renderQuizCount(searched.length)
+                    queryTagRenderZeroRes(query, param);
+                }
+                else{
+                     renderQuizCount(searched.length)
+                    searched.map(res => queryTagRender(res))
+                }
+            }
+
+            else if(param === 'author'){
+                let searched = [];
+                let res = search_in.filter(quiz => {
+                    if( quiz.admin.username.match(search_regex) ) {
+                        searched.push(quiz)
+                    }
+                });
+                if(searched.length === 0){
+                     renderQuizCount(searched.length)
+                    queryTagRenderZeroRes(query, param);
+                }
+                else{
+                     renderQuizCount(searched.length)
+                    searched.map(res => queryTagRender(res))
+                }
+            }
+
+            else if(param === 'date'){
+                let searched = [];
+                let res = search_in.filter(quiz => {
+                    if( quiz.createTime.match(search_regex) ) {
+                        searched.push(quiz)
+                    }
+                });
+                if(searched.length === 0){
+                     renderQuizCount(searched.length)
+                    queryTagRenderZeroRes(query, param);
+                }
+                else{
+                     renderQuizCount(searched.length)
+                    searched.map(res => queryTagRender(res))
+                }
+            }
+
+            else if(param === 'discussion_code'){
+                let searched = [];
+                let res = search_in.filter(quiz => {
+                    if( quiz.discussionCode.match(search_regex) ) {
+                        searched.push(quiz)
+                    }
+                });
+                if(searched.length === 0){
+                     renderQuizCount(searched.length)
+                    queryTagRenderZeroRes(query, param);
+                }
+                else{
+                     renderQuizCount(searched.length)
+                    searched.map(res => queryTagRender(res))
+                }
+            }
+
+        }
+
+        console.log(param, ',' , query)
+    }
+
+    function markSearchResult(res){
+        let result = `<mark> ${ res } </mark>`
+        console.log('THE MARKED RESULT IS ', result)
+        return result;
+    }
+
+
+    function queryTagRenderZeroRes(text, type) {
+        const newA = `
+        <ion-card class="ion-no-margin ion-margin-bottom ion-no-padding" router-direction="forward" mode='ios'>
+            <ion-card-header class="card-header">
+                <ion-card-title class="text-center"> No search results found  </ion-card-title>
+
+            </ion-card-header>
+
+        <ion-card-content class="ion-no-padding">
+
+            <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                    <span> The search for <b><i class="text-danger"> '${text}' </i> </b> did not match with any of our <strong class="text-primary"> ${type}s </strong>
+                    <h1 class="display-4 text-center" style="font-size: 120px;"> Found results <br/> 0 </h1>
+                </div>
+
+            </div>
+
+
+        </ion-card-content>
+
+      </ion-card>
+
+        `;
+        queriesEl.insertAdjacentHTML("beforeEnd", newA);
+    }
+
 </script>
 {% endblock %}

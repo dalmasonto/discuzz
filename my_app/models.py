@@ -14,109 +14,6 @@ from django.dispatch import receiver
 from multiselectfield import MultiSelectField
 
 
-class Friend(models.Model):
-    friend = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='friend')
-
-
-class Languages(models.Model):
-    languages = (
-        ('java', 'Java'),
-        ('javascript', 'Javascript'),
-    )
-    choices = models.CharField(choices=languages, blank=True, null=True, max_length=30)
-
-
-class JSONCharField(models.TextField):
-    def to_python(self, value):
-        if value == "":
-            return None
-        try:
-            if isinstance(value, str):
-                return json.loads(value)
-        except ValueError:
-            pass
-
-    def from_db_value(self, value, *args, **kwargs):
-        if value == "":
-            return None
-        if isinstance(value, dict):
-            value = json.dumps(value, cls=DjangoJSONEncoder)
-            return value
-
-
-class UserExtension(models.Model):
-    sheet = (
-        ('prettify', 'default'),
-        ('desert', 'desert'),
-        ('doxy', 'doxy'),
-        ('sons-of-obsidian', 'sons-of-obsidian'),
-        ('sunburst', 'sunburst')
-
-    )
-    mode = (
-        ('light', 'light'),
-        ('dark', 'dark')
-    )
-    gender_choices = (
-        ('male', 'Male'),
-        ('female', 'Female'),
-        ('other', 'Other')
-    )
-    languages = (
-        ('Java', 'Java'),
-        ('Javascript', 'Javascript'),
-        ('C', 'C'),
-        ('C#', 'C#'),
-        ('C++', 'C++'),
-        ('Objective-c', 'Objective-C'),
-        ('Php', 'Php'),
-        ('Python', 'Python'),
-        ('Javascript', 'Javascript'),
-        ('Ruby', 'Ruby'),
-        ('Perl', 'Perl'),
-        ('Clojure', 'Clojure'),
-        ('Scala', 'Scala'),
-        ('Go', 'Go'),
-        ('R*', 'R*'),
-        ('Tcl', 'Tcl'),
-        ('Lua', 'Lua'),
-        ('Bash', 'Bash'),
-        ('Visual Basic.NET', 'Visual Basic.NET'),
-        ('Haskel', 'Haskel'),
-    )
-    user = models.OneToOneField(User, default=None, on_delete=models.CASCADE, blank=True, null=True)
-    style_sheet = models.TextField(null=True, blank=True, default=sheet[1][1], choices=sheet)
-    mode_sheet = models.TextField(null=True, blank=True, default=mode[1][0], choices=mode)
-    profile_pic = models.ImageField(blank=True,
-                                    null=True,
-                                    default='/default.png')
-    friends = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='friends')
-    friend_requests = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='friend_requests')
-
-    location = models.CharField(default='', null=True, blank=True, max_length=100)
-    phone_number = models.CharField(default='+254 7 06 522 473', null=True, blank=True, max_length=20)
-    gender = models.TextField(default='Not set', blank=True, null=True, choices=gender_choices, max_length=10)
-    bio = models.CharField(default='I love discuzz since it is the best discussion platform.',
-                           max_length=200, blank=True, null=True)
-    programming_languages = MultiSelectField(choices=languages, max_choices=20, blank=True, null=True)
-
-    notifications = jsonfield.JSONField(default=[{"id": 0, "type": "visiting message", "by": "Discuzz"}])
-
-    hobbies = models.CharField(blank=True, null=True, max_length=200)
-
-    status = models.TextField(blank=True, null=True, max_length=200, default='offline')
-
-    @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
-            UserExtension.objects.create(user=instance)
-        # post_save.connect(UserExtension, sender=User)
-
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.userextension.save()
-
-
 class Create(models.Model):
     choices = (
         ('visible', 'visible'),
@@ -137,9 +34,6 @@ class Create(models.Model):
 
     def __str__(self):
         return self.topic
-
-    def where(self):
-        return self.discussion_code
 
 
 class Discuzz(models.Model):

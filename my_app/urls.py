@@ -16,7 +16,8 @@ urlpatterns = [
     path('create/', views.create, name='create'),
     path('api/createTopic/', views.api_create_quiz, name='api/createTopic'),
     path('api/create/topics_subtopics/', views.api_topic_subtopic_render, name='api/create'),
-    path('Join/', views.join, name='join'),
+    path('join/', views.join, name='join'),
+    path('discussion_join/', views.join_via_code, name='discussion_join'),
 
     path('comments/<str:reply_id>/', views.comments_api),
 
@@ -32,25 +33,21 @@ urlpatterns = [
     path('discuzz_api/<str:discussion_details>/', views.reply_api),
 
     path('api/discuzz/<str:discussion_details>/', views.api_discuzz_details, name='api_discuzz'),
-    path('api/all_discussions/', views.api_all_queries, name='api_objects_all'),
     path('api/all_numbers/', views.api_my_admin, name='api_all_numbers'),
     path('api/participants/<str:discussion_code>/', views.participants),
 
     path('like/', views.like, name='like'),
     path('dislike/', views.dislike, name='dislike'),
     path('comment/', views.all_comments_api, name='comment'),
-
-    path('api/like/<int:reply_id>/', views.api_like),
-    path('api/dislike/<int:reply_id>/', views.api_dislike),
     path('emails/', views.email, name='emails'),
 
     path('prog/', views.progpage, name='prog'),
 
-    path('api/user-details/<str:username>/', views.get_user_info)
-
 ]
 
 urlpatterns += [
-    path('api/replies/', views.reply_api),
-    path('api/questions/', views.quiz_api),
+    path('mapi/questions/', views.quiz_api.as_view()),
+    path('mapi/questions/<str:id_>/', views.quiz_api_single),
+    path('mapi/replies/', views.reply_api),
+    path('mapi/comments/', views.comment_api),
 ]

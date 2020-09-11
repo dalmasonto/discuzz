@@ -1,73 +1,43 @@
 {% extends 'base.html' %} {% block content %}
-<div class="row">
 
-    <div class="col-md-3 col-sm-12 full">
-
-        <div class="social-login">
-            <a href="{% url 'social:begin' 'facebook' %}" class="fb btn">
-                <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+    <div class="row">
+        <div class="col-md-5 col-sm-12 p-4">
+            <h4 class="text-center"> Login with a social media account </h4>
+            <a href="{% url 'social:begin' 'facebook' %}" class="fb btn btn-primary w-100 p-2 mb-3 mt-3">
+                <i class="fa fa-facebook fa-fw pl-1"></i> Login with Facebook
             </a>
 
-            <a href="#" class="twitter btn">
-                <i class="fa fa-twitter fa-fw"></i> Login with Twitter
+            <a href="#" class="twitter btn btn-info w-100 p-2 mb-3">
+                <i class="fa fa-twitter fa-fw pl-1"></i> Login with Twitter
             </a>
 
-            <a href="{% url 'social:begin' 'github' %}" class="google btn">
-                <i class="fa fa-github fa-fw"></i> Login with Github
+            <a href="{% url 'social:begin' 'github' %}" class="btn btn-success w-100 p-2 mb-3">
+                <i class="fa fa-github fa-fw pl-1"></i> Login with Github
             </a>
 
-        </div>
+            <h4 class="text-center"> Login with your Discuzz account</h4>
 
-    </div>
-    <div class="col-md-6 col-sm-12 form">
-        <ion-card color="dark">
-        <ion-card-header>
-            <h4 class="text-center"> Or login manually </h4>
-        </ion-card-header>
-        <ion-card-content>
-        <div class="jumbotron">
-
-            <div class="login_form">
-
-                <form method="POST" action="">
+            <form method="POST" action="" class="form">
                     {% csrf_token %}
-                    <fieldset>
                         <div class="form-row input">
                             <div class="form-group col-md-12 inputBox">
                                 <label for="uid">Username</label>
-                                <input type="text" class="" name="uid" id="uid" placeholder="Username">
+                                <input type="text" class="form-control" name="uid" id="uid" placeholder="Username">
                             </div>
                             <div class="form-group col-md-12 inputBox">
                                 <label for="pwd">Password</label>
-                                <input type="password" class="" name="pwd" id="pwd" placeholder="Password">
+                                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Password">
                             </div>
                             <div class="form-group col-md-12 inputBox">
-                                <input type="submit" name="" value="Sign In">
+                                <button class="btn btn-primary w-100"> Login </button>
                             </div>
                         </div>
-                    </fieldset>
                 </form>
-                <script>
-                    let form_inputs = document.getElementsByTagName("input");
-                    form_inputs[1].placeholder = 'Username';
-                    form_inputs[2].placeholder = 'Password';
-                </script>
-                <div class="help">
-
-                    <ion-chip color="primary">
-                        <p>Don't have an account? <a href="{% url 'signup' %}">Signup</a> </p>
-                    </ion-chip>
-                    <ion-chip color="success">
-                        <p>Forgot password?
-                            <a href="{% url 'signup' %}"> <span> Click here </span> </a>
-                        </p>
-                    </ion-chip>
-                </div>
+            <div class="p-1 ">
+                <a href="{% url 'signup' %}" class="btn btn-info">Signup</a>
+                <a href="{% url 'password_reset' %}" class="btn btn-secondary"> Forgot password? </a>
             </div>
         </div>
-           </ion-card-content>
-    </ion-card>
     </div>
-    <div class="col-md-3 col-sm-12"></div>
-</div>
+
 {% endblock %}

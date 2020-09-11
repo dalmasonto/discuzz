@@ -43,6 +43,8 @@ class ThreadManager(models.Manager):
 class Thread(models.Model):
     first = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chat_thread_first')
     second = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='chat_thread_second')
+    first_online_state = models.BooleanField(verbose_name='chat_firts_online_status', default=False)
+    second_online_state = models.BooleanField(verbose_name='chat_second_online_status', default=False)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -63,4 +65,13 @@ class ChatMessage(models.Model):
     thread = models.ForeignKey(Thread, null=True, blank=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='sender', on_delete=models.CASCADE)
     message = models.TextField()
+    read_by = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name='read_by', related_name='read_by', blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class Emoji(models.Model):
+    emoji = models.CharField(max_length=10)
+    name = models.TextField(max_length=50)
+
+    def __str__(self):
+        return f'{self.emoji} {self.name}'

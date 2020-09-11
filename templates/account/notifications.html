@@ -1,140 +1,330 @@
 {% extends 'base.html' %} {% load static %}
+
+{% block style %}
+    <style>
+        .fixed-card{
+            width: 300px;
+            display: block;
+        }
+
+        .fixed-quiz-card{
+            width: 400px;
+            height: 350px;
+            overflow: auto;
+        }
+
+        .notification-pic{
+
+            width: 180px;
+            height: 180px;
+            margin: auto;
+
+
+        }
+
+        .notification-pic-quiz{
+
+            width: 180px;
+            height: 180px;
+            margin: auto;
+
+
+        }
+
+        @media (max-width: 576px){
+
+            .fixed-card{
+                width: 90vw;
+                display: block;
+            }
+
+        }
+        .down{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+        }
+        .close-top{
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            font-size: 24px;
+        }
+        .lower{
+            position: fixed;
+            bottom: 0;
+            /* top: 20px; */
+            left: 0;
+            right: 0;
+            padding: 10px;
+        }
+        .not-card{
+            height: 400px;
+            overflow: auto;
+         }
+
+
+    </style>
+{% endblock %}
+
 {% block content %}
-    <ion-card color="dark" class="ion-no-padding">
-        <ion-card-header>
-            <ion-card-title class="text-center">
-                NOTIFICATIONS
-            </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <ion-card-subtitle class="text-center ion-no-padding ion-no-margin"> Requests </ion-card-subtitle> <hr>
+    <h4 class="text-center ion-no-padding ion-no-margin w-100"> Friend requests </h4>
+    <div class="container-fluid d-flex" style="width: auto; overflow-x: auto">
 
-                <ion-card color="dark" class="ion-no-padding ion-no-margin">
+        {% for req in notifications %}
+        {% if req.kind == 'request' %}
 
-                    {% for req in notifications %}
-                        {% if req.type == 'request' %}
-                            <ion-item color="dark">
-                                <ion-avatar slot="start">
-                                    <img src="{{ req.by.profile_pic }}">
-                                </ion-avatar>
-                                <ion-label>
-                                    {{ req.by.user.username }}
-                                </ion-label>
-                                <ion-button class="non-friend-{{req.by.user.username}}" color="primary" onclick="addUserAsFriend(this)" data-name="{{req.by.user.username}}" data-hide="parent" data-id="btn-add-{{my_user.person.username}}" data-url="/api/add/{{req.by.user.username}}/">
-                                    <ion-icon slot="start" name="add" ></ion-icon>
-                                    Accept
-                                </ion-button>
-                                <ion-icon name="trash" color="danger" data-what="request by {{req.by.user.username}}" onclick="presentAlertConfirm(this)" data-url="/notification/{{req.id}}/"></ion-icon>
-                            </ion-item>
-                        {% elif req.type == 'now_friends' %}
-                            <ion-item color="dark">
-                                <ion-avatar slot="start">
-                                    <img src="{{ req.by.profile_pic }}">
-                                </ion-avatar>
-                                <ion-label>
-                                    Now friends with {{ req.by.user.username }}
-                                </ion-label>
-                                <ion-icon name="trash" color="danger" data-what="Now friends with {{req.by.user.username}}" onclick="presentAlertConfirm(this)" data-hide="parent" data-url="/notification/{{req.id}}/"></ion-icon>
-                             </ion-item>
-                        {% endif %}
+        <div class="d-inline-flex">
+            <ion-card class="fixed-card ion-no-margin mt-2 mr-2 mb-1">
+            <ion-card-header>
+                <h6 class="text-center"> {{ req.by.username }} sent a friend request </h6>
+                     <ion-avatar slot="" class="notification-pic">
+                         <img src="{{ req.by.userextension.profile_pic }}">
+                     </ion-avatar>
+                    <ion-icon name="close" class="close-top"></ion-icon>
+            </ion-card-header>
+            <ion-card-content>
+                <div class="">
+                    <ion-button color="secondary" expand="block" class="non-friend-{{req.by.username}}" onclick="addUserAsFriend(this)" data-username="{{req.by.username}}" data-hide="parent" data-id="btn-add-{{my_user.person.username}}" data-notificationId="{{req.id}}" data-url="/api/add/{{req.by.username}}/{{req.id}}">
+                        Accept
+                    </ion-button>
+                    <ion-button color="primary" expand="block" fill="outline" onclick="presentAlertConfirm(this)" data-what="Request by {{ req.by.username }} notification" data-hide="parent" data-url="/notification/delete/{{req.id}}/">
+                        Cancel
+                    </ion-button>
 
-                    {% endfor %}
-
-                </ion-card>
+                </div>
+            </ion-card-content>
+        </ion-card>
+        </div>
 
 
-                    <ion-card color="dark" class="ion-no-padding ion-no-margin">
-                        <ion-card-subtitle class="text-center"> Messages </ion-card-subtitle> <hr>
-                    {% for req in notifications %}
-                        {% if req.type == 'message' %}
-                            <ion-item color="dark">
-                                <ion-avatar slot="start">
-                                    <img src="{{ req.by.profile_pic }}">
-                                </ion-avatar>
-                                <ion-label>
-                                    {{ req.by.user.username }}
-                                </ion-label>
-                                <ion-button color="success" ion-link="/chat/{{req.by.user.username}}/" href="/chat/{{req.by.user.username}}/">
-                                    Read
-                                </ion-button>
-                                <ion-icon name="trash" color="danger" data-what="Message from {{req.by.user.username}}" data-hide="parent" onclick="presentAlertConfirm(this)" data-url="/notification/{{req.id}}/"></ion-icon>
-                             </ion-item>
-                        {% endif %}
-                    {% endfor %}
-                    </ion-card>
-
-            <ion-card-subtitle class="text-center"> Question notifications </ion-card-subtitle> <hr>
+        {% endif %}
 
 
-                    {% for req in notifications %}
-                        {% if req.type == 'question' %}
-                            <ion-card color="dark" class="ion-no-padding ion-no-margin ion-margin-bottom">
-                                <div class="col">
-                                    <ion-fab vertical="top" horizontal="end" slot="fixed" data-hide="parent2" data-what="Question posted by {{req.by.user.username}}" onclick="presentAlertConfirm(this)"  data-url="/notification/{{req.id}}/">
-                                        <ion-fab-button color="danger">
-                                          <ion-icon name="trash"></ion-icon>
-                                        </ion-fab-button>
-                                    </ion-fab>
-                                </div>
+        {% if req.kind == 'now_friends' %}
 
-                                <ion-card-header>
+        <div class="d-inline-flex">
 
-                                    <ion-avatar slot="" style="margin: auto">
-                                    <img src="{{ req.by.profile_pic }}">
-                                    </ion-avatar>
+            <ion-card class="fixed-card ion-no-margin mt-2 mr-2 mb-1">
+            <ion-card-header>
+                <h6 class="text-center"> Now friends with {{ req.by.username }} </h6>
+                     <ion-avatar slot="" class="notification-pic">
+                         <img src="{{ req.by.userextension.profile_pic }}">
+                     </ion-avatar>
+                    <ion-icon name="close" class="close-top"></ion-icon>
+            </ion-card-header>
+            <ion-card-content>
+                <div class="">
 
-                                    <ion-card-subtitle class="text-center">
-                                        {{ req.by.user.username | title}} posted a new question
-                                    </ion-card-subtitle>
+                    <ion-button color="success" fill="outline" expand="block" href="/chat/{{req.by.username}}" data-url="/notification/{{req.id}}/">
+                        Chat
+                    </ion-button>
 
-                                </ion-card-header>
-                                <ion-card-content>
-                                    <ion-button color="success" fill="outline" expand="block" ion-link="/discuzz/{{req.by.user.username}}/" href="/chat/{{req.by.user.username}}/">
-                                        <ion-label> Join </ion-label>
-                                    </ion-button>
-                                </ion-card-content>
-                             </ion-card>
-                        {% endif %}
-                    {% endfor %}
+                    <ion-button color="danger" expand="block" onclick="presentAlertConfirm(this)" data-what="Now friends with {{ req.by.username }} notification" data-hide="parent" data-url="/notification/delete/{{req.id}}/">
+                        Delete
+                    </ion-button>
 
-            <ion-card-subtitle class="text-center"> Mentions </ion-card-subtitle> <hr>
+                </div>
+            </ion-card-content>
+        </ion-card>
+        </div>
+
+
+        {% endif %}
+
+        {% endfor %}
+
+</div>
+
+
+
+<h4 class="text-center ion-no-padding ion-no-margin w-100"> Question Notifications </h4>
+    <div class="container-fluid d-flex" style="width: auto; overflow-x: auto; -webkit-overflow-scrolling: touch; -ms-overflow-style: -ms-autohiding-scrollbar;">
+
+        {% for req in notifications %}
+        {% if req.kind == 'question' %}
+
+        <div class="d-inline-flex mr-3">
+            <div class="d-block">
+                <h6> Your friend {{req.by.username}} posted a new question </h6>
+            <ion-card class="ion-no-margin ion-margin-bottom ion-no-padding mr-3 fixed-quiz-card" href="/discuzz/{{req.question_code}}/" router-direction="forward" router-link="/discuzz/${req.question_code}" mode='ios'>
+
+            <ion-card-header class="card-header">
+                <ion-card-title> {{req.topic }}, some subtopic </ion-card-title>
+
+            </ion-card-header>
+
+        <ion-card-content class="ion-padding">
+            <div class="w-100">
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <ion-card-subtitle class="text-center"> Description </ion-card-subtitle>
+                    <blockquote class=""> Some description </blockquote>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <ion-card-subtitle class="text-center"> Question </ion-card-subtitle>
+                    <blockquote class=""> {{ req.question }}</blockquote>
+                </div>
+            </div>
+            <div class=""> The discussion code is: <span class="code"> {{req.question_code }}</span></div>
+
+          <div class="fixed-bottom">
+            <p class="ion-no-padding">
+              <span class="float-right">
+                <ion-chip color="primary">
+                  <ion-avatar>
+                    <img src=" {{req.by.userextension.profile_pic}}">
+                  </ion-avatar>
+                  <ion-label>
+                    {{ req.by.username }}
+                  </ion-label>
+                </ion-chip>
+              </span>
+            </p>
+          </div>
         </ion-card-content>
-    </ion-card>
+
+      </ion-card>
+       <ion-button expand="block" color="danger" onclick="presentAlertConfirm(this)" data-what="Now friends with {{ req.by.username }} notification" data-hide="parent3" data-url="/notification/delete/{{req.id}}/"> Delete </ion-button>
+
+        </div>
+        </div>
+
+
+        {% endif %}
+        {% endfor %}
+
+</div>
+
+<h4 class="text-center ion-no-padding ion-no-margin w-100"> Mentions </h4>
+<div class="container-fluid d-flex" style="width: auto; overflow-x: auto">
+
+        {% for question in question_mentions %}
+        <div class="d-inline-flex">
+            <ion-card class="fixed-card ion-no-margin mt-2 mr-2 mb-1 not-card">
+            <ion-card-header>
+                <h6 class="text-center"> You were mentioned in a question posted on {{question.createTime | date}} </h6>
+                    <ion-icon name="close" class="close-top"></ion-icon>
+
+            </ion-card-header>
+            <ion-card-content>
+                <div>
+                    <p> {{ question.admin.username }} mentioned you in his question about {{question.topic | title}}, {{question.subtopic | title}} <br/>
+                        With a description ' {{ question.description }}' and discussion code <a href="/discuzz//{{question.discussionCode}}/"> {{question.discussionCode}} </a> </p>
+                    <p> The question is {{ question.question }} </p>
+                </div>
+                <div class="lower">
+                    <ion-button color="secondary" expand="block" href="/discuzz/{{question.discussionCode}}/">
+                        View Question
+                    </ion-button>
+
+                </div>
+            </ion-card-content>
+        </ion-card>
+        </div>
+     {% endfor %}
+
+    {% for reply in reply_mentions %}
+        <div class="d-inline-flex">
+            <ion-card class="fixed-card ion-no-margin mt-2 mr-2 mb-1 not-card">
+            <ion-card-header>
+                <h6 class="text-center"> You were mentioned in a reply made on {{ reply.reply_time | date }} </h6>
+                    <ion-icon name="close" class="close-top"></ion-icon>
+            </ion-card-header>
+            <ion-card-content>
+                <div>
+
+                    <p> The reply was done by {{ reply.username.username }} in a hot discussion. You can make a reply too <a href="/discuzz/{{reply.discussion_code.discussionCode}}/"> here </a> </p>
+                    <p> 🙶 {{ reply.reply }} 🙷 </p>
+
+                </div>
+                <div class="lower">
+                    <ion-button color="secondary" expand="block" href="/discuzz/{{reply.discussion_code.discussionCode}}/">
+                        Answer
+                    </ion-button>
+
+                </div>
+            </ion-card-content>
+        </ion-card>
+        </div>
+     {% endfor %}
+
+    {% for comment in comment_mentions %}
+        <div class="d-inline-flex">
+            <ion-card class="fixed-card ion-no-margin mt-2 mr-2 mb-1 not-card">
+            <ion-card-header>
+                <h6 class="text-center"> You were mentioned in a comment done on {{ comment.commented_on | date }} </h6>
+                    <ion-icon name="close" class="close-top"></ion-icon>
+            </ion-card-header>
+            <ion-card-content>
+                <div>
+                    <p> The comment was made by {{ comment.commented_by.username }} to a reply " {{comment.commented_to.reply}} "
+                        at a hot discussion about `{{comment.commented_to.discussion_code.topic }}, {{comment.commented_to.discussion_code.subtopic }}`
+                        <a href="/discuzz/{{comment.commented_to.discussion_code.discussionCode }}/"> {{comment.commented_to.discussion_code.discussionCode }} </a>
+                    </p>
+                    <p class="mt-5"> The comment is 🙶 {{ comment.comment }} 🙷 </p>
+                </div>
+                <div class="lower">
+                    <ion-button color="secondary" expand="block" href="/discuzz/{{comment.commented_to.discussion_code.discussionCode}}/">
+                        Visit to Answer
+                    </ion-button>
+
+                </div>
+            </ion-card-content>
+        </ion-card>
+        </div>
+     {% endfor %}
+
+</div>
+
 
 <script>
-    /* function deleteNotification(el) {
-        const method = 'GET';
-        const url = el.dataset.url;
-        console.log('THE URL TO DELETE NOTIFICATION IS ', url)
-        const xhr = new XMLHttpRequest();
-
-        xhr.open(method, url);
-        xhr.onload = () => {
-            console.log(xhr.response)
-        }
-        xhr.send()
-    } */
 
     function addUserAsFriend(el){
+        const friend_username = el.dataset.username;
+        const notification_id = el.dataset.notificationId;
+
         const url = el.dataset.url;
         const method = 'GET';
         const xhr = new XMLHttpRequest();
         xhr.open(method, url);
         xhr.onload = () => {
-            const response = JSON.parse(xhr.response);
-            if(response.sent === 'request sent'){
+            let response = xhr.response;
+            let res = JSON.parse(response)
+            if(res.response === 'added'){
+                newAttrs = `
 
-                var non_friend = document.querySelectorAll(`.non-friend-${el.dataset.name}`);
-                var friend = document.querySelectorAll(`.friend-${el.dataset.name}`);
+                    <ion-button color="success" fill="outline" expand="block" data-what="request by ${friend_username}" data-url="/notification/{{req.id}}/" href="/chat/${friend_username}/">
+                        Chat
+                    </ion-button>
 
-                for(var i = 0; i < non_friend.length; i++){
-                    non_friend[i].style.display = 'none';
-                    friend[i].style.display = 'block';
-                    console.log('adjusted');
-                }
+                    <ion-button color="danger" expand="block" onclick="presentAlertConfirm(this)" data-what="Now friends with ${ friend_username }} notification" data-hide="parent" data-url="/notification/delete/${notification_id}/">
+                        Delete
+                    </ion-button>
 
-
+                `;
+                el.parentNode.innerHTML = newAttrs;
             }
+
+            else if(res.response === ''){
+                 newAttrs = `
+
+                    <ion-button color="success" fill="outline" expand="block" data-what="request by ${friend_username}" data-url="/notification/{{req.id}}/" href="/chat/${friend_username}/">
+                        Already friends, chat
+                    </ion-button>
+
+                    <ion-button color="danger" expand="block" onclick="presentAlertConfirm(this)" data-what="Now friends with ${ friend_username }} notification" data-hide="parent" data-url="/notification/delete/${notification_id}/">
+                        Delete
+                    </ion-button>
+
+                `;
+                el.parentNode.innerHTML = newAttrs;
+            }
+
         }
         xhr.send();
     }
@@ -166,7 +356,7 @@
 
                      async function presentToast() {
                         const toast = document.createElement('ion-toast');
-                        toast.message = `Notification ${el.dataset.what} successfully deleted`;
+                        toast.message = `${el.dataset.what} successfully deleted`;
                         toast.color = 'success';
                         toast.duration = 3000;
 
@@ -176,9 +366,9 @@
                     presentToast();
                     const what_to_hide = el.dataset.hide;
                     if(what_to_hide === 'parent'){
-                        el.parentNode.style.display = 'none';
+                        el.parentNode.parentNode.parentNode.style.display = 'none';
                     }
-                    else if(what_to_hide === 'parent2'){
+                    else if(what_to_hide === 'parent3'){
                         el.parentNode.parentNode.style.display = 'none';
                         el.style.display = 'none';
                     }

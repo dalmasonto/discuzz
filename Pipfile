@@ -21,6 +21,8 @@ django-jsonfield = "*"
 djcommon = "*"
 redis = "*"
 social-auth-app-django = "*"
+django-cors-headers = "*"
+python-memcached = "*"
 
 [requires]
 python_version = "3.8"

@@ -96,8 +96,8 @@ socket.onmessage = (e) => {
 
     setTimeout(() => {
         handleComments();
-        handleLikes();
-        handleDislikes();
+//        handleLikes();
+//        handleDislikes();
     }, 200);
     handleParticipants(part);
 }
@@ -117,8 +117,8 @@ socket.onopen = (e) => {
     socket.send(sendJoin);
 
     handleComments();
-    handleLikes();
-    handleDislikes();
+//    handleLikes();
+//    handleDislikes();
 
     reply_form.submit((event) => {
         event.preventDefault();
@@ -175,15 +175,24 @@ socket.onclose = (e) => {
 
 }
 
+
+function handleMakeComment(event){
+    event.preventDefault();
+    console.log('THE EVENT IS COMING AGAIN', event)
+}
+
+
+
 function handleComments() {
+
     const comForms = document.querySelectorAll('.commentform');
     comForms.forEach((form, current) => {
         form.addEventListener('submit', (event) => {
             event.preventDefault();
-            console.log(current);
+            console.log(' THE CURRENT EVENT IS', event);
             const ID = form.id.split('-')[1];
-            const comment_field_value = event.target[1].value;
-//            console.log('THE FORM IS: ', comment_field_value, ID);
+            const comment_field_value = event.target[0].value;
+            console.log('THE FORM IS: ', comment_field_value, ID);
             const sendComment = JSON.stringify({
                 'comment': comment_field_value,
                 'profile_pic': profile_pic,
@@ -194,29 +203,21 @@ function handleComments() {
                 return;
             } else {
                 socket.send(sendComment);
-                /* setTimeout(() => {
-                socket_myadmin.send(sendComment);
-                }, 500); */
             }
-            event.target[1].value = '';
+            event.target[0].value = '';
         });
     });
 }
 
-function handleLikes() {
-    var likeForms = document.querySelectorAll('.likeform');
 
-    likeForms.forEach((form) => {
-        var counter = 1;
-        form.addEventListener('submit', (event) => {
-            console.log(counter)
-            event.preventDefault();
-            var ID = form.id.split('-')[1];
-            console.log('THE LIKE FORM IS : ', ID);
+function handleLike(like){
+            var ID = like.id.split('-')[1];
+            console.log('THE LIKE button IS : ', ID);
             var addOrRemoveLike = JSON.stringify({
                 'id': ID,
                 'type': 'like'
             });
+            var counter = 1;
             if (counter === 1 && ID !== 'x') {
                 socket.send(addOrRemoveLike);
                 /* setTimeout(() => {
@@ -229,25 +230,18 @@ function handleLikes() {
             } else {
                 return;
             }
-
-        });
-    });
 }
 
-function handleDislikes() {
-    const disLikeForms = document.querySelectorAll('.dislikeform');
-
-    disLikeForms.forEach((form) => {
-        var counter = 1;
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-            var ID = form.id.split('-')[1];
-            var addOrRemoveDisLike = JSON.stringify({
+function handleDisLike(dislike){
+            var ID = dislike.id.split('-')[1];
+            console.log('THE DISLIKE button IS : ', ID);
+            var addOrRemoveLike = JSON.stringify({
                 'id': ID,
                 'type': 'dislike'
             });
+            var counter = 1;
             if (counter === 1 && ID !== 'x') {
-                socket.send(addOrRemoveDisLike);
+                socket.send(addOrRemoveLike);
                 /* setTimeout(() => {
                 socket_myadmin.send(addOrRemoveLike);
                 }, 500); */
@@ -258,108 +252,155 @@ function handleDislikes() {
             } else {
                 return;
             }
-
-        });
-    });
 }
 
+
+
+//function handleLikes() {
+//    var likeForms = document.querySelectorAll('.likeform');
+//
+//    likeForms.forEach((form) => {
+//        var counter = 1;
+//        form.addEventListener('submit', (event) => {
+//            console.log(counter)
+//            event.preventDefault();
+//            var ID = form.id.split('-')[1];
+//            console.log('THE LIKE FORM IS : ', ID);
+//            var addOrRemoveLike = JSON.stringify({
+//                'id': ID,
+//                'type': 'like'
+//            });
+//            if (counter === 1 && ID !== 'x') {
+//                socket.send(addOrRemoveLike);
+//                /* setTimeout(() => {
+//                socket_myadmin.send(addOrRemoveLike);
+//                }, 500); */
+//                event.stopImmediatePropagation();
+//                ID = 'x';
+//                counter = null;
+//                return false;
+//            } else {
+//                return;
+//            }
+//
+//        });
+//    });
+//}
+
+//function handleDislikes() {
+//    const disLikeForms = document.querySelectorAll('.dislikeform');
+//
+//    disLikeForms.forEach((form) => {
+//        var counter = 1;
+//        form.addEventListener('submit', (event) => {
+//            event.preventDefault();
+//            var ID = form.id.split('-')[1];
+//            var addOrRemoveDisLike = JSON.stringify({
+//                'id': ID,
+//                'type': 'dislike'
+//            });
+//            if (counter === 1 && ID !== 'x') {
+//                socket.send(addOrRemoveDisLike);
+//                /* setTimeout(() => {
+//                socket_myadmin.send(addOrRemoveLike);
+//                }, 500); */
+//                event.stopImmediatePropagation();
+//                ID = 'x';
+//                counter = null;
+//                return false;
+//            } else {
+//                return;
+//            }
+//
+//        });
+//    });
+//}
+
 function reply_renderer(reply_obj) {
+    console.log('THE REPLY OBJ IS', reply_obj)
     var reply_text = reply_obj.reply;
     var new_reply_txt = reply_text.replace(/\</g, '&lt;');
     var new_reply_txt1 = new_reply_txt.replace(/\>/g, '&gt;');
 
     const new_reply = `
-                <div id="shadow-card-replies">
-                    <div>
-                        <ion-chip onclick="view(this)" color="primary">
-                            <ion-avatar>
-                                <img src="${reply_obj.profile_pic}">
-                            </ion-avatar>
-                            <ion-label>
-                                ${ reply_obj.username}
-                            </ion-label>
-                        </ion-chip>
-                        <ion-chip color="primary">
-                            <ion-icon name="timer"></ion-icon>
-                                <ion-label>
-                                0 minutes
-                            </ion-label>
-                        </ion-chip>
-                    </div>
-                    <div id="${reply_obj.id}">
-<pre id="pre"> 
-<code class="prettyprint">
-${new_reply_txt1}
+                <ion-card class="ion-no-margin ion-no-padding ion-margin-bottom ">
+            <ion-card-header>
+
+                <ion-chip>
+                    <ion-avatar>
+                        <img src="${ reply_obj.profile_pic }"/>
+                    </ion-avatar>
+                    <ion-label>
+                        ${ reply_obj.username }
+                    </ion-label>
+                </ion-chip>
+
+                <ion-chip>
+                    <ion-label>
+                        0 minutes
+                    </ion-label>
+                </ion-chip>
+
+                <ion-chip class="float-right">
+                    <ion-label>
+                        ${reply_obj.likes } Likes
+                    </ion-label>
+                </ion-chip>
+
+            </ion-card-header>
+            <ion-card-content class="ion-no-margin ion-no-padding">
+<pre class="">
+<code style="font-size: 16px">
+ ${ new_reply_txt1 }
 </code>
 </pre>
+                <div class="btn-group mb-2 ml-2">
+                    <button class="btn btn-primary" id="like-${reply_obj.id}" onclick="handleLike(this)"> ${ reply_obj.likes } Likes </button>
+                    <button class="btn-btn-warning" id="dislike-${reply_obj.id}" onclick="handleDisLike(this)"> ${ reply_obj.dislikes } Dislikes </button>
+                    <button class="btn btn-info"> 0 Comments </button>
+                </div>
+                <div class="container p-3 ">
+                    <div class="comments-${ reply_obj.id }">
+                    <h2 class="text-center"> <ion-title> Comments </ion-title> </h2>
+
                     </div>
-                    <div id="options-menu">
 
-                        <form class="likeform" id="like-${reply_obj.id}" method="POST" action="/api/like/${reply_obj.id}/" data-likes="${reply_obj.likes}">
-                            ${csrf_like}
-                            <button type="submit" class="btn btn-primary bg-primary" name="like" value="${reply_obj.id}">
-                            <span class='likess-${reply_obj.id} text-light'><i class="fa fa-thumbs-up">  </i>Likes ${reply_obj.likes}</span>
-                            </button>
-                        </form>
 
-                        <form class="dislikeform" id="dislike-${reply_obj.id}" method="POST" action="/api/dislike/${reply_obj.id}/">
-                            ${csrf_dislike}
-                            <button type="submit" class="btn btn-warning bg-warning" name="dislike" value="${reply_obj.id}">
-                            <span class='dislikess-${reply_obj.id} text-light'><i class="fa fa-thumbs-down"> </i>Dislikes ${reply_obj.dislikes}</span>
+                    <div>
+                        <div>
+                    <form class="form p-2 commentform" id="form-${reply_obj.id}">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" cols="40" ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="">
+
+                                <button class="btn btn-outline-primary btn-full">
+                                    Comment
                                 </button>
-                        </form>
 
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-3 col-sm-12"></div>
-                        <div class="col-md-6 col-sm-12">
-                            <ion-card class="comments-${reply_obj.id}" color="dark">
-                                <h5 class="text-center">Comments</h5>
-                                    
-                            </ion-card>
-                            <div>
-                                <div class="form">
-                                    <div class="login-form">
-                                        <form class="commentform" id="comment-${reply_obj.id}" action="/comments/${reply_obj.id}/" method="POST">
-                                            ${csrf_comment}
-                                            <div class="form-row input">
-
-                                                <div class="form-group col-md-12 inputBox comment-reponse">
-                                                    
-                                                </div>
-
-                                                <div class="form-group col-md-12 inputBox">
-                                                    <label for="reply">Make comment  </label>
-                                                    <textarea name="comment" class="inputBox " rows="3" cols="35" placeholder="Make a comment to this reply" required="required"></textarea>
-                                                </div>
-
-                                                <div class="form-group col-md-12 inputBox ">
-                                                    <button type="submit" name="" class="btn btn-success w-100 ">Comment</button>
-                                                </div>
-
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-12"></div>
+                    </form>
+                    <div class=" p-1">
+                        <ion-button class="emojis-show" expand="block" fill="outline" onclick="showEmojis(this)">
+                            <ion-chip>
+                                &#128512;
+                            </ion-chip>
+                            <ion-label> Show emojis </ion-label>
+                        </ion-button>
+                        <div class="comment-emojis fixed-emoji-div" style="display: none">
+
+                        </div>
                     </div>
-                    <div class="row">
-                            <div class="col">
-                                <ion-button onclick="showEmojis(this)" class="emoji-show" expand="block"
-                                    fill="outline">
-                                    <ion-chip>
-                                        &#128512;
-                                    </ion-chip>
-                                    <ion-label> Show emojis </ion-label>
-                                </ion-button>
                             </div>
-                        <div class="comment-emojis fixed-emoji-div" style="display: none;"></div>
-                    </div>
+                </div>
 
                 </div>
+
+
+            </ion-card-content>
+        </ion-card>
             `;
 
     all_replies_div.insertAdjacentHTML('beforeEnd', new_reply);
@@ -370,57 +411,59 @@ ${new_reply_txt1}
 }
 
 function comment_renderer(comment) {
+    console.log('THE COMMENT IS', comment)
     const comment_div = document.querySelector(`.comments-${comment.id}`);
     var comm = comment.comment;
     var new_com = comm.replace(/\</g, '&lt;')
     var new_com1 = new_com.replace(/\>/g, '&gt;')
-    console.log('the new comm is', comm);
     const comment_to_render = `
-                <span class="w-100">
-                    <ion-chip onclick="view(this)" color="primary">
-                        <ion-avatar>
-                             <img src="${comment.profile_pic}">
-                        </ion-avatar>
-                        <ion-label>
-                            ${comment.username}
-                        </ion-label>
-                    </ion-chip>
-                    <ion-chip color="primary">
-                        <ion-icon name="timer"></ion-icon>
-                        <ion-label>
+                <div class="mb-1" style="background: var(--ion-color-step-250); border-radius: 10px">
+                        <ion-chip color="primary">
+                            <ion-avatar slot="">
+                                <img src="${comment.profile_pic}" />
+                            </ion-avatar>
+                            <ion-label> ${ comment.username } </ion-label>
+                        </ion-chip>
+                        <ion-chip color="primary">
                             0 minutes
-                        </ion-label>
-                    </ion-chip>
-                </span>
-<pre>
-<code class="prettyprint">
-${new_com1}
-</code>
-</pre>
-<hr class="comment-divider">
+                        </ion-chip>
+
+                        <pre class="" >
+                            <code style="font-size: 16px; color: var(--ion-color-step-950)" class="com">
+  ${ new_com1 }
+                            </code>
+                        </pre>
+
+                        <div class="btn-group-sm">
+                            <button class="btn btn-primary btn-sm"> 2 Likes </button>
+                            <button class="btn btn-warning btn-sm"> 4 Dislikes </button>
+                            <button class="btn btn-secondary btn-sm"> 3 Comments </button>
+                        </div>
+
+                    </div>
             `;
     comment_div.insertAdjacentHTML('beforeEnd', comment_to_render);
 }
 
 function like_renderer(like) {
-    var like_el = document.querySelector(`.likess-${like.id}`);
-    var dislike_el = document.querySelector(`.dislikess-${like.id}`);
+    var like_el = document.querySelector(`#like-${like.id}`);
+    var dislike_el = document.querySelector(`#dislike-${like.id}`);
     if (like_el === '') {
         return;
     }
-    like_el.innerHTML = 'Likes ' + ' ' + like.likes;
-    dislike_el.innerHTML = 'Dislikes ' + ' ' + like.dislikes;
+    like_el.innerHTML = like.likes + ' Likes ';
+    dislike_el.innerHTML = like.dislikes + ' Dislikes';
 }
 
     function dislike_renderer(like) {
-        var dislike_el = document.querySelector(`.dislikess-${like.id}`);
-        var like_el = document.querySelector(`.likess-${like.id}`);
+        var dislike_el = document.querySelector(`#dislike-${like.id}`);
+        var like_el = document.querySelector(`#like-${like.id}`);
         if (dislike_el === '') {
             return;
         }
-        dislike_el.innerHTML = 'Dislikes ' + ' ' + like.dislikes;
-        like_el.innerHTML = 'Likes ' + ' ' + like.likes;
+        dislike_el.innerHTML = like.dislikes + ' Dislikes';
+        like_el.innerHTML = like.likes + ' Likes';
     }
 
 
-// for (var i = 0; i < document.forms.length; i++) { document.forms[i].style.display = 'none'; }
+//for (var i = 0; i < document.forms.length; i++) { document.forms[i].style.display = 'none'; }

@@ -1,4 +1,56 @@
 {% extends 'base.html' %} {% block content %}
+
+<div class="row">
+
+    <div class="col-md-5 col-sm-12 p-4">
+        <h4 class="text-center"> Signup for a Discuzz account </h4>
+            {% for message in messages %}
+                <p class="text-success text-danger">{{ message }}</p>
+            {% endfor %}
+        <form method="POST" action="" class="form">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div class="form-row input">
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="id_first_name">{{ form.first_name.label }}</label> {{ form.first_name }}
+                            </div>
+
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="id_last_name">{{ form.last_name.label }}</label> {{ form.last_name }}
+                            </div>
+
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="id_username">{{ form.username.label }}</label> {{ form.username }}
+                            </div>
+
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="id_email"> Email </label> {{ form.email }}
+                            </div>
+
+                            <div class="form-group col-md-12 inputBox">
+                                <label for="id_password1"> Password </label> {{ form.password1 }}
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="id_password2"> Repeat password </label> {{ form.password2 }}
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <ion-button expand="block" color="primary"> Signup </ion-button>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="btn-group d-row">
+                    <a href="{% url 'login' %}" class="btn btn-primary"> Login </a>
+                </div>
+    </div>
+
+    <div class="col-md-7 col-sm-12"></div>
+
+</div>
+
 <div class="row">
     <div class="col-md-3 col-sm-12"></div>
     <div class="col-md-6 col-sm-12 form">
@@ -31,15 +83,15 @@
                             </div>
 
                             <div class="form-group col-md-12 inputBox">
-                                <label for="id_email">{{ form.email.label }}</label> {{ form.email }}
+                                <label for="id_email"> Email </label> {{ form.email }}
                             </div>
 
                             <div class="form-group col-md-12 inputBox">
-                                <label for="id_password1">{{ form.password1.label }}</label> {{ form.password1 }}
+                                <label for="id_password1"> Password </label> {{ form.password1 }}
                             </div>
 
                             <div class="form-group col-md-12 inputBox">
-                                <label for="id_password2">{{ form.password2.label }}</label> {{ form.password2 }}
+                                <label for="id_password2"> Repeat password </label> {{ form.password2 }}
                             </div>
 
                             <div class="form-group col-md-12 inputBox">

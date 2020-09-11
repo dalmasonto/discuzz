@@ -1,4 +1,5 @@
 from urllib.parse import quote_plus
+import re
 
 from django.contrib.auth.models import User
 from django.db import transaction
@@ -16,15 +17,12 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-# Create your views here.
-
-import json
-
 from .decorators import unauthenticated_user
 from .forms import UserSignUp, PicForm
-from my_app.models import Create, Discuzz, UserExtension, Comment, Topic, SendEmail
+from .models import UserExtension, Notification
+from my_app.models import Create, Discuzz, Comment, Topic, SendEmail
 
-from my_app.rest_serializers import UserExtensionSerializer, UserSerializer
+from my_app.rest_serializers import UserExtensionSerializer, UserSerializer, NotificationSerializer
 
 
 def page_not_found(request, exception):
@@ -82,6 +80,7 @@ def api_home_topic_form(request):
         else:
             add_topic = Topic(user=user, topic=topic, subtopic=subtopic)
             add_topic.save()
+
             response_msg = 'Topic successfully created'
             response_type = 'success'
         data = {
@@ -91,69 +90,26 @@ def api_home_topic_form(request):
         return JsonResponse(data, status=201)
 
 
-def api_all_queries(request, *args, **kwargs):
-    objects = Create.objects.all()
-
-    data_for_front_end = [{"id": obj.id,
-                           "pic": UserExtension.objects.get(user=obj.admin).profile_pic.url,
-                           "topic": obj.topic,
-                           "admin": obj.admin.username,
-                           "paymentMode": obj.paymentMode,
-                           "paymentCode": obj.paymentCode,
-                           "subtopic": obj.subtopic,
-                           "description": obj.description,
-                           "question": obj.question,
-                           "discussionCode": obj.discussionCode,
-                           "replies": Discuzz.objects.filter(discussion_code=obj).count(),
-                           "createTime": obj.createTime} for obj in objects]
-
-    data = {
-        "response": data_for_front_end
-    }
-
-    return JsonResponse(data, status=200)
-
-
 def base(request):
-    pics = UserExtension.objects.all()
-    my_pic = []
-    for pic in pics:
-        my_pic.append(pic.user)
 
-    if request.user not in my_pic:
-        pic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU'
-    else:
-        obj = UserExtension.objects.get(user=request.user)
-        pic = obj.profile_pic.url
-    context = {
-        'my_pic': pic,
-    }
-    return render(request, "base.html", context)
+    return render(request, "base.html")
 
 
 @login_required(login_url='login')
 def home(request):
     discussions = Create.objects.all().order_by("-createTime")
+
+    latest_questions = Create.objects.all().order_by("-createTime")[0:3]
+
     all_replies = Discuzz.objects.all()
     my_questions = Create.objects.filter(admin=request.user).count()
-    pics = UserExtension.objects.all()
-    my_pic = []
-    for pic in pics:
-        my_pic.append(pic.user)
-
-    if request.user not in my_pic:
-        pic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU'
-    else:
-        obj = UserExtension.objects.get(user=request.user)
-        pic = obj.profile_pic.url
 
     context = {
         "discussions": discussions,
         "all_replies": all_replies,
         "page": 'Home',
         'my_questions': my_questions,
-        'my_pic': pic,
-        'pics': pics
+        'latest_questions': latest_questions
     }
     return render(request, "account/home.html", context)
 
@@ -249,20 +205,6 @@ def profile(request):
 
     my_quizes = Create.objects.filter(admin=request.user)
 
-    pics = UserExtension.objects.all()
-    my_pic = []
-    for pic in pics:
-        my_pic.append(pic.user)
-
-    if request.user not in my_pic:
-        pic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU'
-    else:
-        obj = UserExtension.objects.get(user=request.user)
-        pic = obj.profile_pic.url
-
-    for y in y_c:
-        t.append(y)
-
     for q in hidden_questions:
         if q.status == 'hidden':
             hidden_q.append(q)
@@ -300,7 +242,6 @@ def profile(request):
         'hidden_topics_count': hidden_topics_count,
         'page': profile_,
         'pic_form': pic_form,
-        'my_pic': pic,
         'friends': friends,
         'friends_count': friends_count - 1,
         'languages': langs,
@@ -446,7 +387,6 @@ def add_friends(request):
             }
 
         users_who_are_friends_and_requests.append(what_to_append)
-        print('Appended ' + user.username + ' with ' + user_case)
 
     context = {
         'users_who_are_friends_and_requests': users_who_are_friends_and_requests,
@@ -459,72 +399,44 @@ def api_add_friend_request(request, username):
     user = request.user
     user_to_send_to = User.objects.get(username=username)
 
-    user_to_send_to_friend_requests = user_to_send_to.userextension.friend_requests.all()
-    if user not in user_to_send_to_friend_requests:
-
-        user_to_send_to.userextension.friend_requests.add(request.user)
-        user_to_send_to.userextension.save()
-
-        user_to_send_to_notifications = user_to_send_to.userextension.notifications
-
-        type_of_notifications = type(user_to_send_to_notifications)
-
-        if type_of_notifications == dict:
-            identity = 2
-        elif type_of_notifications == list:
-            identity = user_to_send_to_notifications[-1]['id'] + 1
-            print('ID', identity)
-            print('THE TYPE AT THIS POINT one is', type(user_to_send_to_notifications))
-
-        new_notification = {
-            "id": identity,
-            "type": "request",
-            "by": UserExtensionSerializer(request.user.userextension, many=False).data,
-            "date_sent": "today"
-        }
-
-        if type_of_notifications == dict:
-            s = [user_to_send_to_notifications, new_notification]
-            user_to_send_to.userextension.notifications = s
-            user_to_send_to.userextension.save()
-
-        elif type_of_notifications == list:
-            s = user_to_send_to_notifications
-            s.append(new_notification)
-            user_to_send_to.userextension.notifications = s
-            user_to_send_to.userextension.save()
-        else:
-            print('NEW TYPE IS: ', type(notifications()))
-
     data = {
         'response': 'Request sent'
     }
     return JsonResponse(data)
 
 
-def api_add_remove_friend(request, option, username):
-    print('AM TIRED DOING THIS')
+def api_add_remove_friend(request, option, username, notification_ID):
     user = request.user.userextension
     user_to_add_remove = User.objects.get(username=username)
+    user_friend_requests = user.friend_requests.all()
+    user_to_add_remove_friend_requests = user_to_add_remove.userextension.friend_requests.all()
     friends = user.friends.all()
 
     response = ''
     if option == 'add':
         if user_to_add_remove not in friends:
             user.friends.add(user_to_add_remove)
-            user.friend_requests.remove(user_to_add_remove)
             user_to_add_remove.userextension.friends.add(request.user)
-            user_to_add_remove.userextension.friend_requests.remove(request.user)
-            user.save()
-            response = 'Added'
-            make_notification(request.user, user_to_add_remove, 'now_friends')
-            make_notification(user_to_add_remove, request.user, 'now_friends')
 
-    if option == 'remove':
+            if user_to_add_remove in user_friend_requests:
+                user.friend_requests.remove(user_to_add_remove)
+            if user in user_to_add_remove_friend_requests:
+                user_to_add_remove.userextension.friend_requests.remove(request.user)
+
+            user.save()
+            user_to_add_remove.save()
+
+            make_notification(request.user, user_to_add_remove, 'now_friends', 'friends')
+            make_notification(user_to_add_remove, request.user, 'now_friends', 'friends')
+            delete_notification(request, notification_ID)
+
+            response = 'added'
+
+    elif option == 'remove':
         if user_to_add_remove in friends:
             user.friends.remove(user_to_add_remove)
             user.save()
-            response = 'Removed'
+            response = 'removed'
 
     data = {
         'response': response
@@ -535,76 +447,71 @@ def api_add_remove_friend(request, option, username):
 class Api_All_Users(APIView):
 
     def get(self, format=None):
-        extensions = UserExtension.objects.all()
-        serializer = UserExtensionSerializer(extensions, many=True)
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
 
         return Response(serializer.data)
 
 
-# class Api_User_Details(APIView):
-#
-#     def get(self, format=None):
-#         print('THE USERNAME IS ', self['kwargs']['username'])
-#         # user = User.objects.get(username='dalmas')
-#         extensions = UserExtension.objects.all()
-#         serializer = UserExtensionSerializer(extensions, many=True)
-#
-#         return Response({'data': 'data'})
+class Api_User_Details(APIView):
 
+    def get(self, format=None, *args, **kwargs):
+        username = self.kwargs['user_name']
+        user = User.objects.get(username=username)
+        serializer = UserSerializer(user, many=False)
 
-@api_view(['GET'])
-def get_user(request, username):
-    user = User.objects.get(username=username)
-    extensions = UserExtension.objects.get(user=user)
-    serializer = UserExtensionSerializer(extensions, many=False)
-
-    return Response(serializer.data)
+        return Response(serializer.data)
 
 
 def notifications(request):
-    notifications_ = request.user.userextension.notifications
-    type_of_notification = type(notifications)
-
     friend_requests = request.user.userextension.friend_requests.all()
-    requests = []
-    for req in friend_requests:
-        requests.append(req)
+    notifications_ = Notification.objects.filter(to=request.user)
+    serializer = NotificationSerializer(notifications_, many=True)
 
-    if type_of_notification == list:
-        notes = notifications_
+    questions = Create.objects.all()
+    replies = Discuzz.objects.all()
+    comments = Comment.objects.all()
 
-        context = {
-            'friend_requests': requests,
-            'page': 'Notifications',
-            'notifications': notes,
-        }
+    question_mentions = []
+    reply_mentions = []
+    comment_mentions = []
 
-        return render(request, 'account/notifications.html', context)
+    pattern_ = re.compile(f'{request.user.username}')
 
-    elif type_of_notification == dict:
-        notes = [notifications_]
-        print('ELSE IF ', notes)
+    for question in questions:
+        search_description = pattern_.search(question.description)
+        search_question = pattern_.search(question.question)
+        if search_description:
+            question_mentions.append(question)
 
-        context = {
-            'friend_requests': requests,
-            'page': 'Notifications',
-            'notifications': notes,
-        }
+        if search_question:
+            question_mentions.append(question)
 
-        return render(request, 'account/notifications.html', context)
-    else:
-        context = {
-            'friend_requests': requests,
-            'page': 'Notifications',
-            'notifications': notifications_
-        }
-        return render(request, 'account/notifications.html', context)
+    for reply in replies:
+        search_ = pattern_.search(reply.reply)
+        if search_:
+            reply_mentions.append(reply)
+
+    for comment in comments:
+        search_ = pattern_.search(comment.comment)
+        if search_:
+            comment_mentions.append(comment)
+
+    context = {
+        'page': 'Notifications',
+        'friend_requests': friend_requests,
+        'notifications': serializer.data,
+        'reply_mentions': reply_mentions,
+        'comment_mentions': comment_mentions,
+        'question_mentions': question_mentions
+    }
+    return render(request, 'account/notifications.html', context)
 
 
 def get_notifications(request):
     friend_requests = request.user.userextension.friend_requests.all()
-    notifications_check = len(request.user.userextension.notifications)
-    total_number = notifications_check
+    notifications_check = Notification.objects.filter(to=request.user)
+    total_number = notifications_check.count()
 
     data = {
         'notifications_count': total_number,
@@ -613,80 +520,22 @@ def get_notifications(request):
 
 
 def delete_notification(request, note_ID):
-    my_notifications = request.user.userextension.notifications
-
-    for note in my_notifications:
-        if note['id'] == int(note_ID):
-            send = note
-            my_notifications.remove(note)
-            request.user.userextension.notifications = my_notifications
-            request.user.userextension.save()
+    Notification.objects.get(id=note_ID).delete()
 
     data = {
-        'notification': send
+        'response': 'deleted successfully'
     }
     return JsonResponse(data)
 
 
-# from validate_email import validate_email
-# Check whether the email is valid
-# is_valid = validate_email('example@example.com')
-# chaeck whether the email exists in the real world
-# is_valid = validate_email('example@example.com',verify=True)
-
-def make_notification(me, other_user, type_, quiz=None):
+def make_notification(me, other_user, kind_, where_, code=None, topic=None, quiz=None):
     user_me = User.objects.get(username=me.username)
     user_to_send_to = User.objects.get(username=other_user)
-
-    user_to_send_to_notifications = user_to_send_to.userextension.notifications
-
-    type_of_notifications = type(user_to_send_to_notifications)
-
-    if type_of_notifications == dict:
-        identity = 2
-    elif type_of_notifications == list:
-        identity = user_to_send_to_notifications.pop()['id'] + 1
-
-    if type_ == 'request':
-        new_notification = {
-            'id': identity,
-            'type': type_,
-            'by': UserExtensionSerializer(user_me.userextension, many=False).data,
-            'date_sent': 'today'
-        }
-    elif type_ == 'message':
-        new_notification = {
-            'id': identity,
-            'type': type_,
-            'by': UserExtensionSerializer(user_me.userextension, many=False).data,
-            'date_sent': 'today'
-        }
-    elif type_ == 'question':
-        new_notification = {
-            'id': identity,
-            'type': type_,
-            'question': quiz,
-            'by': UserExtensionSerializer(user_me.userextension, many=False).data,
-            'date_sent': 'today'
-        }
-    elif type_ == 'now_friends':
-        new_notification = {
-            'id': identity,
-            'type': type_,
-            'by': UserExtensionSerializer(user_me.userextension, many=False).data,
-            'date_sent': 'today'
-        }
-        print('ACCEPTED TTTT')
-
-    if type_of_notifications == dict:
-        s = [user_to_send_to_notifications, new_notification]
-        user_to_send_to.userextension.notifications = s
-        user_to_send_to.userextension.save()
-
-    elif type_of_notifications == list:
-        s = user_to_send_to_notifications
-        s.append(new_notification)
-        user_to_send_to.userextension.notifications = s
-        user_to_send_to.userextension.save()
-    else:
-        print('NEW TYPE IS: ', type(type_of_notifications))
+    notification = Notification(kind=kind_,
+                                by=user_me,
+                                to=user_to_send_to,
+                                where=where_,
+                                question_code=code,
+                                topic=topic,
+                                question=quiz)
+    notification.save()

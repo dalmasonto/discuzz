@@ -28,6 +28,4 @@ admin.site.register(Topic, TopicAdmin)
 admin.site.register(Comment)
 admin.site.register(SendEmail)
 
-admin.site.register(UserExtension)
-admin.site.register(Languages)
 admin.site.register(Syntax)

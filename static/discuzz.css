@@ -27,16 +27,9 @@
     padding: 0 0 10px 5px;
 }
 
-pre {
-    padding: 0 !important;
-}
 
 .comment-divider {
     background: linear-gradient(#0a0101, #1a0314, #0f0422, #077c72);
-}
-
-code {
-    padding: 0 !important;
 }
 
 .w-wrap {
@@ -58,13 +51,6 @@ code {
     margin-left: 5px;
 }
 
-#pre {
-    /* font-family: Lucida; */
-    font-size: 16px;
-    color: #797777;
-    padding-top: 2px !important;
-}
-
 #shadow-card-replies {
     position: relative;
     width: 100%;
@@ -74,22 +60,11 @@ code {
     box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 
-#shadow-card-replies h6 {
-    color: #03a9f4;
-}
-
-#shadow-card-replies h6 span {
-    color: #ff0047;
-}
-
 #shadow-card-replies pre {
     text-overflow: clip;
     color: rgba(227, 233, 228, 0.897) !important;
 }
 
-#shadow-card-replies p {
-    color: rgba(152, 153, 152, 0.575);
-}
 
 #shadow-card .form #login-form {
     position: relative;
@@ -173,19 +148,20 @@ code {
             width: 100%;
         }
         
-        .emoji-div {
+        .emoji-div{
             width: 50%;
             margin: auto;
+            background: inherit;
+            border-radius: 6px;
             display: flex;
-            justify-content: space-evenly;
-            background-color: black;
-            border-radius: 40px;
+            flex-wrap:wrap;
+            justify-content: space-around
         }
-        
+
         .tab-content {
-            background: rgb(252, 172, 172);
-            border-radius: 20px;
-            width: 70%;
+            background: inherit;
+            border-radius: 6px;
+            width: 80%;
             margin: auto;
         }
         
@@ -193,14 +169,14 @@ code {
             width: 100%;
             height: 250px;
             overflow-y: scroll;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
         }
         
         .spaced {
-            display: inline-table;
-            padding: 4px;
-            border: 1px solid rgb(153, 153, 153);
-            margin: 1px;
-            border-radius: 50px;
+            font-size: 20px;
+            margin: 4px;
             cursor: pointer;
         }
         
@@ -218,18 +194,9 @@ code {
         
         @media (max-width: 768px) {
             .tab-content {
-                background: rgb(252, 101, 214);
+                background: inherit;
                 border-radius: 20px;
                 width: 90%;
                 margin: auto;
-            }
-            .emoji-div {
-                width: 95%;
-                margin: auto;
-                display: flex;
-                justify-content: space-evenly;
-                background-color: black;
-                border-radius: 40px;
-                padding: 5px;
             }
         }

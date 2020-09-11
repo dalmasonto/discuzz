@@ -6,23 +6,28 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone, dateformat
+from rest_framework.views import APIView
 
 from .models import *
 from .decorators import *
 from django.utils import safestring, html
 
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 
 from random import random, seed, randint
-# Create your views here.
-from .forms import *
+
+from django.views.decorators.cache import cache_page
 
 import json
 
-from .rest_serializers import DiscuzzReplySerializer, DiscuzzQuestionSerializer, UserExtensionSerializer
+from .rest_serializers import DiscuzzReplySerializer, DiscuzzQuestionSerializer, UserExtensionSerializer,\
+    CommentSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
+from account.views import make_notification
+
 
 def page_not_found(request, exception):
     context = {
@@ -374,108 +379,8 @@ def api_create_quiz(request):
         return JsonResponse(data)
 
 
-def api_all_queries(request, *args, **kwargs):
-    objects = Create.objects.all()
-
-    data_for_front_end = [{"id": obj.id,
-                           "pic": UserExtension.objects.get(user=obj.admin).profile_pic.url,
-                           "topic": obj.topic,
-                           "admin": obj.admin.username,
-                           "paymentMode": obj.paymentMode,
-                           "paymentCode": obj.paymentCode,
-                           "subtopic": obj.subtopic,
-                           "description": obj.description,
-                           "question": obj.question,
-                           "discussionCode": obj.discussionCode,
-                           "replies": Discuzz.objects.filter(discussion_code=obj).count(),
-                           "createTime": obj.createTime} for obj in objects]
-
-    data = {
-        "response": data_for_front_end
-    }
-
-    return JsonResponse(data, status=200)
-
-
 def base(request):
-    pics = UserExtension.objects.all()
-    my_pic = []
-    for pic in pics:
-        my_pic.append(pic.user)
-
-    if request.user not in my_pic:
-        pic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU'
-    else:
-        obj = UserExtension.objects.get(user=request.user)
-        pic = obj.profile_pic.url
-    context = {
-        'my_pic': pic,
-    }
-    return render(request, "base.html", context)
-
-
-def api_like(request, reply_id):
-    reply = get_object_or_404(Discuzz, id=reply_id)
-
-    id_ = reply_id
-    if request.method == 'POST':
-        if reply.dislikes.filter(username=request.user).exists():
-            reply.likes.add(request.user)
-            reply.dislikes.remove(request.user)
-            liked = 'liked'
-            class_ = 'thumbs-up'
-            stroked = 'false'
-
-        elif reply.likes.filter(username=request.user).exists():
-            reply.likes.remove(request.user)
-            liked = 'unliked'
-            class_ = 'thumbs-up'
-            stroked = 'true'
-        else:
-            reply.likes.add(request.user)
-            liked = 'liked'
-            class_ = 'thumbs-up'
-            stroked = 'false'
-
-        data = {
-            'response': liked,
-            'class_': class_,
-            'stroked': stroked,
-            'id': id_
-        }
-        return JsonResponse(data, status=201)
-
-
-def api_dislike(request, reply_id):
-    reply = get_object_or_404(Discuzz, id=reply_id)
-
-    id_ = reply_id
-    if request.method == 'POST':
-        if reply.likes.filter(username=request.user).exists():
-            reply.dislikes.add(request.user)
-            reply.likes.remove(request.user)
-            disliked = 'disliked'
-            class_ = 'thumbs-up'
-            stroked = 'false'
-
-        elif reply.dislikes.filter(username=request.user).exists():
-            reply.dislikes.remove(request.user)
-            disliked = 'undisliked'
-            class_ = 'thumbs-up'
-            stroked = 'true'
-        else:
-            reply.dislikes.add(request.user)
-            disliked = 'disliked'
-            class_ = 'thumbs-up'
-            stroked = 'false'
-
-        data = {
-            'response': disliked,
-            'class_': class_,
-            'stroked': stroked,
-            'id': id_
-        }
-        return JsonResponse(data, status=201)
+    return render(request, "base.html")
 
 
 def about(request):
@@ -495,38 +400,33 @@ def contact(request):
 
 @login_required(login_url='login')
 def join(request):
-    pics = UserExtension.objects.all()
-    my_pic = []
-    for pic in pics:
-        my_pic.append(pic.user)
+    context = {
+        'page': 'Create or Join a group discussion',
+    }
+    return render(request, 'my_app/motion/join.html', context)
 
-    if request.user not in my_pic:
-        pic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU'
-    else:
-        obj = UserExtension.objects.get(user=request.user)
-        pic = obj.profile_pic.url
+
+@login_required(login_url='login')
+def join_via_code(request):
     if request.method == "POST":
-        join_disc_id = request.POST.get('discussionid')
+        join_disc_id = request.POST.get('discussionId')
 
         if join_disc_id is None or join_disc_id == '':
-            messages.error(request, "Empty field")
+            messages.error(request, "An error occurred here")
 
         else:
             try:
-                disc_name = Create.objects.get(discussionCode=join_disc_id)
+                disc_name = get_object_or_404(Create, discussionCode=join_disc_id)
             except Create.DoesNotExist:
                 disc_name = None
+                return render(request, 'my_app/help/not-found.html')
 
             if disc_name is None:
                 messages.error(request, "Discussion ID NOT FOUND")
             else:
                 url = '/discuzz/%s' % join_disc_id
                 return redirect(url)
-    context = {
-        'page': 'Create or Join a group discussion',
-        'my_pic': pic
-    }
-    return render(request, 'my_app/motion/join.html', context)
+    return render(request, 'my_app/motion/join.html')
 
 
 def api_topic_subtopic_render(request):
@@ -544,9 +444,6 @@ def api_topic_subtopic_render(request):
         topics_dic.append(topic.topic)
         subtopics_dic.append(topic.subtopic)
 
-    print('THE TOPICS ARE', topics_dic)
-    print('THE SUB-TOPICS ARE', topics_dic)
-
     data = {
         'response': 'fetched the topics and subtopics',
         'topics': topics_dic,
@@ -557,23 +454,12 @@ def api_topic_subtopic_render(request):
 
 @login_required(login_url='login')
 def create(request):
-    pics = UserExtension.objects.all()
-    my_pic = []
-    for pic in pics:
-        my_pic.append(pic.user)
-
-    if request.user not in my_pic:
-        pic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU'
-    else:
-        obj = UserExtension.objects.get(user=request.user)
-        pic = obj.profile_pic.url
     topics1 = Create.objects.all()
     topics2 = Topic.objects.all()
     context = {
         'topics1': topics1,
         'topics2': topics2,
         'page': 'Create a topic',
-        'my_pic': pic
     }
 
     if request.method == 'POST':
@@ -604,42 +490,12 @@ def create(request):
                                   discussionCode=discussioncode, createTime=create_time)
             create_query.save()
 
-            user_to_send_to = User.objects.all()
+            my_friends = request.user.userextension.friends.all()
 
-            for user_to in user_to_send_to:
-
-                user_to_send_to_notifications = user_to.userextension.notifications
-
-                type_of_notifications = type(user_to_send_to_notifications)
-
-                if type_of_notifications == dict:
-                    identity = 2
-                elif type_of_notifications == list:
-                    identity = user_to_send_to_notifications[-1]['id'] + 1
-                    print('ID', identity)
-                    print('THE TYPE AT THIS POINT one is', type(user_to_send_to_notifications))
-
-                new_notification = {
-                    "id": identity,
-                    "type": "question",
-                    "by": UserExtensionSerializer(request.user.userextension, many=False).data,
-                    "date_sent": "today"
-                }
-
-                if type_of_notifications == dict:
-                    s = [user_to_send_to_notifications, new_notification]
-                    user_to.userextension.notifications = s
-                    user_to.userextension.save()
-
-                elif type_of_notifications == list:
-                    s = user_to_send_to_notifications
-                    print('Before adding', len(user_to.userextension.notifications))
-                    s.append(new_notification)
-                    user_to.userextension.notifications = s
-                    user_to.userextension.save()
-                    print('SAVED ANOTHER', len(user_to.userextension.notifications))
-                else:
-                    pass
+            for other_user in my_friends:
+                make_notification(request.user, other_user, 'question', 'questions field', discussioncode, topic,
+                                  question)
+                other_user.save();
 
             str_ = '%s was successfully created' % discussion_code
             messages.success(request, str_)
@@ -649,68 +505,30 @@ def create(request):
     return render(request, 'my_app/motion/create.html', context)
 
 
+@cache_page(60 * 15)
 @login_required(login_url='login')
 def discuzz(request, discussion_details):
-    # The reply action incase action="/discuzz_api/{{disc_name.discussionCode}}/"
-    try:
-        disc_name = Create.objects.get(discussionCode=discussion_details)
-        admin_pic = UserExtension.objects.get(user=disc_name.admin)
+    disc_name = get_object_or_404(Create, discussionCode=discussion_details)
+    if disc_name:
+        question_serializer = DiscuzzQuestionSerializer(disc_name, many=False)
+        question_data = question_serializer.data
 
         syntax_topics = Syntax.objects.all()
         software_topics = []
         for topic in syntax_topics:
             software_topics.append(topic.topic)
-            print(software_topics)
 
-        if request.method == 'POST':
-            discussioncode = disc_name.discussionCode
-            reply = request.POST.get('reply')
-            username = request.user.username
-            replytime = timezone.now()
-            reply_query = Discuzz(discussion_code=discussioncode, reply=reply, username=username, reply_time=replytime)
-            reply_query.save()
-            replies = Discuzz.objects.all()
-            url = '/discuzz/%s' % discussioncode
-            return redirect(url)
-        try:
-            replies = Discuzz.objects.filter(status='visible')
-            comments_ = Comment.objects.filter(status='visible')
-            share = quote_plus('share')
-            pics = UserExtension.objects.all()
-            my_pic = []
-            for pic in pics:
-                my_pic.append(pic)
+        context = {
+            'my_friends': request.user.userextension.friends.all(),
+            'page': discussion_details,
+            'question_data': question_data
+        }
 
-            pics = UserExtension.objects.all()
-            my_pic = []
-            for pic in pics:
-                my_pic.append(pic.user)
-
-            if request.user not in my_pic:
-                pic = 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRoHeooXTzmQjxc83ln5YOLHZlC5L8bUnFzAg&usqp=CAU'
-            else:
-                obj = UserExtension.objects.get(user=request.user)
-                pic = obj.profile_pic.url
-            context = {
-                'disc_name': disc_name,
-                'admin_pic': admin_pic,
-                "replies": replies,
-                'comments': comments_,
-                'pics': pics,
-                'page': discussion_details,
-                'my_pic': my_pic,
-            }
-
-            if disc_name.topic in software_topics:
-                return render(request, 'my_app/motion/prog.html', context)
-            else:
-                return render(request, 'my_app/motion/discuzz.html', context)
-        except Discuzz.DoesNotExist:
-            discuzz = None
-
-    except Create.DoesNotExist:
-        disc_name = None
-        # messages.error(request, "The Discussion ID does not exist, Please check and try again")
+        if question_data['topic'] in software_topics:
+            return render(request, 'my_app/motion/prog.html', context)
+        else:
+            return render(request, 'my_app/motion/discuzz.html', context)
+    else:
         return render(request, 'my_app/help/not-found.html')
 
 
@@ -927,6 +745,24 @@ def email(request):
     return render(request, 'my_app/news/emails.html', context)
 
 
+class quiz_api(APIView):
+
+    def get(self, format=None):
+        quizes = Create.objects.all()  # .order_by('createTime')
+        serializer = DiscuzzQuestionSerializer(quizes, many=True)
+
+        return Response(serializer.data)
+
+
+@api_view(['GET'])
+def quiz_api_single(request, id_):
+    disc_name = get_object_or_404(Create, id=id_)
+    question_serializer = DiscuzzQuestionSerializer(disc_name, many=False)
+    question_data = question_serializer.data
+
+    return Response(question_data)
+
+
 @api_view(['GET'])
 def reply_api(request):
     replies = Discuzz.objects.all()
@@ -935,7 +771,7 @@ def reply_api(request):
 
 
 @api_view(['GET'])
-def quiz_api(request):
-    quizes = Create.objects.all()
-    serializer = DiscuzzQuestionSerializer(quizes, many=True)
+def comment_api(request):
+    comments_ = Comment.objects.all()
+    serializer = CommentSerializer(comments_, many=True)
     return Response(serializer.data)

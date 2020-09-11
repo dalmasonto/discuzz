@@ -1,165 +1,443 @@
-{% extends 'base.html' %} {% load static %}
+{% extends 'base.html' %} {% load static %} {% load cache %} {% block style %}
+<style>
+  .me {
+    text-overflow: wrap;
+    max-width: 90%;
+    width: auto;
+    background: var(--ion-color-step-700);
+    color: var(--ion-color-step-200);
+    margin-left: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 5px 5px 5px #8700ff, 5px 5px 5px #404040;
+    border-left: 5px solid #8700ff;
+    position: relative;
+  }
 
-{% block content %}
+  .other {
+    text-overflow: wrap;
+    max-width: 90%;
+    width: auto;
+    background: var(--ion-color-step-550);
+    color: var(--ion-color-step-150);
+    margin-right: 10%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    box-shadow: 5px 5px 5px #0533b9, 5px 5px 5px #00b383;
+    border-right: 5px solid #0533b9;
+    position: relative;
+  }
+  .floating-top {
+    /* float: right; */
+    position: absolute;
+    top: 30px;
+    right: -15px;
+    width: 100px;
+    height: 100px;
+    background: var(--ion-color-step-850);
+    border-radius: 20px;
+    padding: 4px;
+    display: none;
+    z-index: 1;
+    animation: float-down 0.4s linear;
+  }
 
+  @keyframes float-down {
+      from {
+          top: 0;
+          /* width: 0; */
+          transform: scale(0.2);
+      }
+      to {
+          top: 30px;
+          /* width: 100px; */
+          transform: scale(1);
+      }
+  }
+  .floating-top::before{
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: var(--ion-color-step-850);
+        top: -10px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        transform: rotate(45deg);
+        animation: show-icon 0.5s linear;
+        z-index: -1;
+  }
+
+  @keyframes show-icon {
+    from {
+          top: 0;
+      }
+      to {
+          top: -10px;
+          z-index: -1;
+      }
+  }
+
+  .me:hover .floating-top,
+  .other:hover .floating-top {
+    display: block;
+  }
+
+  .floating span {
+    width: 100%;
+    padding: 4px;
+    display: block;
+  }
+  .bb {
+    border-bottom: 1px solid rgb(56, 53, 53);
+  }
+
+  .action:hover{
+      cursor: pointer;
+      color: var(ion-color-step-500);
+      transform: scale(1.2); 
+  }
+
+</style>
+{% endblock %} {% block content %}
 
 <div class="">
-    <div class="row">
-        <div class="col-md-3 col-sm-12"></div>
-        <div class="col-md-6 col-sm-12">
+  <div class="row">
+    <div class="col-md-3 col-sm-12"></div>
+    <div class="col-md-6 col-sm-12">
+      <ion-card class="ion-no-padding ion-no-margin">
+        <ion-card-header>
+          <ion-card-title class="text-center">
+            The discuzz chat &#128712;
+          </ion-card-title>
 
-            <ion-card color="dark" class="ion-no-padding">
-                <ion-card-header>
-                    <ion-card-title class="text-center"> The discuzz chat &#128712; </ion-card-title>
+          <ion-chip class="" style="background: grey;">
+            <ion-icon name="person"></ion-icon>
+            <ion-label> {{ other_user }} </ion-label>
+          </ion-chip>
 
-                    <ion-chip class="" style="background: grey;">
-                        <ion-icon name="person"></ion-icon>
-                        <ion-label> {{ other_user }} </ion-label>
-                    </ion-chip>
+          <ion-chip class="" style="background: green;">
+            <ion-icon name="person"></ion-icon>
+            <ion-label> {{ user.username }} </ion-label>
+          </ion-chip>
+        </ion-card-header>
+        <ion-card-content class="text-messages">
+          <div id="chat-holder" class="w-100 ion-no-padding">
+            {% cache 100 chat_cache %} {% for chat in chat_messages %} 
+            {% if chat.user.username == user.username %}
+            <div class="me" id="{{chat.id}}">
+              <div class="floating-top" id="id-{{chat.id}}">
+                <h6 class="text-center bb">Action</h6>
+                <div class="text-center action">
+                    <span> 🗊 </span>
+                  Copy
+                </div>
+                <div class="text-center action" onclick="deleteMessage(this)" data-message_id="{{chat.id}}" data-message_delete_url="/inbox/delete_message/{{chat.id}}/">
+                    <span class="text-white"> 🗙 </span>
+                    Delete
+                </div>
+                <div class="text-center action">
+                  <span> &#128712; </span>Info
+                </div>
 
-                    <ion-chip class="" style="background: green;">
-                        <ion-icon name="person"></ion-icon>
-                        <ion-label> {{ user.username }} </ion-label>
-                    </ion-chip>
+              </div>
 
-                </ion-card-header>
-                <ion-card-content class="">
-                        <div id="chat-holder" class="w-100 ion-no-padding">
-                            {% for chat in chat_messages %}
-                                {% if chat.user.username == user.username %}
-                                    <div class="" style="text-overflow: wrap; max-width: 70%; width: auto; background: green; color: white; margin-left: 30%; margin-top: 10px; margin-bottom: 10px; padding: 8px; border-radius: 5px;">
-                                        {{ chat.message }}
-                                    </div>
-                                {% else %}
-                                    <div class="" style="text-overflow: wrap; max-width: 70%; width: auto; background: grey; color: white; margin-right: 30%; margin-top: 10px; margin-bottom: 10px; padding: 8px; border-radius: 5px;">
-                                        {{ chat.message }}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
+              <p>
+                <i class="float-right"> </i>
+                {{ chat.message }}
+              </p>
 
-                    <div>
-                        <form class="form" id="send-message">
-                            <div class="form-row">
-                                <input id="username" type="text" value="{{user.username}}" class="d-none">
-                                <textarea rows="5" class="w-100 form-group text-primary" id="message" placeholder="message" required></textarea>
-                            </div>
-                            <button type="submit" name="Send" class="btn btn-primary btn-small w-100">Send</button>
-                        </form>
-                        <div class="row">
-                            <div class="col emojis fixed-emoji-div">
+              <p class="pb-3">
+                <span class="float-right">
+                  🕕 {{ chat.timestamp | date }}, 
+                  {{ chat.timestamp | time|upper }}
+                </span>
+              </p>
 
-                            </div>
-                        </div>
-                    </div>
-                </ion-card-content>
-            </ion-card>
+              <input type="checkbox" onclick="checked(this)" class="d-none"/>
 
-        </div>
-        <div class="col-md-3 col-sm-12"></div>
+            </div>
+            {% else %}
+            <div class="other">
+
+              <div class="floating-top" id="id-2-{{chat.id}}">
+
+                <h6 class="text-center bb">Action</h6>
+
+                <div class="text-center action">
+                    <span> 🗊 </span>
+                    Copy
+                </div>
+
+                <div class="text-center action" onclick="deleteMessage(this)" data-message_id="{{chat.id}}" data-message_delete_url="/inbox/delete_message/{{chat.id}}/">
+                    <span> 🗙 </span>
+                    Delete
+                </div>
+
+                <div class="text-center action">
+                  <span> &#128712; </span>Info
+                </div>
+
+              </div>
+
+              <p>
+                <i class="float-right"> 🗊 </i>
+                {{ chat.message }}
+              </p>
+
+              <p class="pb-3">
+                <span class="float-right">
+                  🕕 {{ chat.timestamp | date }}, 
+                    {{ chat.timestamp | time|upper }}
+                </span>
+              </p>
+
+              <input type="checkbox" onclick="checked(this)" class="d-none"/>
+
+            </div>
+            {% endif %} {% endfor %} {% endcache %}
+          </div>
+
+          <div>
+            <form class="form" id="send-message">
+              <div class="form-row mb-2">
+                <input
+                  id="username"
+                  type="text"
+                  value="{{user.username}}"
+                  class="d-none"
+                />
+                <textarea
+                  rows="5"
+                  class="form-control text-primary"
+                  id="message"
+                  placeholder="message"
+                  style="background: var(--ion-color-step-300);"
+                  required
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                name="Send"
+                class="btn btn-outline-primary btn-small w-100"
+              >
+                Send
+              </button>
+            </form>
+            <div class="w-100 d-row btn-group mt-2">
+              <button class="btn btn-outline-primary mr-1">select all</button>
+              <button class="btn btn-outline-success mr-1">copy</button>
+              <button class="btn btn-outline-warning mr-1">cut</button>
+              <button class="btn btn-outline-info mr-1">paste</button>
+            </div>
+            <div class="row">
+              <div class="col emojis fixed-emoji-div"></div>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
     </div>
+    <div class="col-md-3 col-sm-12 many"></div>
+  </div>
+  <div class="row">
+    <div class="col w-100 me1"></div>
+  </div>
 </div>
 
 <script>
-        var form = $('#send-message');
+  var form = $("#send-message");
 
-        var msg = $('#message');
-        const all_chats_div = document.querySelector('#chat-holder');
-        var username = $('#username');
-        var user = username.val();
+  var msg = $("#message");
+  const all_chats_div = document.querySelector("#chat-holder");
+  // const me1 = document.querySelector('.me1');
+  var username = $("#username");
+  var user = username.val();
 
-        var loc = window.location;
-        var wSStart = 'ws://'
-        if(loc.protocol === 'https:'){
-            wSStart = 'wss://';
-        }
+  var loc = window.location;
+  var wSStart = "ws://";
+  if (loc.protocol === "https:") {
+    wSStart = "wss://";
+  }
 
-        var endPoint = wSStart + loc.host + loc.pathname;;
-        var socket =new WebSocket(endPoint);
+  var endPoint = wSStart + loc.host + loc.pathname;
+  var socket = new WebSocket(endPoint);
 
-        socket.onmessage = (e) => {
-            // console.log('Message', e);
-            console.log(e.data);
-            var cleaned_data = JSON.parse(e.data);
-            var reply = cleaned_data.message;
-            var reply_two = reply.replace(/\</g, '&lt;');
-            var reply_three = reply_two.replace(/\>/g, '&gt;');
-            if(cleaned_data.username === user){
-                var new_chat = `
-                    <div class="" style="text-overflow: wrap; max-width: 70%; width: auto; background: green; color: white; margin-left: 30%; margin-top: 10px; margin-bottom: 10px; padding: 8px; border-radius: 5px;">
-                              ${reply_three}
+  socket.onmessage = (e) => {
+    var cleaned_data = JSON.parse(e.data);
+    console.log(cleaned_data)
+    var timestamp = new Date(cleaned_data.messageData.timestamp);
+
+    var reply = cleaned_data.messageData.message;
+    var reply_two = reply.replace(/\</g, "&lt;");
+    var reply_three = reply_two.replace(/\>/g, "&gt;");
+    if (cleaned_data.username === user) {
+      var new_chat = `
+                    <div class="me">
+                        <div class="floating-top" id="id-${cleaned_data.id}">
+                            <h6 class="text-center bb">Action</h6>
+
+                            <div class="text-center action">
+                                <span> 🗊 </span>
+                                Copy
+                            </div>
+
+                            <div class="text-center action" onclick="deleteMessage(this)" data-message_id="${cleaned_data.id}" data-message_delete_url="/inbox/delete_message/${cleaned_data.id}/">
+                                <span> 🗙 </span>
+                                Delete
+                            </div>
+
+                            <div class="text-center action">
+                                <span> &#128712; </span>Info
+                            </div>
+                        </div>
+                        <p>${reply_three}</p>
+                        <p class="pb-3"> <span class="float-right"> 🕕 ${timestamp.toDateString()}, ${timestamp.toLocaleTimeString()} </span> </p>
                     </div>
                     `;
-                all_chats_div.insertAdjacentHTML('beforeEnd', new_chat);
-            }
-            else if(cleaned_data.username !== user){
-                var new_chat = `
-                     <div class="" style="text-overflow: wrap; max-width: 70%; width: auto; background: grey; color: white; margin-right: 30%; margin-top: 10px; margin-bottom: 10px; padding: 8px; border-radius: 5px;">
-                              ${reply_three}
+      all_chats_div.insertAdjacentHTML("beforeEnd", new_chat);
+    } else if (cleaned_data.username !== user) {
+      var new_chat = `
+                     <div class="other">
+                        <div class="floating-top" id="id-2-${cleaned_data.id}">
+                            <h6 class="text-center bb">Action</h6>
+
+                            <div class="text-center action">
+                                <span> 🗊 </span>
+                                Copy
+                            </div>
+
+                            <div class="text-center action" onclick="deleteMessage(this)" data-message_id="${cleaned_data.id}" data-message_delete_url="/inbox/delete_message/${cleaned_data.id}/">
+                                <span> 🗙 </span>
+                                Delete
+                            </div>
+                            <div class="text-center action">
+                                <span> &#128712; </span>Info
+                            </div>
+                        </div>
+                        <p>${reply_three}</p>
+                        <p class="pb-3"> <span class="float-right"> 🕕 ${timestamp.toDateString()}, ${timestamp.toLocaleTimeString()} </span> </p>
                     </div>
                 `;
-                all_chats_div.insertAdjacentHTML('beforeEnd', new_chat);
-            }
-        }
-        socket.onopen = (e) => {
-            console.log('OPEN',e);
-            form.submit((event) => {
-                event.preventDefault();
-                var message = msg.val();
-                var sendMsg = JSON.stringify({'message': message, 'username': user});
-                socket.send(sendMsg);
-                msg.val('');
-            });
-        }
-        socket.onerror = (e) => {
-    console.log('ERROR', e)
-    async function presentToast() {
-            const toast = document.createElement('ion-toast');
-            toast.message = `<strong> Connection lost </strong>`;
-            toast.color = 'danger';
-            toast.duration = 3000;
+      all_chats_div.insertAdjacentHTML("beforeEnd", new_chat);
+    }
+  };
+  socket.onopen = (e) => {
+    console.log("OPEN", e);
+    var online_state = JSON.stringify({ type: "online" });
+    socket.send(online_state);
 
-            document.body.appendChild(toast);
-            return toast.present();
-        }
-        presentToast();
-}
-socket.onclose = (e) => {
-    console.log('CLOSE', e)
-    async function presentToast() {
-            const toast = document.createElement('ion-toast');
-            toast.message = `<strong> Connection closed </strong>`;
-            toast.color = 'warning';
-            toast.duration = 3000;
+    form.submit((event) => {
+      event.preventDefault();
+      var message = msg.val();
+      var sendMsg = JSON.stringify({
+        type: "message",
+        message: message,
+        username: user,
+      });
+      socket.send(sendMsg);
+      msg.val("");
+    });
+  };
+  socket.onerror = (e) => {
+    presentToast('Connection lost, please try reloading the page again', 'danger');
+  };
+  socket.onclose = (e) => {
+    presentToast('Connection has been terminated', 'warning');
+  };
 
-            document.body.appendChild(toast);
-            return toast.present();
-        }
-        presentToast();
+  function deleteMessage(el) {
+      const xhr = new XMLHttpRequest();
+      const method = 'GET';
+    //   const url = el.dataset.message_delete_url;
+      const url = `/chat/delete_message/${el.dataset.message_id}/`;
+    //  
+    xhr.open(method, url);
+    xhr.onload = () => {
+        if(xhr.readyState === 4 && xhr.statusText === 'OK'){
+            console.log(xhr.responseText, xhr.readyState, xhr.status, xhr.statusText)
+            all_chats_div.removeChild(el.parentNode.parentNode);
+        }   
+    }
+    xhr.onerror = (e) => {
+        console.log('errprr', e)
+    }
+    xhr.send();
 
-}
+  }
 
-    </script>
-
-    <script>
-        const emojis_field = document.querySelector('.emojis');
-        function CommentEmojis(field) {
-
-            for (let index = 0; index < 1000; index++) {
-                var num = 127744 + index;
-                var emoji = `<span class="spaced" onclick='addCommentEmoji(this)'>&#${num};</span>`;
-                field.insertAdjacentHTML('beforeEnd', emoji);
-            }
-
-        }
-        CommentEmojis(emojis_field);
-        function addCommentEmoji(el){
-            const text_area = el.parentNode.parentNode.parentNode.children[0].children[0].children[1];
-            text_area.value += el.innerHTML;
-        }
+  function checked(el){
+      console.warn(el)
+  }
 
 
+  async function presentToast(message, class_) {
+      const toast = document.createElement("ion-toast");
+      toast.message = `<strong> ${message} </strong>`;
+      toast.color = `${class_}`;
+      toast.duration = 3000;
 
-    </script>
+      document.body.appendChild(toast);
+      return toast.present();
+    }
+</script>
+
+<script>
+  const emojis_field = document.querySelector(".emojis");
+  const em_ = document.querySelector(".many");
+
+  function CommentEmojis(field) {
+    for (let index = 0; index < 1000; index++) {
+      var num = 127744 + index;
+      var emoji = `<span class="spaced" onclick='addCommentEmoji(this)'>&#${num};</span>`;
+      field.insertAdjacentHTML("beforeEnd", emoji);
+    }
+  }
+  CommentEmojis(emojis_field);
+  function addCommentEmoji(el) {
+    const text_area =
+      el.parentNode.parentNode.parentNode.children[0].children[0].children[1];
+    text_area.value += el.innerHTML;
+  }
+
+  function LoadEmojis() {
+    let method = "GET";
+    let url = "/emojiss/type=all/order_by=id/";
+    let responseType = "json";
+    let emojis_array = [];
+
+    let xhr = new XMLHttpRequest();
+    xhr.responseType = responseType;
+    xhr.open(method, url);
+    xhr.onload = () => {
+      const emojis = xhr.response;
+      for (let i = 0; i < emojis.length; i++) {
+        let new_emoji_data = {
+          id: emojis[i].id,
+          emoji: emojis[i].emoji,
+          decimal: emojis[i].emoji.codePointAt(),
+          name: emojis[i].name,
+        };
+        emojis_array.push(new_emoji_data);
+
+        if (String(emojis[i].emoji) === "🨐") return;
+
+        let em = `<ion-button color='primary' fill='outline'  class=""> <span class="float-left" style="font-size: 30px; padding-right: 10px;"> ${emojis[i].emoji}  </span> <ion-label> ${emojis[i].name} </ion-label> </ion-button>`;
+        // me1.insertAdjacentHTML('beforeEnd', em);
+      }
+      //print(emojis_array)
+      console.log(emojis_array);
+    };
+    xhr.send();
+  }
+
+  // LoadEmojis()
+</script>
 
 {% endblock %}

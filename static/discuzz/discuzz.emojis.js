@@ -13,12 +13,10 @@ function addCommentEmoji(num) {
     window.addEventListener('dblclick', (e) => {
         e.preventDefault();
     });
-    var btn = num.parentNode.parentNode.children[0].children[0].children[1];
-    var text_area = num.parentNode.parentNode.parentNode.children[3].children[1].children[1].children[0].children[0].children[0].children[1].children[1].children[1];
-    console.log(btn)
+    var btn = num.parentNode.parentNode.children[0].children[1];
+    var text_area = num.parentNode.parentNode.parentNode.children[0].children[0].children[0]; // .children[0].children[0].children[0].children[1].children[1].children[1];
+
     var parent_emojis_div = num.parentNode;
-    
-    console.log('the btn ', btn);
     text_area.addEventListener('click', () => {
         parent_emojis_div.style.display = 'none';
         btn.innerHTML = 'Show Emojis';
@@ -28,17 +26,17 @@ function addCommentEmoji(num) {
 }
 
 function showEmojis(btn) {
-    const emoji_div = btn.parentNode.parentNode.children[1];
+    const emoji_div = btn.parentNode.children[1];
     const label = btn.children[1];
     const style = emoji_div.style.display;
 
-    if (style === 'block') {
+    if (style === 'flex') {
         label.innerHTML = 'Show Emojis';
         emoji_div.style.display = 'none';
     }
     else if (style === 'none') {
         label.innerHTML = 'Hide Emojis';
-        emoji_div.style.display = 'block';
+        emoji_div.style.display = 'flex';
     }
 
 }

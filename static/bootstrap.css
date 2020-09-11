@@ -3930,7 +3930,7 @@ tbody.collapse.show {
 }
 
 .tab-content > .active {
-  display: block;
+  display: flex;
 }
 
 .navbar {

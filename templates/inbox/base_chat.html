@@ -1,0 +1,69 @@
+{% extends 'base.html' %} {% load static %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-5 m-2">
+            {% for chat in chats %}
+
+                {% if chat.first.username == user.username %}
+
+                <ion-card class="d-flex ion-padding ion-no-margin ion-margin-top ion-margin-top" style="cursor: pointer;" onclick="chatWith(this)" data-href="/chat/{{ chat.second.username }}/">
+                    <ion-avatar slot="">
+                        <img src="{{ chat.second.userextension.profile_pic }}" />
+                    </ion-avatar>
+                    <div class="d-block ml-3">
+
+                        <div>
+                            <ion-label> {{ chat.second.username }} </ion-label>
+                        </div>
+
+                        <div>
+                            <ion-badge slot="end" color="success"> {{ chat.chatmessage_set_count }} </ion-badge>
+                            <ion-badge slot="end" color="danger"> 3 </ion-badge>
+                        </div>
+
+                        <div>
+                            <span class=""> Last updated {{ chat.updated }} </span>
+                        </div>
+
+                    </div>
+                </ion-card>
+
+
+                {% endif %}
+
+                {% if chat.second.username == user.username %}
+
+                <ion-card class="d-flex ion-padding ion-no-margin ion-margin-top ion-margin-bottom" style="cursor: pointer;" onclick="chatWith(this)" data-href="/chat/{{ chat.first.username }}/">
+                    <ion-avatar slot="">
+                        <img src="{{ chat.first.userextension.profile_pic }}" />
+                    </ion-avatar>
+                    <div class="d-block ml-3">
+
+                        <div>
+                            <ion-label> {{ chat.first.username }} </ion-label>
+                        </div>
+
+                        <div>
+                            <ion-badge slot="end" color="success"> {{ chat.chatmessage_set_count }} </ion-badge>
+                            <ion-badge slot="end" color="danger"> 3 </ion-badge>
+                        </div>
+
+                        <div>
+                            <span class=""> Last updated {{ chat.updated }} </span>
+                        </div>
+
+                    </div>
+                </ion-card>
+                {% endif %}
+
+
+            {% endfor %}
+    </div>
+</div>
+<script>
+    function chatWith(el){
+        window.location.href = el.dataset.href;
+    }
+</script>
+{% endblock %}

@@ -3,8 +3,7 @@
     <div class="row">
         <div class="col-md-3 col-sm-12"></div>
         <div class="col-md-6 col-sm-12">
-            <ion-toolbar color="warning">
-                <ion-segment value="create" color="primary" class="ion-no-padding">
+            <ion-segment value="create" color="primary" class="ion-no-padding">
 
                   <ion-segment-button onclick="create()" color="primary" class="ion-no-padding" value="create">
                         <ion-icon name="person-add"></ion-icon>
@@ -16,31 +15,51 @@
                         <ion-label> Join </ion-label>
                   </ion-segment-button>
 
-                </ion-segment>
-            </ion-toolbar>
+            </ion-segment>
         </div>
         <div class="col-md-3 col-sm-12"></div>
     </div>
 
-    <div id="holder">
+    <div>
 
         <div class="row">
     <div class="col-md-3 col-sm-12"></div>
     <div class="col-md-6 col-sm-12 form">
     <ion-card class="">
-        <ion-card-content>
-        <div class="jumbotron">
-            <div class="login_form">
-                <h4 class="text-center w-100">Create a discussion</h4>
+        <ion-card-content id="holder">
+            <h4 class="text-center">Raise a topic</h4>
+
+                <form class="form" method="POST" action="/api/create/topic/" id="topic_creation_form">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div class="form-group col-md-12 inputBox response-topic-creation">
+                            <!-- <p class="response-msg text-center">Some msg</p> -->
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label for="topic1">Topic</label>
+                                <input type="text" class="form-control" name="topic" id="topic1" required placeholder="Topic">
+                            </div>
+                            <div class="form-group col-md-6 col-sm-12">
+                                <label for="subtopic1">Subtopic</label>
+                                <input type="text" class="form-control" name="subtopic" id="subtopic1" required placeholder="Subtopic">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button type="submit" name="" class="btn btn-primary btn-full"> Send </button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            <div>
+                <h4 class="text-center">Create a discussion</h4>
                 {% for message in messages %}
                 <p class="text-success text-danger">{{ message }}</p>
                 {% endfor %}
-                <div class="w-100">
-                    <form action="/create/" method="POST">
+                <form action="/create/" method="POST" class="form">
                         {% csrf_token %}
                         <div class="form-row input">
 
-                            <div class="form-group col-md-12  inputBox">
+                            <div class="form-group col-md-12 ">
                                 <label for="topic">Topic</label>
 
                                 <select type="text" id="topic" class="bg-light form-control form-control-sm topic" name="topic">
@@ -48,21 +67,21 @@
                                 </select>
                             </div>
 
-                            <div class="form-group col-md-12  inputBox">
+                            <div class="form-group col-md-12 ">
                                 <label for="sub">Subtopic</label>
                                 <select type="text" id="sub" class="bg-light form-control form-control-sm sub" name="subtopic">
 
                                 </select>
                             </div>
 
-                            <div class="form-group col-md-12 inputBox">
+                            <div class="form-group col-md-12">
                                 <label for="desc">Description</label>
-                                <textarea name="description" id="desc" class="inputBox " rows="5" cols="40" placeholder="Description about topic"></textarea>
+                                <textarea name="description" id="desc" class="form-control " rows="5" cols="40" placeholder="Description about topic"></textarea>
                             </div>
 
                             <div class="form-group col-md-12 inputBox">
                                 <label for="quiz">Question</label>
-                                <textarea name="question" id="quiz" class="inputBox " rows="8" cols="40" placeholder="Question for discussion"></textarea>
+                                <textarea name="question" id="quiz" class="form-control" rows="8" cols="40" placeholder="Question for discussion"></textarea>
                             </div>
 
                             <div class="form-group col-md-12  inputBox">
@@ -79,9 +98,7 @@
                             </ion-chip>
                         </p>
                     </div>
-                </div>
             </div>
-        </div>
         </ion-card-content>
         </ion-card>
     </div>
@@ -93,6 +110,22 @@
 
 <script>
         window.onload = LoadTopicsAndSubtopics;
+
+
+        const topic_creation_div = document.querySelector('.response-topic-creation')
+        const topic_creation_form = document.querySelector('#topic_creation_form');
+        topic_creation_form.addEventListener('submit', handleCreateTopicForm);
+
+    const fillSelection = (parentEl, selection) => {
+
+
+            const newSelect = `
+                <option value="${selection}">${selection}</option>
+            `;
+
+            parentEl.insertAdjacentHTML("beforeEnd", newSelect);
+        }
+
 
         function LoadTopicsAndSubtopics() {
             const subtopicsEl = document.querySelector('.sub');
@@ -124,11 +157,19 @@
 
 
                 cleanedTopics.forEach(element => {
-                    fillSelection(topicsEl, element);
+                    // fillSelection(topicsEl, element);
+                    const newSelect = `
+                        <option value="${element}">${element}</option>
+                    `;
+                    topicsEl.insertAdjacentHTML("beforeEnd", newSelect);
                 });
 
                 cleanedSubtopics.forEach(element => {
-                    fillSelection(subtopicsEl, element);
+                   // fillSelection(subtopicsEl, element);
+                    const newSelect = `
+                        <option value="${element}">${element}</option>
+                    `;
+                    subtopicsEl.insertAdjacentHTML("beforeEnd", newSelect);
                 });
 
 
@@ -136,15 +177,40 @@
 
             xhr.send();
         }
-        const fillSelection = (parentEl, selection) => {
 
+        function handleCreateTopicForm(event) {
+        event.preventDefault();
+        const myForm = event.target;
+        const myFormData = new FormData(myForm);
+        const url = myForm.getAttribute('action');
+        const method = myForm.getAttribute('method');
 
-            const newSelect = `
-                <option value="${selection}">${selection}</option>
+        const xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+        xhr.onload = () => {
+            const serverResponse = xhr.response;
+            const response_ = JSON.parse(serverResponse);
+            clear_errors();
+            myForm.reset();
+            responseDisplay(topic_creation_div, response_.response_msg, response_.response_type);
+            LoadTopicsAndSubtopics();
+        };
+        xhr.send(myFormData);
+    }
+
+    const responseDisplay = (parentEl, messsage, type) => {
+        const response = `
+                <p class="response-msg text-center text-${type}">${messsage}</p>
             `;
 
-            parentEl.insertAdjacentHTML("beforeEnd", newSelect);
-        }
+        parentEl.insertAdjacentHTML('beforeEnd', response);
+    };
+
+    function clear_errors() {
+        topic_creation_div.innerHTML = '';
+    }
+
+
     </script>
 
     <script>
@@ -158,24 +224,15 @@
         function create(){
         const holder = document.querySelector('#holder');
         const create = `
-
-        <div class="row ease-in">
-    <div class="col-md-3 col-sm-12"></div>
-    <div class="col-md-6 col-sm-12 form">
-    <ion-card class="">
-        <ion-card-content>
-        <div class="jumbotron">
-            <div class="login_form">
-                <h4 class="text-center w-100">Create a discussion</h4>
+        <h4 class="text-center">Create a discussion</h4>
                 {% for message in messages %}
                 <p class="text-success text-danger">{{ message }}</p>
                 {% endfor %}
-                <div class="w-100">
-                    <form action="/create/" method="POST">
+                <form action="/create/" method="POST" class="form">
                         {% csrf_token %}
                         <div class="form-row input">
 
-                            <div class="form-group col-md-12  inputBox">
+                            <div class="form-group col-md-12 ">
                                 <label for="topic">Topic</label>
 
                                 <select type="text" id="topic" class="bg-light form-control form-control-sm topic" name="topic">
@@ -183,21 +240,21 @@
                                 </select>
                             </div>
 
-                            <div class="form-group col-md-12  inputBox">
+                            <div class="form-group col-md-12 ">
                                 <label for="sub">Subtopic</label>
                                 <select type="text" id="sub" class="bg-light form-control form-control-sm sub" name="subtopic">
 
                                 </select>
                             </div>
 
-                            <div class="form-group col-md-12 inputBox">
+                            <div class="form-group col-md-12">
                                 <label for="desc">Description</label>
-                                <textarea name="description" id="desc" class="inputBox " rows="5" cols="40" placeholder="Description about topic"></textarea>
+                                <textarea name="description" id="desc" class="form-control " rows="5" cols="40" placeholder="Description about topic"></textarea>
                             </div>
 
                             <div class="form-group col-md-12 inputBox">
                                 <label for="quiz">Question</label>
-                                <textarea name="question" id="quiz" class="inputBox " rows="8" cols="40" placeholder="Question for discussion"></textarea>
+                                <textarea name="question" id="quiz" class="form-control" rows="8" cols="40" placeholder="Question for discussion"></textarea>
                             </div>
 
                             <div class="form-group col-md-12  inputBox">
@@ -207,21 +264,14 @@
                         </div>
                     </form>
                     <div class="help">
-                        <p>Want to join other discussions?
+                        <p>
+                            Want to join other discussions?
                             <ion-chip onclick="join()" color="warning">
                                 <ion-label> Join </ion-label>
                             </ion-chip>
                         </p>
                     </div>
-                </div>
             </div>
-        </div>
-        </ion-card-content>
-        </ion-card>
-    </div>
-    <div class="col-md-3 col-sm-12"></div>
-        </div>
-
         `;
         holder.innerHTML = create;
         LoadTopicsAndSubtopics()
@@ -230,50 +280,35 @@
         function join(){
             const holder = document.querySelector('#holder')
             const join = `
-                <div class="row mt-2 pt-2">
-    <div class="col-md-3 col-sm-12"></div>
-    <div class="col-md-6 col-sm-12 form">
-    <ion-card class="">
-        <ion-card-content>
-        <div class="jumbotron">
-            <div class="login_form">
-                <h4 class="text-center w-100">Join a current running discussion</h4>
+                <h4 class="text-center">Join a discussion</h4>
                 {% for message in messages %}
                 <p class="text-success text-danger">{{ message }}</p>
                 {% endfor %}
-                <div class="w-100">
-                    <form action="" method="POST">
+                <form action="/discussion_join/" method="POST" class="form">
                         {% csrf_token %}
-                        <fieldset>
-                            <div class="form-row input">
+                        <div class="form-row input">
 
-                                <div class="form-group col-md-12  inputBox">
-                                    <label for="discussionid">Discussion Id</label>
-                                    <input type="text" name="discussionid" id="discussionid" placeholder="Join discussion Id">
-                                </div>
+                            <div class="form-group col-md-12 ">
+                                <label for="discussionId">Discussion ID</label>
 
-                                <div class="form-group col-md-12 inputBox">
-                                    <input type="submit" name="" value="Join">
-                                </div>
-
+                                <input type="text" name="discussionId" id="discussionId" class="form-control"/>
                             </div>
-                        </fieldset>
+
+                            <div class="form-group col-md-12 ">
+                                <button type="submit" name="join-submit" class="btn btn-primary w-100"> Join </button>
+                            </div>
+
+                        </div>
                     </form>
                     <div class="help">
-                        <p>Want to create a discussion topic?
+                        <p>
+                            Want to create a question?
                             <ion-chip onclick="create()" color="warning">
                                 <ion-label> Create </ion-label>
                             </ion-chip>
-                         </p>
+                        </p>
                     </div>
-                </div>
             </div>
-        </div>
-        </ion-card-content>
-        </ion-card>
-    </div>
-    <div class="col-md-3 col-sm-12"></div>
-</div>
             `;
             holder.innerHTML = join;
         }

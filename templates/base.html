@@ -8,19 +8,28 @@
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script type="text/javascript" src="{% static 'jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'bootstrap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'google-code-prettify/run_prettify.js' %}"></script>
+    <script defer type="text/javascript" src="{% static 'bootstrap.js' %}"></script>
+    <script defer type="text/javascript" src="{% static 'google-code-prettify/run_prettify.js' %}"></script>
 
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
 
     <link rel="stylesheet" href="{% static 'ser.css' %}">
-    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
     <link rel="stylesheet" href="/static/google-code-prettify/skins/{{ user.userextension.style_sheet }}.css">
+
+<!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">-->
+
     <title> Discuzz | Enjoy your forum </title>
 
     <style>
+
+    body {
+        font-family: 'Tangerine', serif;
+      }
+
     ion-slides {
       height: 100%;
     }
@@ -44,16 +53,6 @@
       font-weight: 500;
     }
 
-    p {
-      padding: 0 40px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--ion-color-step-600, #60646b);
-    }
-
-    p b {
-      color: var(--ion-text-color, #000000);
-    }
   </style>
 
 
@@ -68,6 +67,360 @@
     }
 
   </style>
+
+    <style>
+ :root {
+
+  --ion-color-primary: #3880ff;
+  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #3171e0;
+  --ion-color-primary-tint: #4c8dff;
+
+  --ion-color-secondary: #0cd1e8;
+  --ion-color-secondary-rgb: 12, 209, 232;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0bb8cc;
+  --ion-color-secondary-tint: #24d6ea;
+
+  --ion-color-tertiary: #7044ff;
+  --ion-color-tertiary-rgb: 112, 68, 255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #633ce0;
+  --ion-color-tertiary-tint: #7e57ff;
+
+  --ion-color-success: #10dc60;
+  --ion-color-success-rgb: 16, 220, 96;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #0ec254;
+  --ion-color-success-tint: #28e070;
+
+  --ion-color-warning: #ffce00;
+  --ion-color-warning-rgb: 255, 206, 0;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255, 255, 255;
+  --ion-color-warning-shade: #e0b500;
+  --ion-color-warning-tint: #ffd31a;
+
+  --ion-color-danger: #f04141;
+  --ion-color-danger-rgb: 245, 61, 61;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #d33939;
+  --ion-color-danger-tint: #f25454;
+
+  --ion-color-dark: #222428;
+  --ion-color-dark-rgb: 34, 34, 34;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+
+  --ion-color-medium: #989aa2;
+  --ion-color-medium-rgb: 152, 154, 162;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #86888f;
+  --ion-color-medium-tint: #a2a4ab;
+
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 244, 244;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255,255,255;
+
+  --ion-text-color: #000000;
+  --ion-text-color-rgb: 0,0,0;
+
+  --ion-color-step-50: #f2f2f2;
+  --ion-color-step-100: #e6e6e6;
+  --ion-color-step-150: #d9d9d9;
+  --ion-color-step-200: #cccccc;
+  --ion-color-step-250: #bfbfbf;
+  --ion-color-step-300: #b3b3b3;
+  --ion-color-step-350: #a6a6a6;
+  --ion-color-step-400: #999999;
+  --ion-color-step-450: #8c8c8c;
+  --ion-color-step-500: #808080;
+  --ion-color-step-550: #737373;
+  --ion-color-step-600: #666666;
+  --ion-color-step-650: #595959;
+  --ion-color-step-700: #4d4d4d;
+  --ion-color-step-750: #404040;
+  --ion-color-step-800: #333333;
+  --ion-color-step-850: #262626;
+  --ion-color-step-900: #191919;
+  --ion-color-step-950: #0d0d0d;
+}
+
+ :root {
+  --ion-color-favorite: #69bb7b;
+  --ion-color-favorite-rgb: 105,187,123;
+  --ion-color-favorite-contrast: #ffffff;
+  --ion-color-favorite-contrast-rgb: 255,255,255;
+  --ion-color-favorite-shade: #5ca56c;
+  --ion-color-favorite-tint: #78c288;
+
+  --ion-color-twitter: #1da1f4;
+  --ion-color-twitter-rgb: 29,161,244;
+  --ion-color-twitter-contrast: #ffffff;
+  --ion-color-twitter-contrast-rgb: 255,255,255;
+  --ion-color-twitter-shade: #1a8ed7;
+  --ion-color-twitter-tint: #34aaf5;
+
+  --ion-color-google: #dc4a38;
+  --ion-color-google-rgb: 220,74,56;
+  --ion-color-google-contrast: #ffffff;
+  --ion-color-google-contrast-rgb: 255,255,255;
+  --ion-color-google-shade: #c24131;
+  --ion-color-google-tint: #e05c4c;
+
+  --ion-color-vimeo: #23b6ea;
+  --ion-color-vimeo-rgb: 35,182,234;
+  --ion-color-vimeo-contrast: #ffffff;
+  --ion-color-vimeo-contrast-rgb: 255,255,255;
+  --ion-color-vimeo-shade: #1fa0ce;
+  --ion-color-vimeo-tint: #39bdec;
+
+  --ion-color-facebook: #3b5998;
+  --ion-color-facebook-rgb: 59,89,152;
+  --ion-color-facebook-contrast: #ffffff;
+  --ion-color-facebook-contrast-rgb: 255,255,255;
+  --ion-color-facebook-shade: #344e86;
+  --ion-color-facebook-tint: #4f6aa2;
+}
+
+.ion-color-favorite {
+  --ion-color-base: var(--ion-color-favorite);
+  --ion-color-base-rgb: var(--ion-color-favorite-rgb);
+  --ion-color-contrast: var(--ion-color-favorite-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-favorite-contrast-rgb);
+  --ion-color-shade: var(--ion-color-favorite-shade);
+  --ion-color-tint: var(--ion-color-favorite-tint);
+}
+
+.ion-color-twitter {
+  --ion-color-base: var(--ion-color-twitter);
+  --ion-color-base-rgb: var(--ion-color-twitter-rgb);
+  --ion-color-contrast: var(--ion-color-twitter-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-twitter-contrast-rgb);
+  --ion-color-shade: var(--ion-color-twitter-shade);
+  --ion-color-tint: var(--ion-color-twitter-tint);
+}
+
+.ion-color-google {
+  --ion-color-base: var(--ion-color-google);
+  --ion-color-base-rgb: var(--ion-color-google-rgb);
+  --ion-color-contrast: var(--ion-color-google-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-google-contrast-rgb);
+  --ion-color-shade: var(--ion-color-google-shade);
+  --ion-color-tint: var(--ion-color-google-tint);
+}
+
+.ion-color-vimeo {
+  --ion-color-base: var(--ion-color-vimeo);
+  --ion-color-base-rgb: var(--ion-color-vimeo-rgb);
+  --ion-color-contrast: var(--ion-color-vimeo-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-vimeo-contrast-rgb);
+  --ion-color-shade: var(--ion-color-vimeo-shade);
+  --ion-color-tint: var(--ion-color-vimeo-tint);
+}
+
+.ion-color-facebook {
+  --ion-color-base: var(--ion-color-facebook);
+  --ion-color-base-rgb: var(--ion-color-facebook-rgb);
+  --ion-color-contrast: var(--ion-color-facebook-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-facebook-contrast-rgb);
+  --ion-color-shade: var(--ion-color-facebook-shade);
+  --ion-color-tint: var(--ion-color-facebook-tint);
+}
+
+.ion-color-github {
+  --ion-color-base: #211F1F;
+  --ion-color-base-rgb: 33,31,31;
+  --ion-color-contrast: #ffffff;
+  --ion-color-contrast-rgb: 255,255,255;
+  --ion-color-shade: #1d1b1b;
+  --ion-color-tint: #373535;
+}
+
+.ion-color-instagram {
+  --ion-color-base: #9537BC;
+  --ion-color-base-rgb: 149,55,188;
+  --ion-color-contrast: #ffffff;
+  --ion-color-contrast-rgb: 255,255,255;
+  --ion-color-shade: #8330a5;
+  --ion-color-tint: #a04bc3;
+}
+
+:root {
+  --ion-headings-font-weight: 300;
+
+  --ion-color-angular: #ac282b;
+  --ion-color-communication: #8e8d93;
+  --ion-color-tooling: #fe4c52;
+  --ion-color-services: #fd8b2d;
+  --ion-color-design: #fed035;
+  --ion-color-workshop: #69bb7b;
+  --ion-color-food: #3bc7c4;
+  --ion-color-documentation: #b16be3;
+  --ion-color-navigation: #6600cc;
+}
+
+
+.dark-theme {
+  --ion-color-primary: #428cff;
+  --ion-color-primary-rgb: 66,140,255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #3a7be0;
+  --ion-color-primary-tint: #5598ff;
+
+  --ion-color-secondary: #50c8ff;
+  --ion-color-secondary-rgb: 80,200,255;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #46b0e0;
+  --ion-color-secondary-tint: #62ceff;
+
+  --ion-color-tertiary: #6a64ff;
+  --ion-color-tertiary-rgb: 106,100,255;
+  --ion-color-tertiary-contrast: white;
+  --ion-color-tertiary-contrast-rgb: 255,255,255;
+  --ion-color-tertiary-shade: #5d58e0;
+  --ion-color-tertiary-tint: #7974ff;
+
+  --ion-color-success: #2fdf75;
+  --ion-color-success-rgb: 47,223,117;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0,0,0;
+  --ion-color-success-shade: #29c467;
+  --ion-color-success-tint: #44e283;
+
+  --ion-color-warning: #ffd534;
+  --ion-color-warning-rgb: 255,213,52;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0,0,0;
+  --ion-color-warning-shade: #e0bb2e;
+  --ion-color-warning-tint: #ffd948;
+
+  --ion-color-danger: #ff4961;
+  --ion-color-danger-rgb: 255,73,97;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255,255,255;
+  --ion-color-danger-shade: #e04055;
+  --ion-color-danger-tint: #ff5b71;
+
+  --ion-color-dark: #f4f5f8;
+  --ion-color-dark-rgb: 244,245,248;
+  --ion-color-dark-contrast: #000000;
+  --ion-color-dark-contrast-rgb: 0,0,0;
+  --ion-color-dark-shade: #d7d8da;
+  --ion-color-dark-tint: #f5f6f9;
+
+  --ion-color-medium: #989aa2;
+  --ion-color-medium-rgb: 152,154,162;
+  --ion-color-medium-contrast: #000000;
+  --ion-color-medium-contrast-rgb: 0,0,0;
+  --ion-color-medium-shade: #86888f;
+  --ion-color-medium-tint: #a2a4ab;
+
+  --ion-color-light: #222428;
+  --ion-color-light-rgb: 34,36,40;
+  --ion-color-light-contrast: #ffffff;
+  --ion-color-light-contrast-rgb: 255,255,255;
+  --ion-color-light-shade: #1e2023;
+  --ion-color-light-tint: #383a3e;
+}
+
+.dark-theme.ios {
+  --ion-background-color: #000000;
+  --ion-background-color-rgb: 0,0,0;
+
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255,255,255;
+
+  --ion-color-step-50: #0d0d0d;
+  --ion-color-step-100: #1a1a1a;
+  --ion-color-step-150: #262626;
+  --ion-color-step-200: #333333;
+  --ion-color-step-250: #404040;
+  --ion-color-step-300: #4d4d4d;
+  --ion-color-step-350: #595959;
+  --ion-color-step-400: #666666;
+  --ion-color-step-450: #737373;
+  --ion-color-step-500: #808080;
+  --ion-color-step-550: #8c8c8c;
+  --ion-color-step-600: #999999;
+  --ion-color-step-650: #a6a6a6;
+  --ion-color-step-700: #b3b3b3;
+  --ion-color-step-750: #bfbfbf;
+  --ion-color-step-800: #cccccc;
+  --ion-color-step-850: #d9d9d9;
+  --ion-color-step-900: #e6e6e6;
+  --ion-color-step-950: #f2f2f2;
+
+  --ion-toolbar-background: #0d0d0d;
+
+  --ion-item-background: #1c1c1c;
+  --ion-item-background-activated: #313131;
+}
+
+.dark-theme.md {
+  --ion-background-color: #121212;
+  --ion-background-color-rgb: 18,18,18;
+  --ion-background-image: url('../assets/img/magazine/m10.jpg');
+
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255,255,255;
+
+  --ion-border-color: #222222;
+
+  --ion-color-step-50: #1e1e1e;
+  --ion-color-step-100: #2a2a2a;
+  --ion-color-step-150: #363636;
+  --ion-color-step-200: #414141;
+  --ion-color-step-250: #4d4d4d;
+  --ion-color-step-300: #595959;
+  --ion-color-step-350: #656565;
+  --ion-color-step-400: #717171;
+  --ion-color-step-450: #7d7d7d;
+  --ion-color-step-500: #898989;
+  --ion-color-step-550: white;
+  --ion-color-step-600: #a0a0a0;
+  --ion-color-step-650: #acacac;
+  --ion-color-step-700: #b8b8b8;
+  --ion-color-step-750: #c4c4c4;
+  --ion-color-step-800: #d0d0d0;
+  --ion-color-step-850: #dbdbdb;
+  --ion-color-step-900: #e7e7e7;
+  --ion-color-step-950: #f3f3f3;
+
+  --ion-item-background: #1e1e1e;
+
+  --ion-toolbar-background: #1f1f1f;
+
+  --ion-tab-bar-background: #1f1f1f;
+}
+
+.dark-theme code{
+    color: white;
+}
+
+
+    </style>
+
+    {% block style %}
+    {% endblock %}
+
   <script type="module">
     import { menuController } from 'https://cdn.jsdelivr.net/npm/@ionic/core@next/dist/ionic/index.esm.js';
     window.menuController = menuController;
@@ -79,21 +432,41 @@
   </script>
 
     <title> Discuzz | Enjoy your forum </title>
+
+    <style>
+        .comment-form{
+            width: 70%;
+            margin: auto;
+
+        }
+
+        @media (max-width: 576px){
+            .comment-form{
+                width: 95%;
+                margin: auto;
+
+            }
+        }
+
+        input, textarea{
+            background: var(--ion-color-step-100) !important;
+        }
+    </style>
 </head>
 <body>
 
-    <ion-app>
+    <ion-app class="{{user.userextension.mode_sheet}}-theme" mode="ios">
     <ion-menu side="start" content-id="main-content" mode="ios">
       <ion-header>
-        <ion-toolbar color="dark">
-          <ion-title color="primary"> Discuzz </ion-title>
+        <ion-toolbar color="">
+          <ion-title color=""> Discuzz </ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
 
-        <ion-list mode="ios" no-lines>
+        <ion-list mode="ios" no-lines class="no-lines lines-none" lines="none">
             {% if user.is_authenticated %}
-          <ion-card color="primary" href="{% url 'profile' %}" router-direction="forward">
+          <ion-card color="" href="{% url 'profile' %}" router-direction="forward">
 
                 <ion-card-content>
                     <ion-card-subtitle class="text-center" href="{% url 'profile' %}" router-link="{% url 'profile' %}" router-direction="forward">
@@ -168,6 +541,19 @@
           </ion-item>
 
 
+            <ion-item href="{% url 'notifications' %}">
+            <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+            <ion-label> Notifications </ion-label>
+            <ion-badge slot="end" color="vimeo"> 1234 </ion-badge>
+          </ion-item>
+
+            <ion-item href="{% url 'chat' %}">
+            <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+            <ion-label> Inbox </ion-label>
+            <ion-badge slot="end" color="success"> 5000 </ion-badge>
+          </ion-item>
+
+
           <ion-item href="{% url 'logout' %}">
             <ion-icon name="log-out-outline" slot="start"></ion-icon>
             <ion-label> Logout </ion-label>
@@ -198,10 +584,10 @@
     <div class="ion-page" id="main-content">
 
       <ion-header mode="ios">
-        <ion-toolbar color="dark">
+        <ion-toolbar color="">
 
           <ion-buttons slot="start">
-                <ion-menu-button color="primary"></ion-menu-button>
+                <ion-menu-button color=""></ion-menu-button>
           </ion-buttons>
 
           <ion-title>
@@ -222,25 +608,27 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content  class="ion-no-padding bg-dark" style="--background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQupxCtmNK363uI4A5U9DPHEg9TmMz3brVokA&usqp=CAU);background-position: center; background-repeat: no-repeat; background-size: auto;">
+      <ion-content  class="ion-no-padding ion-no-margin" color="">
         {% block content %} {% endblock %}
 
-        <section class="disc-footer">
+        <section class="">
         <div class="row">
             <div class="col-md-4">
                 {% if user.is_authenticated %}
-                <p class="text-center">We are glad to have you here, {{ user.username }}</p>
+                <p class="text-center text-primary">We are glad to have you here, {{ user.username }}</p>
                 {% endif %}
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-4">
                 {% if user.is_authenticated %}
                 <a href="{% url 'logout' %}">
-                    <button class="btn btn-primary btn-medium float-right">
+                    <button class="btn btn-primary btn-medium float-right mr-4">
                         Logout
                     </button>
                 </a> {% else %}
-                <button class="btn btn-primary btn-medium float-right">Login</button> {% endif %}
+                <a href="{% url 'login' %}">
+                    <button class="btn btn-primary btn-medium float-right mr-4">Login</button>
+                </a> {% endif %}
             </div>
         </div>
 
@@ -270,15 +658,47 @@
             </div>
 
 
-            <div class="col-md-3 b-right share">
+            <div class="col-md-3 b-right">
                 <h4 class="text-center">SHARE</h4>
-                <hr>
-                <a href=""> <ion-icon name="logo-facebook" color="primary"></ion-icon> Facebook </a>
-                <a href=""> <ion-icon name="logo-twitter" color="secondary"></ion-icon> Twitter</a>
-                <a href=""> <ion-icon name="logo-instagram" color="warning"></ion-icon> Instagram </a>
-                <a href=""> <ion-icon name="logo-linkedin" class="indigo"></ion-icon> LinkedIn </a>
-                <a href=""> <ion-icon name="logo-google" color="danger"></ion-icon> Google plus </a>
-                <a href=""> <ion-icon name="logo-google-playstore" class="text-yellow"></ion-icon>Download application </a>
+                <hr/>
+                <ion-list class="ion-no-padding" lines="none">
+
+                    <ion-item class="ion-padding-left">
+                        <ion-icon name="logo-facebook" slot="start" color="primary"></ion-icon>
+                        Facebook
+                    </ion-item>
+
+                    <ion-item class="ion-padding-left">
+                        <ion-icon name="logo-twitter" slot="start" color="secondary"></ion-icon>
+                        Twitter
+                    </ion-item>
+
+                    <ion-item class="ion-padding-left">
+                        <ion-icon name="logo-instagram" slot="start" color="warning"></ion-icon>
+                        Instagram
+                    </ion-item>
+
+                    <ion-item class="ion-padding-left">
+                        <ion-icon name="logo-linkedin" slot="start" color="danger"></ion-icon>
+                        LinkedIn
+                    </ion-item>
+
+                    <ion-item class="ion-padding-left ">
+                        <ion-icon name="logo-github" class="ion-color-github" slot="start"></ion-icon>
+                        Github
+                    </ion-item>
+
+                    <ion-item class="ion-padding-left">
+                        <ion-icon name="logo-google-plus" slot="start"></ion-icon>
+                        Google Plus
+                    </ion-item>
+
+                    <ion-item class="ion-padding-left">
+                        <ion-icon name="logo-playstore" slot="start"></ion-icon>
+                        Download application
+                    </ion-item>
+
+                </ion-list>
             </div>
 
         </div>
@@ -289,7 +709,7 @@
             </div>
         </div>
         </section>
-      </ion-content>
+    </ion-content>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>
@@ -369,6 +789,44 @@
             }
             xhr.send();
         }
+
+        window.ononline = (e) => {
+            console.log('ONLINE STATUS ===', e)
+          }
+
+          document.ononline = (e) => {
+            console.log('document online', e)
+          }
+
+        function Notes(){
+            var loc = window.location;
+            var wSStart = 'ws://'
+            if(loc.protocol === 'https:'){
+                wSStart = 'wss://';
+            }
+
+            var endPoint = wSStart + loc.host + '/notifications/';
+            console.log(endPoint)
+            var socket =new WebSocket(endPoint);
+
+            socket.onmessage = (e) => { console.log('Notifications', e.data) }
+            socket.onopen = (e) => {
+                console.log('Notifications', e)
+                // setInterval(() => {
+
+                    // socket.send('something')
+                // }, 1000);
+
+
+             }
+            socket.onerror = (e) => { console.log('Notifications', e) }
+        }
+        Notes();
+
+        // function checkWindowStatus(){
+          
+        // }
+        // checkWindowStatus();
     </script>
 
 </body>

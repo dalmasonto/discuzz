@@ -45,15 +45,19 @@ INSTALLED_APPS = [
     'inbox',
     'fanpage',
 
+    # 'crispy-forms',
+
     'channels',
     'multiselectfield',
     'rest_framework',
     'social_django',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -182,8 +186,8 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         # 'AUTH': 'KngTsmw0Mpm5vPBuzhdQEWro20zm2E48',
         "CONFIG": {
-            # "hosts": [("localhost", 6379)]
-            "hosts": [os.environ.get('REDIS_URL')]
+            "hosts": [("localhost", 6379)]
+            # "hosts": [os.environ.get('REDIS_URL')]
             # "hosts": [("https://heroku.com/redis-18157.c15.us-east-1-4.ec2.cloud.redislabs", 18157)],
         },
     },
@@ -201,3 +205,27 @@ CHANNEL_LAYERS = {
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
+# CORS SETTINGS
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_URLS_REGEX = r'^/api/.*$'
+
+
+#EMAIL SETTINGS
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'dalmasogembo@gmail.com'
+EMAIL_HOST_PASSWORD = 'iajw blok ypqt bvmj'
+
+# CACHES
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': '127.0.0.1:11211',
+#     }
+# }

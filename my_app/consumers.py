@@ -87,9 +87,7 @@ class SendReplyConsumer(AsyncConsumer):
 
     def __init__(self, scope):
         super().__init__(scope)
-        # print('THE SCOPE HAS THE FOLLOWING INFORMATION', scope)
         chat_room = scope['url_route']['kwargs']['discussion_Code']
-        print(chat_room)
         chat_room_2 = 'myadmin'
 
         discussion_code = chat_room
@@ -127,21 +125,20 @@ class SendReplyConsumer(AsyncConsumer):
         if type_ == 'reply':
             reply = loaded_dict_data.get('reply')
 
-            await self.create_new_reply(reply)
+            rep_ = await self.create_new_reply(reply)
 
-            new_rep = await self.get_the_new_reply(reply)
-            # print('THE NEW REP IS: ', new_rep.reply)
+            # new_rep = await self.get_the_new_reply(reply)
             participants_data = await self.participants(self.discussion_code)
-            print('THE PARTICIPANTS DATA IS on reply: ', participants_data)
 
             data_to_front = {
-                'id': new_rep.id,
+                'id': rep_.id,
                 'username': self.user.username,
                 'profile_pic': profile_pic,
-                'reply': new_rep.reply,
+                'reply': rep_.reply,
                 'likes': 0,
                 'dislikes': 0,
                 'comments': 0,
+                'parent_question_replies_count': 0,
                 'participants': participants_data,
                 'type': 'reply'
             }
@@ -167,6 +164,7 @@ class SendReplyConsumer(AsyncConsumer):
                 'username': self.user.username,
                 'profile_pic': profile_pic,
                 'comment': comment,
+                'parent_reply_comments_count': 0,
                 'participants': participants_data,
                 'type': 'comment'
             }
@@ -202,7 +200,6 @@ class SendReplyConsumer(AsyncConsumer):
             id_ = loaded_dict_data.get('id')
             # print(id_)
             participants_data = await self.participants(self.discussion_code)
-            print('THE PARTICIPANTS DATA IS: ', participants_data)
 
             await self.create_like(id_)
             likes = await self.get_reply_likes(id_)
@@ -258,7 +255,6 @@ class SendReplyConsumer(AsyncConsumer):
         })
 
     async def reply_chat(self, event):
-        # print('MESSAGE REPLY', event)
 
         await self.send({
             'type': 'websocket.send',
@@ -273,7 +269,6 @@ class SendReplyConsumer(AsyncConsumer):
         })
 
     async def like_chat(self, event):
-        # print('MESSAGE LIKE', event)
 
         await self.send({
             'type': 'websocket.send',
@@ -281,12 +276,18 @@ class SendReplyConsumer(AsyncConsumer):
         })
 
     async def dislike_chat(self, event):
-        # print('MESSAGE DISLIKE', event)
 
         await self.send({
             'type': 'websocket.send',
             'text': event['text']
         })
+
+    # async def send_time(self, event):
+    #
+    #     await self.send({
+    #         'type': 'websocket.send',
+    #         'text': event['text']
+    #     })
 
     async def websocket_disconnect(self, event):
         print('disconnected', event)
@@ -297,8 +298,8 @@ class SendReplyConsumer(AsyncConsumer):
         discussion_code = Create.objects.get(discussionCode=self.discussion_code)
         reply = Discuzz(discussion_code=discussion_code, reply=reply, username=self.user,
                         reply_time=now)
-
-        return reply.save()
+        reply.save()
+        return reply
 
     @database_sync_to_async
     def create_new_comment(self, comment, id_):

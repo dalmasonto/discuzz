@@ -11,10 +11,6 @@
     box-shadow: -5px -5px 10px rgba(247, 244, 244, 0.05), 5px 5px 15px rgba(250, 240, 240, 0.5) !important;
 }
 
-.about h4 {
-    color: #ff0047;
-}
-
 .about .card:hover {
     transform: rotateX(10deg);
 }

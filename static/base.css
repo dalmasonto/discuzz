@@ -1,6 +1,3 @@
-.container-fluid {
-    margin-top: 50px !important;
-}
 
 .page-input {
     padding-right: -10px !important;
@@ -20,7 +17,6 @@ input[type="checkbox"]:checked~* {
     width: 100%;
     background: #131419;
     padding: 20px;
-    color: white;
     font-size: 14px;
 }
 
@@ -30,16 +26,6 @@ input[type="checkbox"]:checked~* {
 
 .b-right {
     border-right: 1px solid rgba(5, 141, 175, 0.03);
-}
-
-.share a {
-    display: block;
-    padding: 5px;
-    margin-left: 10px;
-}
-
-.share a {
-    color: white;
 }
 
 .top {
